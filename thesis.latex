@@ -1,0 +1,59 @@
+\documentclass[12pt]{report}
+\usepackage[margin=1in]{geometry}
+\usepackage[default]{sourcesanspro}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\spacing{1.5}
+
+\title{
+    {Orthogonal Array Sampling for Monte Carlo Based Rendering}\\
+    {\large Dartmouth College} \\
+    \vspace{1.5cm}
+    {\includegraphics[scale=0.3]{graphics/D-Pine_RGB.jpg}}
+}
+\author{Afnan Enayet}
+\date{\today} % TODO update the date
+
+\begin{document}
+
+\maketitle
+
+\chapter*{Abstract}
+In computer graphics (especially in offline rendering), the current state of
+the art rendering techniques utilize Monte Carlo integration to simulate light
+and calculate the value of each pixel in order to generate a realistic looking
+image. \\
+
+Monte Carlo integration is a highly efficient method to estimate an integral
+that scales extremely well to a high number of dimensions, making it well
+suited for graphics, because generating images creates an extremely
+high-dimensional integrand. The efficiency of these Monte Carlo integrations
+partially depends on the sampling techniques used, and using a more efficient
+sampling technique can make a Monte Carlo simulation converge to the right
+answer much more quickly than using more naive sampling techniques. \\
+
+In this thesis, we present an efficient sampling method that demonstrates much
+higher performance than other non-QMC based sampling techniques, and tends to
+perform about as well as state of the art QMC sampling techniques.  This novel
+sampling method, based on orthogonal arrays, offers guaranteed stratification
+in arbitrary projections, leading to better theoretical performance with
+integrands that have cross-correlated variance compared to sampling methods
+that do not offer these same guarantees.
+
+\chapter*{Acknowledgements}
+
+I would like to thank my thesis advisor, Wojciech Jarosz, whose help was
+crucial in the development of this thesis. I would also like to acknowledge
+Andrew Kensler, Per Christensen, and Charlie Kilpatrick from Pixar for their
+help and collaborative efforts in the development of this thesis and the
+related research paper.
+
+\tableofcontents
+
+% All other "real" chapters should be included as separate files to keep the
+% latex file from getting too messy
+\end{document}
