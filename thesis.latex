@@ -1,4 +1,6 @@
 \documentclass[12pt]{report}
+
+% packages
 \usepackage[margin=1in]{geometry}
 \usepackage[default]{sourcesanspro}
 \usepackage[utf8]{inputenc}
@@ -6,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 
+% general formatting
 \pagestyle{fancy}
 \spacing{1.5}
 
@@ -16,7 +19,7 @@
     {\includegraphics[scale=0.3]{graphics/D-Pine_RGB.jpg}}
 }
 \author{Afnan Enayet}
-\date{\today} % TODO update the date
+\date{\today} % TODO update the date whenever the deadline is announced
 
 \begin{document}
 
@@ -56,4 +59,8 @@ related research paper.
 
 % All other "real" chapters should be included as separate files to keep the
 % latex file from getting too messy
+%
+% Example:
+% \include{chapters/introduction.tex}
+
 \end{document}
