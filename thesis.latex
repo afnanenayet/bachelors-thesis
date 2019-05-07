@@ -7,6 +7,10 @@
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{todo}
+%\usepackage{unicode-math}
+\usepackage[cm]{sfmath}
+\DeclareMathVersion{sans}
+
 %\usepackage{fancyhdr}
 
 % general formatting
