@@ -1,0 +1,58 @@
+\chapter{Background}
+
+This section will explore background knowledge that pertains to the findings in
+this thesis. In order to understand the significance of a sampling method, we
+must first explore the fundamentals of Monte Carlo integration and how
+different sampling strategies can affect the effectiveness of Monte Carlo
+integration. The background section will discuss different conventional
+sampling techniques for Monte Carlo integration and comment on various
+properties of these sampling techniques. \\
+
+\section{Monte Carlo Integration}
+
+Suppose you have a square dartboard that is one meter by one meter. We will
+call the length of a side $l$. We know that the area of a square is simply
+$l^2$, so the area of the dartboard is $1$. Now suppose we have a perfect
+circle inside of the square, and we don't know the area of this circle. For
+some reason, we have an unlimited supply of darts, and we know whether each
+dart we throw falls inside the circle, or outside of the circle (assuming that
+every dart hits the dartboard). If we want to find the area of the circle, we
+can throw a bunch of random darts, record the number of darts that hit the
+circle, and use the ratio of the number of darts that hit the circle to the
+total number of darts thrown to find the area of the circle. For example, if
+about a quarter of our darts hit the circle, then we can reasonably estimate
+that the size of our circle is $0.25 * 1 = 0.25$. \\
+
+The principle of stochastically estimating some arbitrary area or shape is the
+same principle that underlies Monte Carlo integration. Instead of a perfectly
+square dartboard, imagine an arbitrary integration domain. Now replace the
+circle with some arbitrary function. We can define the integral of the function
+as the area under the function. Now imagine throwing darts at random, within
+some domain, except now we are trying to find the integral of a function rather
+than the area of a square. \\
+
+\todo{add a visual here with the circle/dartboard example}
+
+In practice, Monte Carlo integration involves randomly selecting some point in
+the function's domain ($R^d$) a certain number of times ($n$) and averaging the
+calculated values.
+
+\todo{add a visual here with an actual function}
+
+\begin{equation}
+    \int_{a}^{b} f(x) \approx \frac{1}{N} \sum_{i = 1}^{i = N} f(\overline{x}_i)
+\end{equation}
+
+\noindent % don't indent since this is a continuation of the prev paragraph
+where $\overline{x}$ is a set of uniform random numbers and $\overline{x}_i$ is
+the $i^{th}$ element of the set of uniform random numbers. It is important to
+note that is is not strictly necessary to use uniform random sampling for Monte
+Carlo integration, but doing so makes the explanation of Monte Carlo simpler. 
+An important property of Monte Carlo integration is that the estimation is
+guaranteed to converge towards the correct answer as $N$ approaches infinity.
+As a result, $N$ becomes a controlled variable that allows one to choose
+between speed and accuracy.
+
+\begin{equation}
+    \lim_{N \rightarrow \inf} \frac{1}{N} \sum_{i = 1}^{i = N} f(\overline{x}_i) = \int_{a}^{b} f(x)
+\end{equation}

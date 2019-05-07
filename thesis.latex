@@ -6,10 +6,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{setspace}
 \usepackage{graphicx}
-\usepackage{fancyhdr}
+\usepackage{todo}
+%\usepackage{fancyhdr}
 
 % general formatting
-\pagestyle{fancy}
+%\pagestyle{fancy}
 \spacing{1.5}
 
 \title{
@@ -53,7 +54,8 @@ I would like to thank my thesis advisor, Wojciech Jarosz, whose help was
 crucial in the development of this thesis. I would also like to acknowledge
 Andrew Kensler, Per Christensen, and Charlie Kilpatrick from Pixar for their
 help and collaborative efforts in the development of this thesis and the
-related research paper.
+related research paper. I would also like to thank Rebecca Luo for her support,
+patience, and critical eye.
 
 \tableofcontents
 
@@ -61,6 +63,6 @@ related research paper.
 % latex file from getting too messy
 %
 % Example:
-% \include{chapters/introduction.tex}
+\input{chapters/background.latex}
 
 \end{document}
