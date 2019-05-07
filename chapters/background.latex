@@ -47,12 +47,99 @@ calculated values.
 where $\overline{x}$ is a set of uniform random numbers and $\overline{x}_i$ is
 the $i^{th}$ element of the set of uniform random numbers. It is important to
 note that is is not strictly necessary to use uniform random sampling for Monte
-Carlo integration, but doing so makes the explanation of Monte Carlo simpler. 
+Carlo integration, but doing so makes the explanation of Monte Carlo simpler.
 An important property of Monte Carlo integration is that the estimation is
 guaranteed to converge towards the correct answer as $N$ approaches infinity.
 As a result, $N$ becomes a controlled variable that allows one to choose
 between speed and accuracy.
 
 \begin{equation}
-    \lim_{N \rightarrow \inf} \frac{1}{N} \sum_{i = 1}^{i = N} f(\overline{x}_i) = \int_{a}^{b} f(x)
+    \lim_{N \rightarrow \inf} \frac{1}{N} \sum_{i = 1}^{i = N}
+    f(\overline{x}_i) = \int_{a}^{b} f(x)
 \end{equation}
+
+\subsection{Convergence Rate}
+
+Even if you know that Monte Carlo integration will eventually converge to the
+correct answer, it is useful to know how quickly it will converge. We call this
+property the \textbf{convergence rate}. One thing that makes Monte Carlo
+integration so appealing for many use cases is that its convergence rate is
+independent of the dimensionality of the integrand. Whether your integrand is a
+2D or a 90D integrand, the accuracy of the approximate integral will increase
+at the same rate. Monte Carlo integration with uniform random sampling has an
+asymptotic convergence rate of $O(N^{-1})$. While Monte Carlo has the advantage
+of having a convergence rate that doesn not scale with dimensionality, there
+are methods that make it possible to yield a steeper convergence rate.
+
+\section{Sampling Methods}
+
+\subsection{Random Sampling}
+
+We have already discussed one method for Monte Carlo sampling: uniform random
+sampling. There are several advantages to using this method, namely that it is
+relatively easy to implement correctly and is a fairly simple method. \\
+
+There is a very intuitive pitfall that results from using naive random sampling
+- consider a scenario where we are trying to sample a step function in which
+$f(x) = 0$ for $ x \leq 0.5$ and $f(x) = 1$ for $ x > 0.5$. In this case, if it
+so happens that every sample falls in the region where $f(x) = 0$, then the
+estimated integral will be $0$, which is clearly incorrect. Random sampling
+presents the danger of oversampling or undersampling regions of functions.
+This phenomenon becomes even more dangerous with functions that are not very
+consistent across the sampled domain.
+
+\begin{minted}{python3}
+from typing import List
+from random import random
+
+def sample(num_samples: int, dims: int) -> PointList:
+    """ Uniform random random sampling
+    """
+    points = list()
+
+    for i in range(num_samples):
+        for dim in range(dims):
+            points.append([random() for _ in range(dims)])
+    return points
+
+\end{minted}
+
+
+\subsection{Jittered Sampling}
+
+In the \textbf{jittered sampling} approach, you divide the domain into
+different \textbf{strata}, and place one sample randomly inside each strata.
+Stratifying your sample domain ensures that each stratum has a sample inside of
+it, which alleviates some of the issues with uniform random sampling. For
+example, if we define even just two strata in the case discussed for uniform
+random sampling, with the step function, we can avoid the pitfall of only
+sampling the side where $f(x) = 0$. \\
+
+This method has the advantage of being relatively simple to implement, and it
+scales easily to multiple dimensions (you can jitter in 2D by creating a grid
+of squares within the domain, jittering in 3D is the same except you select
+cubes, etc). Jittered still does not provide the most efficient manner of
+sampling a function, as it has the unintended effect of clumping points near the
+boundaries of multiple strata.
+
+\begin{minted}{python3}
+from random import random
+
+def sample(num_samples: int, dims: int) -> PointList:
+    """ Jittered sampling in two dimensions
+    
+    This method assumes that the number of samples is proportional to the
+    desired number of strata.
+    """
+
+    for i in range(num_samples):
+        for d in range(dims):
+            pass
+    return
+\end{minted}
+
+\subsection{Multi-Jittered Sampling}
+
+This sampling method was introduced by Pete Shirley and introduces a new method
+of sampling that addresses the issue of functions that have variance in
+two dimensions.

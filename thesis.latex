@@ -1,14 +1,21 @@
 \documentclass[12pt]{report}
 
 % packages
+\usepackage{biblatex}
 \usepackage[margin=1in]{geometry}
 \usepackage[default]{sourcesanspro}
 \usepackage[utf8]{inputenc}
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{todo}
-%\usepackage{unicode-math}
+\usepackage[]{color}
 \usepackage[cm]{sfmath}
+\usepackage{sourcecodepro}
+\usepackage{listings}
+\usepackage{minted}
+\usepackage{etoolbox}
+\AtBeginEnvironment{minted}{\singlespacing%
+    \fontsize{11}{11}\selectfont}
 \DeclareMathVersion{sans}
 
 %\usepackage{fancyhdr}
