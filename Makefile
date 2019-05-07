@@ -14,7 +14,7 @@ output_file=thesis.pdf
 .PHONY: all clean
 
 $(output_file): $(input_file) $(input_files)
-	xelatex $(input_file)
+	xelatex -shell-escape $(input_file)
 
 clean:
 	rm -rf *.log *.aux *.toc *.pdf
