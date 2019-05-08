@@ -73,6 +73,22 @@ are methods that make it possible to yield a steeper convergence rate.
 
 \section{Sampling Methods}
 
+One heavily researched method to speed up Monte Carlo integration entails
+changing the sampling strategy. You can recall the example with the dartboard,
+and you may realize that it may be more efficient to ensure that every part of
+the dartboard as a dart in it. Instead of randomly throwing darts at the board,
+what if you were to break the dartboard up into small grids. Doing so would
+ensure that you were at least covering all parts of the dartboard, alleviating
+the worry that you might have missed something on the board. \\
+
+Many sampling strategies were designed to fix exactly the same issue. Naive
+random sampling can fail by oversampling or undersampling critical parts of a
+function that will heavily influence the average (usually parts of a function
+that are really large or really small relative to the average value of the
+function). In this section, we will explore notable sapmling methods that are
+used in Monte Carlo integration that we considered when developing the new
+sampling methods that will be introduced in this paper.
+
 \subsection{Random Sampling}
 
 We have already discussed one method for Monte Carlo sampling: uniform random
@@ -88,58 +104,44 @@ presents the danger of oversampling or undersampling regions of functions.
 This phenomenon becomes even more dangerous with functions that are not very
 consistent across the sampled domain.
 
-\begin{minted}{python3}
-from typing import List
-from random import random
+\subsection{N-Rooks Sampling}
 
-def sample(num_samples: int, dims: int) -> PointList:
-    """ Uniform random random sampling
-    """
-    points = list()
+N-Rooks sampling is a method which yields a perfect 1D distribution of points.
+Imagine a finite 1D line. Now suppose that we want to place $N$ points on the
+line, ensuring that none of the points ``overlap." An easy method to do this is
+to divide the line into $N$ sections, or \textbf{strata}, and place a point
+within each strata. Because there are $N$ points and $N$ strata, we know that
+there will only be one point per strata without any overlap. We can randomly
+jitter a point within a strata as well to provide a nice ``random" looking set
+of points that also have a good numerical distribution. \\
 
-    for i in range(num_samples):
-        for dim in range(dims):
-            points.append([random() for _ in range(dims)])
-    return points
-
-\end{minted}
-
+N-Rooks sampling can be extended to multiple dimensions in an uncorrelated
+manner by generating an N-Rooks point set for each dimension.
 
 \subsection{Jittered Sampling}
 
-In the \textbf{jittered sampling} approach, you divide the domain into
-different \textbf{strata}, and place one sample randomly inside each strata.
-Stratifying your sample domain ensures that each stratum has a sample inside of
-it, which alleviates some of the issues with uniform random sampling. For
-example, if we define even just two strata in the case discussed for uniform
-random sampling, with the step function, we can avoid the pitfall of only
-sampling the side where $f(x) = 0$. \\
+In the jittered sampling approach, you divide the domain into different strata,
+and place one sample randomly inside each strata.  Stratifying your sample
+domain ensures that each stratum has a sample inside of it, which alleviates
+some of the issues with uniform random sampling. For example, if we define even
+just two strata in the case discussed for uniform random sampling, with the
+step function, we can avoid the pitfall of only sampling the side where $f(x) =
+0$. \\
 
 This method has the advantage of being relatively simple to implement, and it
 scales easily to multiple dimensions (you can jitter in 2D by creating a grid
 of squares within the domain, jittering in 3D is the same except you select
 cubes, etc). Jittered still does not provide the most efficient manner of
-sampling a function, as it has the unintended effect of clumping points near the
-boundaries of multiple strata.
-
-\begin{minted}{python3}
-from random import random
-
-def sample(num_samples: int, dims: int) -> PointList:
-    """ Jittered sampling in two dimensions
-    
-    This method assumes that the number of samples is proportional to the
-    desired number of strata.
-    """
-
-    for i in range(num_samples):
-        for d in range(dims):
-            pass
-    return
-\end{minted}
+sampling a function, as it has the unintended effect of clumping points near
+the boundaries of multiple strata.
 
 \subsection{Multi-Jittered Sampling}
 
 This sampling method was introduced by Pete Shirley and introduces a new method
-of sampling that addresses the issue of functions that have variance in
-two dimensions.
+of sampling that addresses the issue of functions that have variance in two
+dimensions. Shirley wanted to address the potential clumping of points that
+tends to happen with jittered sampling. \\
+
+Shirley's solution was to combine the constraints of jittered sampling with the
+constraints of N-rooks. This yields a perfect distribution in each 1D
+projection as well as a nice distribution in 2D.
