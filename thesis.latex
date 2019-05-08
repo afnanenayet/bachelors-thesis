@@ -14,8 +14,12 @@
 \usepackage{listings}
 \usepackage{minted}
 \usepackage{etoolbox}
-\AtBeginEnvironment{minted}{\singlespacing%
-    \fontsize{11}{11}\selectfont}
+\AtBeginEnvironment{minted}{
+    \singlespacing%
+    \fontsize{11}{11}
+    \selectfont
+    \usemintedstyle{vs}
+}
 \DeclareMathVersion{sans}
 
 %\usepackage{fancyhdr}
