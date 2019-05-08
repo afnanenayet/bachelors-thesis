@@ -140,8 +140,26 @@ the boundaries of multiple strata.
 This sampling method was introduced by Pete Shirley and introduces a new method
 of sampling that addresses the issue of functions that have variance in two
 dimensions. Shirley wanted to address the potential clumping of points that
-tends to happen with jittered sampling. \\
+tends to happen with jittered sampling. His solution was to combine the
+constraints of jittered sampling with the constraints of N-rooks. This yields a
+perfect distribution in each 1D projection as well as a nice distribution in
+2D. \\
 
-Shirley's solution was to combine the constraints of jittered sampling with the
-constraints of N-rooks. This yields a perfect distribution in each 1D
-projection as well as a nice distribution in 2D.
+The technique to generate a multi-jittered point set is to start out by first
+dividing the domain (2D) into a set of strata and corresponding substrata.
+Start by placing a point in each strata, forming the ``canonical" arrangement.
+Note that the canonical arrangement maintains the jittered and N-Rooks
+constraints. Then shuffle the samples within each strata in each dimension,
+while maintaining the jittered and N-Rooks constraints.
+
+\subsection{Correlated Multi-Jittered Sampling}
+
+Introduced by researcher Andrew Kensler of Pixar in 2013, correlated
+multi-jittered (CMJ) sampling modifies Shirley's multi-jittered sampling
+design to provide point sets that have a better shuffling arrangement and
+consequently yield steeper convergence rates in empirical testing. \\
+
+The key idea behind CMJ is changing the shuffling step from multi-jittered
+sampling. In Shirley's method, the strata in each dimension shuffles points
+independently of the shuffle at other strata. Kensler's modification entails
+using the same shuffle over each strata in each dimension.
