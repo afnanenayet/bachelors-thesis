@@ -10,10 +10,12 @@ input_file=thesis.latex
 # define the actual input files so the makefile knows when to regenerate the PDF
 input_files=$(wildcard chapters/*.latex)
 output_file=thesis.pdf
+bib=bibliography.bib
 
 .PHONY: all clean
 
-$(output_file): $(input_file) $(input_files)
+$(output_file): $(input_file) $(input_files) $(bib)
+	biber thesis
 	xelatex -shell-escape $(input_file)
 
 clean:
