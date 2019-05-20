@@ -24,8 +24,10 @@
 
 %\usepackage{fancyhdr}
 
-% general formatting
+% formatting
 %\pagestyle{fancy}
+%\fancyhead{} % clear existing header style
+%\fancyhead[L]{\fontsize{10}{12} \selectfont}
 \spacing{1.5}
 
 \title{

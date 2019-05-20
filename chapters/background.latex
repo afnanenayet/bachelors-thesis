@@ -108,11 +108,11 @@ consistent across the sampled domain.
 
 N-Rooks sampling is a method which yields a perfect 1D distribution of points.
 Imagine a finite 1D line. Now suppose that we want to place $N$ points on the
-line, ensuring that none of the points ``overlap." An easy method to do this is
+line, ensuring that none of the points ``overlap.'' An easy method to do this is
 to divide the line into $N$ sections, or \textbf{strata}, and place a point
 within each strata. Because there are $N$ points and $N$ strata, we know that
 there will only be one point per strata without any overlap. We can randomly
-jitter a point within a strata as well to provide a nice ``random" looking set
+jitter a point within a strata as well to provide a nice ``random'' looking set
 of points that also have a good numerical distribution. \\
 
 N-Rooks sampling can be extended to multiple dimensions in an uncorrelated
@@ -147,7 +147,7 @@ perfect distribution in each 1D projection as well as a nice distribution in
 
 The technique to generate a multi-jittered point set is to start out by first
 dividing the domain (2D) into a set of strata and corresponding substrata.
-Start by placing a point in each strata, forming the ``canonical" arrangement.
+Start by placing a point in each strata, forming the ``canonical'' arrangement.
 Note that the canonical arrangement maintains the jittered and N-Rooks
 constraints. Then shuffle the samples within each strata in each dimension,
 while maintaining the jittered and N-Rooks constraints.
