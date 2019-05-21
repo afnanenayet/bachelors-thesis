@@ -21,6 +21,9 @@
     \usemintedstyle{vs}
 }
 \DeclareMathVersion{sans}
+\usepackage[hidelinks]{hyperref}
+\usepackage{biblatex}
+\addbibresource{bibliography.bib}
 
 %\usepackage{fancyhdr}
 
@@ -79,7 +82,9 @@ patience, and critical eye.
 % All other "real" chapters should be included as separate files to keep the
 % latex file from getting too messy
 %
-% Example:
+% Example: \input{folder/my_latex_file.latex}
 \input{chapters/background.latex}
+
+\printbibliography
 
 \end{document}
