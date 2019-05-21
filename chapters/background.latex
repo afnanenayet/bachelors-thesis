@@ -68,7 +68,7 @@ independent of the dimensionality of the integrand. Whether your integrand is a
 2D or a 90D integrand, the accuracy of the approximate integral will increase
 at the same rate. Monte Carlo integration with uniform random sampling has an
 asymptotic convergence rate of $O(N^{-1})$. While Monte Carlo has the advantage
-of having a convergence rate that doesn not scale with dimensionality, there
+of having a convergence rate that does not scale with dimensionality, there
 are methods that make it possible to yield a steeper convergence rate.
 
 \section{Sampling Methods}
@@ -163,3 +163,52 @@ The key idea behind CMJ is changing the shuffling step from multi-jittered
 sampling. In Shirley's method, the strata in each dimension shuffles points
 independently of the shuffle at other strata. Kensler's modification entails
 using the same shuffle over each strata in each dimension.
+
+\subsection{Quasi Monte Carlo Sampling}
+
+All of the sampling methods discussed so far rely on some element of
+randomness. Each produced point has some sort of input that stems from
+pseudo-random number generation. There are methods of sapmling that have been
+developed that don't rely on any sort of randomness. We call such sampling
+methods ``Quasi-Monte Carlo'' (QMC) sampling. \\
+
+QMC sampling methods tend to provide much higher performance in Monte Carlo
+integration than other sampling methods, and have become quite popular due to
+their superior performance, low discrepancy, and high efficiency.
+
+\subsection{Halton Sequence}
+
+The Halton sequence, named after its author, was introduced in 1960 as a means
+of deterministically generating points that are low-discrepancy, but at the
+same time, appear to be a random point set
+\cite{Halton:1964:ARQ:355588.365104}. The Halton sequence has the additional
+advantage of being a progressive sequence - you don't need knowledge of the
+previous points in order to generate the next point. This property allows for
+extremely high efficiency in generating samples. \\
+
+The Halton sequence can be constructed as follows: given some index in the
+point set, get the representation of the number in binary. Take the number,
+invert it (read the number from right to left), and then place that number
+after a decimal point. Interpreting that number in base 10 yields the point in
+the $[0,1)^d$ domain. \\
+
+As an example, lets look at the point at the fifth index of the Halton
+sequence. $5 = 101$. $101$ inverted is $101$. Placing the number after a
+decimal point yields $0.101$, which we interpret in base 10. It is easy to
+generate points in this manner, as you can trivially convert an index into
+binary and perform these steps to calculate where the point lies in space with
+high computational efficiency and very low computational overhead.
+
+\subsection{Sobol Sequence}
+
+Perhaps one of the most widely used sequences in Monte Carlo rendering, and
+other Monte Carlo applications, the Sobol sequence provides a high-efficiency,
+low-discrepancy point set that performs extremely well in Monte Carlo
+integration. You can think of Sobol as the current gold standard of Monte Carlo
+sampling. Not only does Sobol perform well, it's also a progressive sequence,
+so you don't need to know the number of samples you will use beforehand, for
+example, which is a limitation for many other sampling methods. \\
+
+The Sobol sequence has the property of being well distributed in the unit
+domain, and can progressively partition the domain as more samples are
+generated to maintain a good distribution.
