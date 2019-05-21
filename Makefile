@@ -17,6 +17,9 @@ bib=bibliography.bib
 $(output_file): $(input_file) $(input_files) $(bib)
 	biber thesis
 	xelatex -shell-escape $(input_file)
+	# Need to run it again to sync the bibliography
+	biber thesis
+	xelatex -shell-escape $(input_file)
 
 clean:
 	rm -rf *.log *.aux *.toc *.pdf
