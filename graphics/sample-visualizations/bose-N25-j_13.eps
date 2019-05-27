@@ -1,0 +1,110 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%HiResBoundingBox: -720 -720 720 720
+%%BoundingBox: -720 -720 720 720
+%%CropBox: -720 -720 720 720
+gsave 900 900 scale
+/radius { 0.1 } def %define variable for point radius
+/p { radius 0 360 arc closepath fill } def %define point command
+/blw 0.01 def %define variable for bounding box linewidth
+/clw 0.003 def %define variable for coarse linewidth
+/flw 0.0004 def %define variable for fine linewidth
+/pfc {0.9 0.55 0.1} def %define variable for point fill color
+/blc 0 def %define variable for bounding box color
+/clc 0.8 def %define variable for coarse line color
+/flc 0.9 def %define variable for fine line color
+% Draw coarse grids 
+clc setgray %fill color for coarse grid 
+clw setlinewidth
+newpath
+-0.792899 -0.792899 moveto
+0.792899 -0.792899 lineto
+0.792899 0.792899 lineto
+-0.792899 0.792899 lineto
+closepath
+stroke
+newpath
+-0.792899 -0.475739 moveto
+0 -0.475739 lineto
+0 -0.475739 lineto
+0.792899 -0.475739 lineto
+stroke
+newpath
+-0.475739 -0.792899 moveto
+-0.475739 0 lineto
+-0.475739 0 lineto
+-0.475739 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.15858 moveto
+0 -0.15858 lineto
+0 -0.15858 lineto
+0.792899 -0.15858 lineto
+stroke
+newpath
+-0.15858 -0.792899 moveto
+-0.15858 0 lineto
+-0.15858 0 lineto
+-0.15858 0.792899 lineto
+stroke
+newpath
+-0.792899 0.15858 moveto
+0 0.15858 lineto
+0 0.15858 lineto
+0.792899 0.15858 lineto
+stroke
+newpath
+0.15858 -0.792899 moveto
+0.15858 0 lineto
+0.15858 0 lineto
+0.15858 0.792899 lineto
+stroke
+newpath
+-0.792899 0.475739 moveto
+0 0.475739 lineto
+0 0.475739 lineto
+0.792899 0.475739 lineto
+stroke
+newpath
+0.475739 -0.792899 moveto
+0.475739 0 lineto
+0.475739 0 lineto
+0.475739 0.792899 lineto
+stroke
+% Draw bounding boxes 
+blc setgray %fill color for bounding box 
+blw setlinewidth
+newpath
+-0.792899 -0.792899 moveto
+0.792899 -0.792899 lineto
+0.792899 0.792899 lineto
+-0.792899 0.792899 lineto
+closepath
+stroke
+% Draw points 
+pfc setrgbcolor %fill color for points
+-0.594249 -0.397363 p
+-0.292156 -0.769183 p
+-0.722082 -0.04661 p
+-0.325823 -0.362129 p
+0.182131 -0.67428 p
+0.428317 0.501937 p
+0.392663 -0.423172 p
+0.772627 -0.309239 p
+-0.180445 0.532413 p
+0.000624783 0.757734 p
+-0.784447 0.266414 p
+-0.609552 0.692847 p
+0.112729 -0.256303 p
+0.124931 -0.0184731 p
+-0.435406 0.370707 p
+0.778048 -0.700112 p
+0.145782 0.361948 p
+-0.590017 -0.611996 p
+0.0550958 -0.738397 p
+0.210454 0.200662 p
+0.50987 0.692881 p
+0.254829 -0.11451 p
+0.561316 0.132062 p
+-0.207184 0.0412341 p
+0.507244 0.210556 p
+grestore

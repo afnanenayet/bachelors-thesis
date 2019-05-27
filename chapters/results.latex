@@ -1,0 +1,547 @@
+\chapter{Results}
+
+We have explored the theory behind OA sampling, and explored different efficient
+construction techniques for different variations of OA sampling. It's important
+to also test for and establish both the theoretical bounds and empirical
+performance of the samplers. In this section we will present the theoretical
+bounds of OA sampling, as well as real world performance and results from
+empirical analyses.
+
+\section{Theoretical Bounds}
+
+Functions can exhibit variation in a number of dimensions, and you ideally want
+your sampler to be well-stratified in the dimensions that a function exhibits
+such variance. For example, if we have an additive one-dimensional function, any
+sampler that meets the N-rooks constraint will perform extremely similarly, and
+identically when looking at the asymptotic convergence rates. \\
+
+We can take this idea and get much more fine-grained bounds on convergence rates
+if we know the dimensions the integrand varies in, and which dimensions our
+sampler is well-stratified in. Analytic variance analyses have been performed in
+several works \cite{ours} which show the theoretical bounds on Monte Carlo
+integration in particular scenarios. \\
+
+For starters, we know that naive random sampling always nets an asymptotic bound
+of $O(N^{-1})$, regardless of the function, its variance properties, or the
+dimensionality. Samplers that are well-stratified in $d$ dimensions with $d$
+dimensional integrands that are C1 discontinuous have a convergence rate of
+$O(N^{-1 - 2 / d})$ \cite{ours,Owen:2013:Monte}. The same scenario with a C0
+discontinuous integrand yields an asymptotic convergence rate of $O(N^{-1 - 1 /
+    d})$ \cite{ours}. Figure~\ref{tab:convergence-rates} presents selection of
+scenarios and the best case convergence bounds, taken from a preprint of an EGSR
+paper \cite{ours}. \\
+
+\begin{table}[t!]
+    \label{tab:convergence-rates}
+    \centering
+    \begin{tabular}{rcccccccc}
+    \toprule
+    \multicolumn{1}{c}{\bfseries Sampler}  & \multicolumn{8}{c}{\bfseries
+        Convergence rate improvement $b$}\\
+    \midrule
+    Integrand: & \multicolumn{2}{c}{$d$-dim.} & \multicolumn{2}{c}{$t$-dim.}&
+    \multicolumn{2}{c}{$t$-additive} & \multicolumn{2}{c}{$1$-additive}\\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7} \cmidrule(lr){8-9}
+    Discontinuity: & $C^1$ & $C^0$ & $C^1$ & $C^0$ & $C^1$ & $C^0$ & $C^1$ &
+    $C^0$\\
+    \midrule
+    Random & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$\\
+    $d$-stratified & $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{d}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{d}}}}$ &
+    $\nicefrac{2}{\text{\textit{d}}}$ & $\nicefrac{1}{\text{\textit{d}}}$ &
+    $\nicefrac{2}{d}$ & $\nicefrac{1}{d}$ & $\nicefrac{2}{d}$ &
+    $\nicefrac{1}{d}$\\
+    Padded $t$-stratified & $0$ & $0$ &
+    $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{t}}}}$ & $0$ & $0$ & $0$ &
+    $0$\\
+    Padded $t$-stratified+LH & $0$ & $0$ &
+    $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{t}}}}$ & $0$ & $0$ &
+    $\mathbf{2}$ & $\mathbf{1}$\\
+    OA strength-$t$ & $0$ & $0$ &
+    $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{t}}}}$ & $\nicefrac{2}{t}$ &
+    $\nicefrac{1}{d}$\\
+    OA strength-$t$+LH & $0$ & $0$ &
+    $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{2}}{\text{\textbf{\textit{t}}}}$ &
+    $\nicefrac{\mathbf{1}}{\text{\textbf{\textit{t}}}}$ & $\mathbf{2}$ &
+    $\mathbf{1}$\\
+    \bottomrule
+\end{tabular}
+    \caption{The convergence rate improvement ($b$ in $O(N^{-1-b})$) as a
+        function of the dimensionality and smoothness of the integrand for
+        various samplers. The 1- and $t$-additive integrands are
+        $d$-dimensional, where $t<d$. Best case for each integrand is bold.
+        \cite{ours}}
+\end{table}
+
+We can see that orthogonal array sampling presents some distinct advantages. One
+big advantage, perhaps one of the biggest advantages, is that orthogonal array
+sampling can handle variation in any $d$ projection. If we know a function has
+variation in $d$ dimensions, we don't need to do any clever mapping to make sure
+the variation lines up with the dimensions of the sampler that are
+well-stratified, because every $d=t$ dimensional projection is well-stratified
+with OA sampling. This provides an even bigger advantage for functions that have
+cross-dimensional variation. Suppose we have some function that exhibits
+variance in multiple arbitrary $d$ dimensional projections. OA sampling can
+handle that as well, since we already have well stratified projections. \\
+
+The downside is that the variation needs to match the strength of the OA.
+Suppose we have an OA with $t = 3$, but the integrand is four-dimensional. This
+will lead to the OA having a performance of $O(N^{-1})$, which is the same as
+random sampling, which is not ideal. Sobol sampling does not have this issue, as
+it maintains good stratification in multiple dimensions. OA sampling does not
+perform optimally when the dimensionality of the integrand is less than the
+strength of the OA. While the performance doesn't degrade as much as when the
+dimensionality is higher, it still doesn't offer as dramatic of an improvement
+as when the dimensionality and the strength match up. OA sampling uniquely
+poised to perform well when functions exhibit variance in all combinations of
+dimensions, such as in Equation~\eqref{eq:tuple-fn}. While this is a unique
+case, there is no other sampler better equipped to handle variation in this
+fashion.
+
+\begin{equation}
+    f(x, y, z) = f(x, y) + f(y, z) + f(x, z)\label{eq:tuple-fn}
+\end{equation}
+
+\section{Empirical Results with Analytic Integrands}
+
+We modified the Empirical Error Analysis (EEA) \cite{Subr:2016:Fourier} tool to
+support multi-dimensional integrands, and added a number of samplers to it in
+order to test the variance of various functions and samplers. This tool allowed
+us to see if our samplers matched the theoretical expectations that we laid out,
+and the results seem to match up. \\
+
+Prior work has mostly focused on variation in two dimensions, and the variance
+analyses presented in this paper offer results that focus on variance in
+multiple dimensions. We crafted several functions that used one dimensional
+functions as the basis, which were then combined to form higher dimensional
+functions in a way that allowed us to control the dimensionality (and the
+dimensionality of the variance) and the discontinuity of the resulting
+functions. \\
+
+Our one-dimensional basis functions consisted of a Gaussian, a C1 discontinuity,
+and a C0 discontinuity, all of which were clipped so that the center of the
+functions began in the origin of the domain. The clipping made the function
+asymmetrical, which is a desired property for these tests. The Gaussian is
+defined in Equation~\eqref{eq:gaussian-1D-kernel} and visualized in
+Figure~\ref{fig:gaussian-1D-kernel}. The C1 discontinuity is defined in
+Equation~\eqref{eq:c1-1D-kernel} and visualized in
+Figure~\ref{fig:c1-1D-kernel}. The C0 discontinuity is defined in
+Equation~\eqref{eq:c0-1D-kernel} and visualized in
+Figure~\ref{fig:c0-1D-kernel}. They all share the parameters $r_{\text{end}} =
+\frac{3}{\pi}$, $r_{\text{start}} = r_{\text{end}} - 0.2$, and $\sigma =
+\frac{1}{3}$.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.45]{figures/linearStep.png}
+    \label{fig:c0-1D-kernel}
+    \caption{A visual representation of the $g^0$ function}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.45]{figures/smoothStep.png}
+    \label{fig:c1-1D-kernel}
+    \caption{A visual representation of the $g^1$ function}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.45]{figures/gaussian.png}
+    \label{fig:gaussian-1D-kernel}
+    \caption{A visual representation of the $g^{\infty}$ function}
+\end{figure}
+
+\begin{equation}
+    g^0(r) = 1 - \text{binaryStep}(r, r_{\text{end}})\label{eq:c0-1D-kernel}
+\end{equation}
+
+\begin{equation}
+    g^1(r) = 1 - \text{linearStep}(r, r_{\text{start}},
+    r_{\text{end}})\label{eq:c1-1D-kernel}
+\end{equation}
+
+\begin{equation}
+    g^{\infty}(r) = \text{exp}(-r^2 / (2 \sigma^2))\label{eq:gaussian-1D-kernel}
+\end{equation}
+
+We built several integrands, both additive and multiplicative, by constructing
+variance in various projections. The way we achieved this was by constructing
+$d$ dimensional functions that were additive or multiplicative in $t$
+dimensions, so an additive function with $t=2$ and $d=3$ would resemble
+Equation~\eqref{eq:tuple-fn}. \\
+
+We can define a more generalized formula to describe the functions that we
+constructed in a dimensionally generic way. The additive and multiplicative
+variants are defined in Equations \eqref{eq:tuple-add-fn} and
+\eqref{eq:tuple-mult-fn}, respectively. Equation~\eqref{eq:tuple-fn} would be
+considered a function of the type $f^{D}_{3, 2+}$.
+
+\begin{equation}
+    f^{D}_{d,t+}(p_1, \cdots, p_d) = \sum_{i_1 = 1}^d \cdots \sum_{i_t = i_{t -
+            1} + 1}^d f_t^D(p_{i_1}, \cdots, p_{i_t})\label{eq:tuple-add-fn}
+\end{equation}
+
+\begin{equation}
+    f^{D}_{d,t \times}(p_1, \cdots, p_d) = \prod_{i_t = 1}^{d} \cdots \prod_{i_t =
+        i_{t - 1} + 1}^{d} f^D_t(p_{i_1}, \cdots, p_{i_t})\label{eq:tuple-mult-fn}
+\end{equation}
+
+We tested our samplers on these integrals. In addition to the samplers that have
+already been discussed, we tested several variations of padded samplers, such as
+CMJ padded, and the padded $(0, 2)$-sequence sampler that is present in PBRT
+\cite{Pharr:2016:Physically}. \\
+
+In Figure~\ref{fig:simple-integrands-variance}, we present empirical convergence
+graphs for an extensive set of variance samplers with various functions. The
+legend of these graphs contain a sampler name, along with the convergence rate
+of the sampler, such that the number provided, $x$, corresponds to the slope
+$O(N^{x})$. \\
+
+You can see that the most significant performance improvements occur when the
+dimensionality of the integrand, $d$, matches the strength of the OA, $t$. The
+1-additive integrand provides a scenario where the OA samplers can achieve a
+steeper convergence rate than even the QMC samplers, a significant result in
+Monte Carlo integration. Unfortunately, when $t \neq d$ for non-additive
+integrands, the performance of the OA samplers degrades to roughly the
+performance that we expect of naive random sampling. Sobol and Halton, which
+offer higher dimensional stratification than OA sampling, perform well in these
+circumstances.
+
+\onecolumn
+\begin{sidewaysfigure*}[h]
+    \centering
+    \small
+    %\vspace*{5in}
+    % \hspace*{-15pt}
+    \begin{tabular}{@{}c@{\,}c@{\;}c@{\;}c@{\;}c@{}}
+        & \qquad\quad 1-additive $\bigl(f^D_{4,1+}\bigr)$ & 2-additive $\bigl(f^D_{4,2+}\bigr)$ & 2-multiplicative $\bigl(f^D_{4,2\times}\bigr)$ & 4D-radial $\bigl(f^D_{4}\bigr)$\\
+        \rotatebox{90}{\qquad\quad Gaussian ($D=\infty$)} &
+        \includegraphics[scale=0.73,trim=   0 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_1_gauss_add} &
+        \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_gauss_add} &
+        % % \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_1_gauss_mul} &
+        \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_gauss_mul} &
+        \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/gaussian_ball}\\
+        %
+        \rotatebox{90}{\qquad\quad Linear step ($D=1$)} &
+        \includegraphics[scale=0.73,trim=   0 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_1_c1_lin_add} &
+        \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_c1_lin_add} &
+        % \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_1_c1_lin_mul} &
+        \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_c1_lin_mul} &
+        \includegraphics[scale=0.73,trim=33pt 23pt 0 0, clip=true]{graphics/variance-plots/graphs/c1_ball}\\
+        %
+        \rotatebox{90}{\qquad\qquad Binary step ($D=0$)} &
+        \includegraphics[scale=0.73,trim=   0 0 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_1_c0_add} &
+        \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_c0_add} &
+        % \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_1_c0_mul} &
+        \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_c0_mul} &
+        \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/c0_ball}
+    \end{tabular}
+    \caption{Analytic variance of various samplers}{Variance behavior of 13
+        samplers on 4D analytic integrands of different complexity (columns) and
+        continuity (rows). We list the best-fit slope of each technique, which
+        generally matches the theoretically predicted convergences
+        rates~(\ref{tab:convergence-rates}). Our samplers always perform better
+        than traditional padding approaches, but are asymptotically inferior to
+        high-dimensional QMC sequences for general high-dimensional integrands.
+        When strength $t<d$ (right two columns), convergence degrades to $-1$,
+        but higher strengths attain lower constant factors.
+        \cite{ours}}
+    \label{fig:simple-integrands-variance}
+\end{sidewaysfigure*}
+
+\section{Empirical Results with Rendered Scenes}
+
+On top of performing empirical analyses with analytic integrands, we tested our
+samplers in real-world rendering scenarios. We implemented the Bose and Bush
+samplers in PBRT as per-pixel samplers. In PBRT, samplers can either be
+implemented as ``global'' samplers, where the samples are distributed across the
+whole image, or as ``per-pixel'' samplers, where each pixel gets its own set of
+samples, which are unaware of the samples in other pixels. Global sampling tends
+to accentuate structural artifacts, such as the ones that are common with the
+Sobol sampler. \\
+
+To measure the performance of our samplers, we computed a ground truth render
+for each scene, using the PBRT-implemented uniform random sampler with four
+orders of magnitude more samples than the rest of the samplers. This gave us a
+reasonably confidence estimate of what image the samplers should be converging
+to. We computed the MSE on each image to see how much error each sampler had at
+comparable sample counts. \\
+
+We created three scenes. The first, dubbed \textsc{CornellxBox}, is the classic
+Cornell box scene and uses anti-aliasing, soft shadows, and depth of field with
+a direct lighting integrator to create a 7D integrand
+\cite{Pharr:2016:Physically}. The second, dubbed \textsc{BlueSpheres}, is a
+scene that utilizes motion blur, depth of field, antialiasing, and
+inter-reflections with the path tracing integrator to create a 9D integrand. The
+third and most complex scene, dubbed \textsc{Barcelona}, is a scene of an
+apartment with a swimming pool featuring global illumination with the path
+tracing integrator to yield a 43D integrand. \\
+
+We found that the benefits of using OA sampling had diminishing returns as the
+scenes got more complex. Visually, it's difficult to see the difference between
+samplers as more complex scenes introduce more elements and noise. We computed
+the MSE for each scene with each sampler, and cropped specific zoom-ins for
+regions where we felt that there was a notable difference in performance between
+the samplers. These comparisons and MSE figures are in
+Figure~\ref{fig:rendered-comparison}. Generally, we found our OA sampling
+methods to be the highest performing non-QMC methods, except in the
+\textsc{CornellBox} scene, where OA sampling outperforms QMC sampling. You may
+also noticed the artifacts from the Sobol sampler in the soft shadows of the
+\textsc{CornellBox} scene. These artifacts are distracting and very noticeable,
+and likely more pronounced because the Sobol sampler in PBRT is a global
+sampler, as mentioned earlier. It is likely that some of this artifacting could
+be rectified by using a per-pixel Sobol sampler. \\
+
+We also conducted variance analyses using different sample sizes on a single
+pixel for the \textsc{CornellBox} and \textsc{BlueSpheres} scenes. The pixels
+were from the regions where the zoom-ins and crops were placed, highlighting
+areas in each scene where we thought the samplers had significant differences.
+In Figure~\ref{fig:rendered-variance}, you can see that Bose outperforms all of
+the other samplers in \textsc{CornellBox}, and in the \textsc{BlueSpheres}
+scene, we get the expected results - the Bose sampler outperforms all of the
+non-QMC samplers.
+
+\begin{figure*}[t!]
+    \vspace*{-1\baselineskip}
+    \DTLsetseparator{,}
+    \DTLloaddb{cornellBoxError}{graphics/cornell-box/zoomins/mse-box.csv}
+    \DTLloaddb{cornellShadowError}{graphics/cornell-box/zoomins/mse-shadow.csv}
+    \DTLloaddb{cornellError}{graphics/cornell-box/mse.csv}
+    \DTLloaddb{blueSpheresError}{graphics/bluespheres/mse.csv}
+    \DTLloaddb{blueSpheresZoomError}{graphics/bluespheres/zoomins/mse.csv}
+    \DTLloaddb{barcelonaError}{graphics/barcelona/mse.csv}
+    \DTLloaddb{barcelonaZoomError}{graphics/barcelona/zoomins/mse.csv}
+    \centering
+    \setlength{\fboxsep}{0pt}%
+    \setlength{\fboxrule}{1pt}%
+    \contourlength{0.1em}%
+    \resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}[x=0.97in,y=0.97in,every text node part/.style={align=center}]
+            \node at (0,0) {\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/bush-s2-121-marked.png}}};
+            \node at (1.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/random-121-big.png}}};
+            \node at (2.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/stratified-121-big.png}}};
+            \node at (3.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/cmj2d-121-big.png}}};
+            \node at (4.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/02-128-big.png}}};
+            \node at (5.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/halton-128-big.png}}};
+            \node at (6.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/sobol-128-big.png}}};
+            \node at (7.5,0) {\color{orange}\fbox{\includegraphics[height=0.92in]{graphics/bluespheres/zoomins/bush-s2-121-big.png}}};
+            \node at (0.0, 0.0-1.5-0.03) {\fbox{\includegraphics[width=1.84in,trim=6pt 0 6pt 0, clip=true]{graphics/cornell-box/cornell-bush-s2-289-marked.png}}};
+            \node at (1.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-random-121-shadow-big.png}}};
+            \node at (1.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-random-121-box-big.png}}};
+            \node at (2.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-stratified-121-shadow-big.png}}};
+            \node at (2.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-stratified-121-box-big.png}}};
+            \node at (3.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-cmj2d-121-shadow-big.png}}};
+            \node at (3.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-cmj2d-121-box-big.png}}};
+            \node at (4.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-02-128-shadow-big.png}}};
+            \node at (4.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-02-128-box-big.png}}};
+            \node at (5.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-halton-121-shadow-big.png}}};
+            \node at (5.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-halton-121-box-big.png}}};
+            \node at (6.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-sobol-128-shadow-big.png}}};
+            \node at (6.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-sobol-128-box-big.png}}};
+            \node at (7.5,-0.5-1.5-0.03) {\color{blue}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-bush-s2-121-shadow-big.png}}};
+            \node at (7.5, 0.5-1.5-0.03) { \color{red}\fbox{\includegraphics[height=0.92in]{graphics/cornell-box/zoomins/cornell-bush-s2-121-box-big.png}}};
+            \node at (0  , 0.0-3-0.06) {\fbox{\includegraphics[height=0.92in,trim=0 25pt 0 0, clip=true]{graphics/barcelona/barcelona-marked.png}}};
+            \node at (1.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/random-3969-big.png}}};
+            \node at (2.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/stratified-3969-big.png}}};
+            \node at (3.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/cmj2d-3969-big.png}}};
+            \node at (4.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/02-4096-big.png}}};
+            \node at (5.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/halton-4096-big.png}}};
+            \node at (6.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/sobol-4096-big.png}}};
+            \node at (7.5, 0.0-3-0.06) {\color[rgb]{0, 0.5, 0}\fbox{\includegraphics[height=0.92in]{graphics/barcelona/zoomins/bush-s2-3969-big.png}}};
+            \node at (1.5, 0.58) {Random};
+            \node at (2.5, 0.58) {Jittered2D pad};
+            \node at (3.5, 0.58) {CMJ2D pad};
+            \node at (4.5, 0.58) {(0,2)-seq.\ pad};
+            \node at (5.5, 0.58) {Halton};
+            \node at (6.5, 0.58) {Sobol};
+            \node at (7.5, 0.58) {\bfseries BushMJ(t=2)};
+            %
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{random-121.exr}
+            \dropshadowlabelcolor{white}{black}{1.5}{0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{stratified-121.exr}
+            \dropshadowlabelcolor{white}{black}{2.5}{0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{cmj2d-121.exr}
+            \dropshadowlabelcolor{white}{black}{3.5}{0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{02-128.exr}
+            \dropshadowlabelcolor{white}{black}{4.5}{0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{halton-121.exr}
+            \dropshadowlabelcolor{white}{black}{5.5}{0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{sobol-128.exr}
+            \dropshadowlabelcolor{white}{black}{6.5}{0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{bush-s2-121.exr}
+            \dropshadowlabelcolor{white}{black}{7.5}{0.4}{full: \num{\myval}};
+            %
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{random-121.exr}
+            \dropshadowlabelcolor{black}{white}{1.5}{-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{stratified-121.exr}
+            \dropshadowlabelcolor{black}{white}{2.5}{-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{cmj2d-121.exr}
+            \dropshadowlabelcolor{black}{white}{3.5}{-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{02-128.exr}
+            \dropshadowlabelcolor{black}{white}{4.5}{-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{halton-121.exr}
+            \dropshadowlabelcolor{black}{white}{5.5}{-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{sobol-128.exr}
+            \dropshadowlabelcolor{black}{white}{6.5}{-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{blueSpheresZoomError}{file}{bush-s2-121.exr}
+            \dropshadowlabelcolor{black}{white}{7.5}{-0.4}{crop: \num{\myval}};
+            %
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-random-121.exr}
+            \dropshadowlabelcolor{black}{white}{1.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-stratified-121.exr}
+            \dropshadowlabelcolor{black}{white}{2.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-cmj2d-121.exr}
+            \dropshadowlabelcolor{black}{white}{3.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-02-128.exr}
+            \dropshadowlabelcolor{black}{white}{4.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-halton-121.exr}
+            \dropshadowlabelcolor{black}{white}{5.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-sobol-128.exr}
+            \dropshadowlabelcolor{black}{white}{6.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellError}{file}{cornell-bush-s2-121.exr}
+            \dropshadowlabelcolor{black}{white}{7.5}{0.5-1.5-0.03+0.4}{full: \num{\myval}};
+            %
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-random-121-box.exr}
+            \dropshadowlabelcolor{white}{black}{1.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-stratified-121-box.exr}
+            \dropshadowlabelcolor{white}{black}{2.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-cmj2d-121-box.exr}
+            \dropshadowlabelcolor{white}{black}{3.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-02-128-box.exr}
+            \dropshadowlabelcolor{white}{black}{4.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-halton-121-box.exr}
+            \dropshadowlabelcolor{white}{black}{5.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-sobol-128-box.exr}
+            \dropshadowlabelcolor{white}{black}{6.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellBoxError}{file}{cornell-bush-s2-121-box.exr}
+            \dropshadowlabelcolor{white}{black}{7.5}{0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+            %
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-random-121-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{1.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}}
+
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-stratified-121-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{2.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-cmj2d-121-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{3.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-02-128-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{4.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-halton-121-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{5.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-sobol-128-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{6.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{cornellShadowError}{file}{cornell-bush-s2-121-shadow.exr}
+            \dropshadowlabelcolor{white}{black}{7.5}{-0.5-1.5-0.03-0.4}{crop: \num{\myval}};
+            % 3969; 4096
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{random-3969.exr}
+            \dropshadowlabelcolor{black}{white}{1.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{stratified-3969.exr}
+            \dropshadowlabelcolor{black}{white}{2.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{cmj2d-3969.exr}
+            \dropshadowlabelcolor{black}{white}{3.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{02-4096.exr}
+            \dropshadowlabelcolor{black}{white}{4.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{halton-4096.exr}
+            \dropshadowlabelcolor{black}{white}{5.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{sobol-4096.exr}
+            \dropshadowlabelcolor{black}{white}{6.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaError}{file}{bush-s2-3969.exr}
+            \dropshadowlabelcolor{black}{white}{7.5}{0.0-3-0.06+0.4}{full: \num{\myval}};
+            %
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{random-3969.exr}
+            \dropshadowlabelcolor{white}{black}{1.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{stratified-3969.exr}
+            \dropshadowlabelcolor{white}{black}{2.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{cmj2d-3969.exr}
+            \dropshadowlabelcolor{white}{black}{3.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{02-4096.exr}
+            \dropshadowlabelcolor{white}{black}{4.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{halton-4096.exr}
+            \dropshadowlabelcolor{white}{black}{5.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{sobol-4096.exr}
+            \dropshadowlabelcolor{white}{black}{6.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+
+            \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{bush-s2-3969.exr}
+            \dropshadowlabelcolor{white}{black}{7.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+        \end{tikzpicture}%
+    }
+    \vspace*{-1.5\baselineskip}%
+    \caption{Comparison of rendered scenes}{The \textsc{BlueSpheres},
+        \textsc{CornellBox}, and \textsc{Barcelona} scenes feature different
+        combinations of pixel antialiasing, DoF, motion blur, and several
+        bounces of indirect illumination for combined integrands of 9D, 7D, and
+        43D respectively.  The relative MSE numbers for the entire image (top)
+        and each inset (bottom) show that our OA-based sampling technique is
+        able to out-perform 2D padded samplers (first 4 columns), and is close
+        to the quality of multi-dimensionally stratified global samplers like
+        Halton and Sobol. \cite{ours}}
+    \label{fig:rendered-comparison}
+    \vspace*{-\baselineskip}
+\end{figure*}
+
+
+\begin{figure}[t!]
+    \centering
+    \small
+    \hspace*{-15pt}\begin{tabular}{@{}c@{\;}c@{}}
+        \qquad\quad \textsc{BlueSpheres} & \textsc{CornellBox}\\
+        \includegraphics[scale=1,trim=   0 23pt 0 0,
+        clip=true]{graphics/variance-plots/eea_graphs/bluespheres} &
+        \includegraphics[scale=1,trim=33pt 23pt 0 0,
+        clip=true]{graphics/variance-plots/eea_graphs/cornell-box}
+    \end{tabular}\vspace*{-0.5\baselineskip}
+    \caption{Variance of samplers for rendered scenes}{Variance behavior and
+        best-fit slope of various samplers for a pixel in the yellow inset in
+        \textsc{BlueSpheres} and the blue inset of \textsc{CornellBox} in
+        \cref{fig:rendered-comparison}. Our samplers always perform better than
+        traditional padding approaches and even outperform the global Halton and
+        Sobol samplers in \textsc{CornellBox}\cite{ours}.}
+    \label{fig:rendered-variance}
+\end{figure}

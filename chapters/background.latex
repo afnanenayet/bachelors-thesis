@@ -31,13 +31,9 @@ as the area under the function. Now imagine throwing darts at random, within
 some domain, except now we are trying to find the integral of a function rather
 than the area of a square. \\
 
-\todo{add a visual here with the circle/dartboard example}
-
 In practice, Monte Carlo integration involves randomly selecting some point in
-the function's domain ($R^d$) a certain number of times ($n$) and averaging the
-calculated values.
-
-\todo{add a visual here with an actual function}
+the function's domain ($\mathbb{R}^d$) a certain number of times ($N$) and
+averaging the calculated values.
 
 \begin{equation}
     \int_{a}^{b} f(x) \approx \frac{1}{N} \sum_{i = 1}^{i = N} f(\overline{x}_i)
@@ -65,35 +61,122 @@ correct answer, it is useful to know how quickly it will converge. We call this
 property the \textbf{convergence rate}. One thing that makes Monte Carlo
 integration so appealing for many use cases is that its convergence rate is
 independent of the dimensionality of the integrand. Whether your integrand is a
-2D or a 90D integrand, the accuracy of the approximate integral will increase
-at the same rate. Monte Carlo integration with uniform random sampling has an
-asymptotic convergence rate of $O(N^{-1})$. While Monte Carlo has the advantage
-of having a convergence rate that does not scale with dimensionality, there
-are methods that make it possible to yield a steeper convergence rate.
+2D or a 90D integrand, the accuracy of the approximate integral will increase at
+the same rate. Monte Carlo integration with uniform random sampling has an
+asymptotic convergence rate of $O(N^{-1})$. While Monte Carlo with uncorrelated
+sampling has the advantage of having a convergence rate that does not scale with
+dimensionality, there are methods that make it possible to yield a steeper
+convergence rate. The convergence rate of Monte Carlo integration with a
+particular sampling method can be calculated theoretically given knowledge about
+the sampling methods and integrand, which yields an asymptotic bound as with
+random sampling, or empirically, by measuring the variance of a sampling method
+at various sample counts with a high number of trials. As part of our research,
+we ascertained the theoretical convergence bounds for various integrands and
+samplers, and verified them empirically.
 
-\section{Sampling Methods}
+\subsection{Variance}
+
+Generally, you want to know how consistent a numerical method is. If you have
+some method of approximating a value, it seems useful to know whether the answer
+you get will vary wildly across different runs, or whether it tends to be fairly
+consistent. In most cases, you want more consistency, something that becomes
+difficult to have with the element of randomness. The measure of how
+inconsistent these approximations are is called \textbf{variance}, also denoted
+as $\sigma^2$.
+
+\begin{equation}
+    \sigma^2 = E[(X - \mu^2)]
+\end{equation}
+
+\noindent
+where $E$ denotes the \textbf{expected value}, $\mu$ is the average value of
+many runs, and $X$ is simply a random variable \cite{Loeve:1977:Probability}. In
+this case, $X$ is the result of some run of a Monte Carlo integration. \\
+
+We can see that if we get the same value every single time, then the difference
+between the result of a particular and the average of all the runs will be 0.
+Clearly, if the answers are more consistent, they will vary less. Variance gives
+us a way to quantify the consistency of random variables, or variables that are
+the result of some sort of random process. It is important to note that variance
+is not the same as accuracy - while having low variance is desirable, it does
+not necessarily imply that the answers that you get are correct.
+
+\section{Sampling}
 
 One heavily researched method to speed up Monte Carlo integration entails
 changing the sampling strategy. You can recall the example with the dartboard,
 and you may realize that it may be more efficient to ensure that every part of
-the dartboard as a dart in it. Instead of randomly throwing darts at the board,
-what if you were to break the dartboard up into small grids. Doing so would
+the dartboard has a dart in it. Instead of randomly throwing darts at the board,
+what if you were to break the dartboard up into small grids? Doing so would
 ensure that you were at least covering all parts of the dartboard, alleviating
 the worry that you might have missed something on the board. \\
 
-Many sampling strategies were designed to fix exactly the same issue. Naive
-random sampling can fail by oversampling or undersampling critical parts of a
-function that will heavily influence the average (usually parts of a function
-that are really large or really small relative to the average value of the
-function). In this section, we will explore notable sapmling methods that are
-used in Monte Carlo integration that we considered when developing the new
-sampling methods that will be introduced in this paper.
+Many sampling strategies were designed to fix exactly this issue. Naive random
+sampling can fail by oversampling or undersampling critical parts of a function
+that will heavily influence the average (usually parts of a function that are
+really large or really small relative to the average value of the function). In
+this section, we will explore notable sampling methods that are used in Monte
+Carlo integration that we considered when developing the new sampling methods
+that will be introduced in this paper. \\
+
+While this section will describe and explore many different sampling methods,
+this is not necessarily a comprehensive survey of all Monte Carlo sampling
+methods. These are important sampling methods that we looked at as prior work as
+we worked on orthogonal array based sampling.
+
+\subsection{Discrepancy}
+
+Some common properties of sampling methods that are often used to describe a
+point set include something called the \textbf{discrepancy} of a point set. The
+discrepancy is a numerical measure of how well spaced out a point set is
+\cite{Shirley:1991:Discrepancy}. You don't want your points to be clumped
+together, and ensuring that all the points are well spaced out tends to be a
+property that is very important for Monte Carlo sampling. In the literature,
+many points are referred to in a favorable manner by being described as a
+low-discrepancy sequence. There are several different ways to measure
+discrepancy, but in this thesis, we do not actually calculate the discrepancy
+values of different point sets, so it is not important to know the mathematical
+definition so much as the general implication of the term. \\
+
+\subsection{Padding}
+
+There is a common technique used specifically for high-dimensional integrands
+called \textbf{padding} which combines different instances or shuffles of a
+low-dimensional sequence or point set to create a higher dimensional point set.
+Suppose that we have some point set that has a very nice 2D distribution.  We
+want to use this point set, which acts nicely in two dimensions, on a four
+dimensional integrand. Suppose that we have $N$ samples, which consist of
+two-tuples (the first element representing the first dimension, and the second
+element representing the value in the second dimension). Now shuffle the indices
+of the point set, and retain that list of numbers, calling it $L$, so that the
+first element of the original point set corresponds to the first element in $L$.
+We can use these shuffled indices to add two more dimensions to the point set,
+by selecting some index, $i$, from the original point set, and ``padding'' it
+with some other index $l$ which is imply the $i^{th}$ element of $L$, yielding
+four dimensions. This method is called uncorrelated jittering
+\cite{Cook:1984:Distributed}. There have been some other methods proposed for
+padding, such as Owen Scrambling \cite{Owen:1997:Monte} and random digit XOR
+scrambling \cite{Kollig:2002:Efficient}. \\
+
+Padding provides an obvious advantage with respect to efficiency. Consider that
+we can effectively ``re-use'' a point set to add more dimensions to it without
+actually computing or storing more samples. If you only need a good distribution
+in a lower set of dimensions than the dimensionality of the integrand, then
+padding is an easy way to add the dimensions you need.
 
 \subsection{Random Sampling}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/random_sampler.eps}
+    \caption{Random sampler, 256 points}
+    \label{random-sampler-example}
+\end{figure}
+
 We have already discussed one method for Monte Carlo sampling: uniform random
 sampling. There are several advantages to using this method, namely that it is
-relatively easy to implement correctly and is a fairly simple method. \\
+relatively easy to implement correctly and is a fairly simple method. You can
+see what such a point set looks like in Figure~\ref{random-sampler-example}. \\
 
 There is a very intuitive pitfall that results from using naive random sampling
 - consider a scenario where we are trying to sample a step function in which
@@ -106,6 +189,13 @@ consistent across the sampled domain.
 
 \subsection{N-Rooks Sampling}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/n_rooks_sampler.eps}
+    \caption{N-rooks sampler, 256 points}
+    \label{n-rooks-sampler-example}
+\end{figure}
+
 N-Rooks sampling is a method which yields a perfect 1D distribution of points.
 Imagine a finite 1D line. Now suppose that we want to place $N$ points on the
 line, ensuring that none of the points ``overlap.'' An easy method to do this is
@@ -113,20 +203,35 @@ to divide the line into $N$ sections, or \textbf{strata}, and place a point
 within each strata. Because there are $N$ points and $N$ strata, we know that
 there will only be one point per strata without any overlap. We can randomly
 jitter a point within a strata as well to provide a nice ``random'' looking set
-of points that also have a good numerical distribution. \\
+of points that also have a good numerical distribution. Refer to
+Figure~\ref{n-rooks-sampler-example} to see what this distribution looks like in
+two dimensions. \\
 
 N-Rooks sampling can be extended to multiple dimensions in an uncorrelated
-manner by generating an N-Rooks point set for each dimension.
+manner by generating an N-Rooks point set for each dimension and arbitrarily
+padding them together. This tends to be suboptimal, but has the advantage of
+being trivial to implement and not very computationally intensive. As you can
+see in Figure~\ref{n-rooks-sampler-example}, the constraints of the N-rooks
+sampler can still allow for intense clumping and awkward gaps. These properties
+lead to lower discrepancy, and are not desirable for Monte Carlo integration.
 
 \subsection{Jittered Sampling}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/jittered_sampler.eps}
+    \caption{Jittered sampler, 256 points}
+    \label{jittered-sampler-example}
+\end{figure}
+
 In the jittered sampling approach, you divide the domain into different strata,
-and place one sample randomly inside each strata.  Stratifying your sample
-domain ensures that each stratum has a sample inside of it, which alleviates
-some of the issues with uniform random sampling. For example, if we define even
-just two strata in the case discussed for uniform random sampling, with the
-step function, we can avoid the pitfall of only sampling the side where $f(x) =
-0$. \\
+and place one sample randomly inside each strata. You can see what this looks
+like by referring to Figure~\ref{jittered-sampler-example}. Stratifying your
+sample domain ensures that each stratum has a sample inside of it, which
+alleviates some of the issues with uniform random sampling. For example, if we
+define even just two strata in the case discussed for uniform random sampling,
+with the step function, we can avoid the pitfall of only sampling the side where
+$f(x) = 0$. \\
 
 This method has the advantage of being relatively simple to implement, and it
 scales easily to multiple dimensions (you can jitter in 2D by creating a grid
@@ -136,6 +241,20 @@ sampling a function, as it has the unintended effect of clumping points near
 the boundaries of multiple strata.
 
 \subsection{Multi-Jittered Sampling}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/mj_canonical.eps}
+    \caption{The ``canonical'' multi-jittered arrangement, 256 points}
+    \label{mj-canonical-sampler}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/mj_randomized.eps}
+    \caption{Randomized multi-jittered sampler, 256 points}
+    \label{mj-randomized-sampler}
+\end{figure}
 
 This sampling method was introduced by Pete Shirley and introduces a new method
 of sampling that addresses the issue of functions that have variance in two
@@ -147,12 +266,20 @@ perfect distribution in each 1D projection as well as a nice distribution in
 
 The technique to generate a multi-jittered point set is to start out by first
 dividing the domain (2D) into a set of strata and corresponding substrata.
-Start by placing a point in each strata, forming the ``canonical'' arrangement.
-Note that the canonical arrangement maintains the jittered and N-Rooks
-constraints. Then shuffle the samples within each strata in each dimension,
-while maintaining the jittered and N-Rooks constraints.
+Start by placing a point in each strata, forming the ``canonical'' arrangement,
+which you can see in Figure~\ref{mj-canonical-sampler}.  Note that the canonical
+arrangement maintains the jittered and N-Rooks constraints. Then shuffle the
+samples within each strata in each dimension, while maintaining the jittered and
+N-Rooks constraints, which you can see in Figure~\ref{mj-randomized-sampler}.
 
 \subsection{Correlated Multi-Jittered Sampling}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/cmj_sampler.eps}
+    \caption{Correlated multi-jittered sampler, 225 points}
+    \label{cmj-sampler-example}
+\end{figure}
 
 Introduced by researcher Andrew Kensler of Pixar in 2013, correlated
 multi-jittered (CMJ) sampling modifies Shirley's multi-jittered sampling
@@ -162,53 +289,180 @@ consequently yield steeper convergence rates in empirical testing. \\
 The key idea behind CMJ is changing the shuffling step from multi-jittered
 sampling. In Shirley's method, the strata in each dimension shuffles points
 independently of the shuffle at other strata. Kensler's modification entails
-using the same shuffle over each strata in each dimension.
+using the same shuffle over each strata in each dimension
+\cite{Kensler:2013:Correlated}. Qualitatively, these points also look more
+aesthetically pleasing given the stronger constraints that CMJ has for its
+points as you can see in Figure~\ref{cmj-sampler-example}.
 
 \subsection{Quasi Monte Carlo Sampling}
 
 All of the sampling methods discussed so far rely on some element of
 randomness. Each produced point has some sort of input that stems from
-pseudo-random number generation. There are methods of sapmling that have been
+pseudo-random number generation. There are methods of sampling that have been
 developed that don't rely on any sort of randomness. We call such sampling
 methods ``Quasi-Monte Carlo'' (QMC) sampling. \\
 
 QMC sampling methods tend to provide much higher performance in Monte Carlo
 integration than other sampling methods, and have become quite popular due to
-their superior performance, low discrepancy, and high efficiency.
+their superior performance, low discrepancy, and high efficiency. \\
+
+There are some terms that are commonly used to describe samplers for QMC, which
+include \textbf{(t, s) sequences} and \textbf{(t, m, s) nets}. Such terms
+describe stratification guarantees for samplers in a convenient and consistent
+manner. To explain these terms, we must first define the \textbf{elementary
+interval}, which we describe as the elementary $s$-interval in base $b$. Suppose
+we have some interval which the following properties:
+
+\begin{equation}
+    \prod^{s}_{j = 1} \bigg[ \frac{a_j}{b^{d_j}}, \frac{a_j + 1}{b^{d_j}}
+    \bigg],
+\end{equation}
+
+Note that the invariants $s \geq 1$ and $b \geq 2$ must hold for this definition
+\cite{NIEDERREITER198851}. You can see that the elementary interval provides a
+notation that describes some sort of even partitioning within an arbitrary
+domain. Having this domain, consisting of evenly spaced partitions naturally
+falls within the scope of sampling. This talk of elementary intervals is very
+similar to the idea of stratification, but intervals provide a far more formal
+and explicit bound. \\
+
+Now let us define a $(t, m, s)$-net in base $b$. We can define one as a set of
+$b^m$ points in a domain $[0, 1)^s$ such that if we define some sequence $x_i$,
+the cardinality of some elementary interval $P \cup \{ x_1, \cdots, x_{b^m} \} =
+b^t$ for every elementary interval $P$ in base $b$ such that the hypervolume of
+$P = b^{t - m}$ \cite{NIEDERREITER198851}. While the formal mathematical
+definition seems daunting, the more general implication of the $(t, m, s)$-net
+constraints is that some set of points is distributed in a uniform manner which
+is more acutely described by the properties of the net, $t, m, s$. \\
+
+A $(t, s)$-sequence is somewhat based on $(t, m, s)$-nets. A $(t, s)$-net is an
+infinite sequence which requires that for every $m > t$ and every $k \geq 0$,
+the set $N$ is defined by Equation~\eqref{eq:ts-sequence}
+\cite{NIEDERREITER198851}, where $N$ must be a valid $(t, m, s)$ net in base
+$b$.
+
+\begin{equation}
+    N = \{[x_i] : kb^m \leq i < (k + 1)b^n \}\label{eq:ts-sequence}
+\end{equation}
 
 \subsection{Halton Sequence}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/halton_sampler.eps}
+    \caption[Halton sampler]{Halton sampler, 256 points}
+    \label{halton-sampler-example}
+\end{figure}
+
 The Halton sequence, named after its author, was introduced in 1960 as a means
-of deterministically generating points that are low-discrepancy, but at the
-same time, appear to be a random point set
-\cite{Halton:1964:ARQ:355588.365104}. The Halton sequence has the additional
-advantage of being a progressive sequence - you don't need knowledge of the
-previous points in order to generate the next point. This property allows for
-extremely high efficiency in generating samples. \\
+of deterministically generating points that have low discrepancy, but at the
+same time, appear to look somewhat random \cite{Halton:1964:ARQ:355588.365104}.
+Check Figure~\ref{halton-sampler-example} to see what it looks like.  The Halton
+sequence has the additional advantage of being a progressive sequence - you
+don't need knowledge of the previous points in order to generate the next point.
+This property allows for extremely high efficiency in generating samples. \\
 
-The Halton sequence can be constructed as follows: given some index in the
-point set, get the representation of the number in binary. Take the number,
-invert it (read the number from right to left), and then place that number
-after a decimal point. Interpreting that number in base 10 yields the point in
-the $[0,1)^d$ domain. \\
+The Halton sequence can be constructed as follows: given some index in the point
+set, get the representation of the number in binary. Take the number, invert it
+(read the number from right to left), and then place that number after a decimal
+point. Interpreting that number in base 10 yields the point in the $[0,1)^d$
+domain. \\
 
-As an example, lets look at the point at the fifth index of the Halton
-sequence. $5 = 101$. $101$ inverted is $101$. Placing the number after a
-decimal point yields $0.101$, which we interpret in base 10. It is easy to
-generate points in this manner, as you can trivially convert an index into
-binary and perform these steps to calculate where the point lies in space with
-high computational efficiency and very low computational overhead.
+As an example, lets look at the point at the fifth index of the Halton sequence.
+$5 = 101$. $101$ inverted is $101$. Placing the number after a decimal point
+yields $0.101$, which we interpret in base 10. It is easy to generate points in
+this manner, as you can trivially convert an index into binary and perform these
+steps to calculate where the point lies in space with high computational
+efficiency and very low computational overhead.
 
 \subsection{Sobol Sequence}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.15]{figures/sobol_sampler.eps}
+    \caption[Sobol sampler]{Sobol sampler, 256 points}
+    \label{sobol-sampler-example}
+\end{figure}
 
 Perhaps one of the most widely used sequences in Monte Carlo rendering, and
 other Monte Carlo applications, the Sobol sequence provides a high-efficiency,
 low-discrepancy point set that performs extremely well in Monte Carlo
 integration. You can think of Sobol as the current gold standard of Monte Carlo
-sampling. Not only does Sobol perform well, it's also a progressive sequence,
-so you don't need to know the number of samples you will use beforehand, for
-example, which is a limitation for many other sampling methods. \\
+sampling. Not only does Sobol perform well, it's also a progressive sequence, so
+you don't need to know the number of samples you will use beforehand, for
+example, which is a limitation present in many other sampling methods. Check
+Figure~\ref{sobol-sampler-example} to see what it looks like. The Sobol sequence
+exploits the properties of numbers in their binary representations in order to
+progressively refine the intervals that points are distributed across
+\cite{SOBOL196786}. \\
 
 The Sobol sequence has the property of being well distributed in the unit
-domain, and can progressively partition the domain as more samples are
-generated to maintain a good distribution.
+domain, and can progressively partition the domain as more samples are generated
+to maintain a good distribution. The progressive nature of Sobol sequencing
+makes it very attractive to use in any scenario where you would want to have
+incremental sampling, such as computer graphics.
+
+\section{Monte Carlo in Computer Graphics}
+
+While we have extensively discussed the usage of Monte Carlo sampling and how it
+pertains to integration in general, this does not explain the relevance of Monte
+Carlo sampling methods in the context of computer graphics, and specifically
+pertaining to rendering. \\
+
+We can generally think of the value of a pixel in a rendered image as the result
+of the integral of light multiplied by the color value. In 1986, James Kajiya
+introduced the rendering equation \eqref{eq:rendering}, perhaps one of the most
+well known and fundamental equations in graphics
+\cite{Kajiya:1986:RE:15886.15902}.
+
+\begin{equation}
+    L_o(x, \omega_o,\lambda, t) = L_e(x, \omega_o, \lambda, t) + \int_{\Omega}
+    f_r(x, \omega_i, \omega_o, \lambda, t) L_i(x, \omega_i, \lambda, t)
+    (\omega_i \cdot n) d \omega_i \label{eq:rendering}
+\end{equation}
+
+You can see that integration is a necessary operation when calculating the
+radiance value of some point. Monte Carlo integration offers an way to
+approximate this equation, which is extremely difficult to calculate
+analytically. Not only that, the rendering equation tends to be extremely high
+dimensional, and it becomes even more practical to use Monte Carlo integration
+due to the fact that its convergence rate is independent of dimensionality.
+Generally in rendering, taking samples is equivalent to tracing a ray, which is
+an extremely computationally expensive operation. \\
+
+The practical benefit to speeding up Monte Carlo integration equates to time and
+money saved when actually rendering a picture or a movie. Not only does it save
+time, it also equates to increased accuracy if you want to use the same amount
+of time when rendering. In either case, optimizing Monte Carlo integration
+carries obvious and significant benefits for rendering.
+
+\section{High-Dimensional Integration}
+
+In the current literature, there are not many sampling methods that explicitly
+address the issue of extremely high dimensional integrals. Most of the samplers
+we presented focus on stratifying and addressing variance in two dimensions.
+Rendering is extremely high dimensional, and potentially infinitely dimensional.
+The functions that Monte Carlo rendering attempts to approximate often exhibit
+variance in more than two dimensions. Having sampling methods that explicitly
+address this high-dimensional variance would offer a significant improvement in
+efficiency. \\
+
+One of the techniques explained earlier, padding, attempts to rectify this to
+some degree. It generates high dimensional samples, but these samples aren't
+stratified in high dimensions, they are only well-stratified in pairs of
+dimensions (if we have a base sampler that is two dimensional and padded
+together). \\
+
+Another issue that arises is that samplers that are well stratified in higher
+dimensions still exhibit poor stratification in certain projections. Consider a
+four-dimensional sampler, with the dimensions $\{0, 1, 2, 3\}$. A sampler that
+is well stratified in four dimensions and two dimensions can still suffer if we
+take some arbitrary cross-dimensional projections, such as dimension $0$ and
+dimension $3$. \\
+
+The fact that arbitrary projections can exhibit poor stratification, or even the
+fact that many samplers don't exhibit stratification in high dimensions can
+cause serious issues with Monte Carlo integration. If there is a mismatch
+between stratification and the dimensions that a function exhibits variance, the
+performance of Monte Carlo will degrade to $O(N^{-1})$
+\cite{Singh:2017:Convergence}.

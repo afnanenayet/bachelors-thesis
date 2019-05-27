@@ -1,0 +1,21 @@
+file, color error, error
+cornell-02-128-box.exr, 0.000158005 0.000101611 1.47297e-05 0, 9.145e-05
+cornell-02-256-box.exr, 0.00024997 0.000160648 2.32748e-05 0, 1.446e-04
+cornell-bose-cmj-121-box.exr, 0.00029113 0.000186936 2.70663e-05 0, 1.684e-04
+cornell-bush-s2-121-box.exr, 3.45105e-05 2.21918e-05 3.2255e-06 0, 1.998e-05
+cornell-bush-s2-169-box.exr, 2.28664e-05 1.47149e-05 2.13733e-06 0, 1.324e-05
+cornell-bush-s2-289-box.exr, 1.32242e-05 8.48058e-06 1.22395e-06 0, 7.643e-06
+cornell-cmj2d-121-box.exr, 0.000753913 0.000483337 6.981e-05 0, 4.357e-04
+cornell-cmj2d-256-box.exr, 7.99402e-05 5.13598e-05 7.43767e-06 0, 4.625e-05
+cornell-halton-121-box.exr, 7.49893e-05 4.80954e-05 6.94588e-06 0, 4.334e-05
+cornell-halton-256-box.exr, 2.24714e-05 1.44515e-05 2.0918e-06 0, 1.300e-05
+cornell-mj-121-box.exr, 0.000760373 0.00048746 7.03207e-05 0, 4.394e-04
+cornell-mj-256-box.exr, 7.75772e-05 4.98578e-05 7.2073e-06 0, 4.488e-05
+cornell-random-121-box.exr, 0.000783486 0.000503011 7.27758e-05 0, 4.531e-04
+cornell-random-256-box.exr, 0.000379746 0.000243662 3.52491e-05 0, 2.196e-04
+cornell-reference-direct-box.exr, 0 0 0 0, 0.000e+00
+cornell-reference-path-box.exr, 4.12022e-06 2.65064e-06 3.80464e-07 0, 2.384e-06
+cornell-sobol-128-box.exr, 1.85918e-05 1.20047e-05 1.74447e-06 0, 1.078e-05
+cornell-sobol-256-box.exr, 1.03184e-05 6.67465e-06 9.68786e-07 0, 5.987e-06
+cornell-stratified-121-box.exr, 0.000737899 0.000473766 6.85605e-05 0, 4.267e-04
+cornell-stratified-256-box.exr, 0.00416991 0.00268127 0.00038864 0, 2.413e-03

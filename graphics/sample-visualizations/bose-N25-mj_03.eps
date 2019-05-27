@@ -1,0 +1,408 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%HiResBoundingBox: -720 -720 720 720
+%%BoundingBox: -720 -720 720 720
+%%CropBox: -720 -720 720 720
+gsave 900 900 scale
+/radius { 0.1 } def %define variable for point radius
+/p { radius 0 360 arc closepath fill } def %define point command
+/blw 0.01 def %define variable for bounding box linewidth
+/clw 0.003 def %define variable for coarse linewidth
+/flw 0.0004 def %define variable for fine linewidth
+/pfc {0.9 0.55 0.1} def %define variable for point fill color
+/blc 0 def %define variable for bounding box color
+/clc 0.8 def %define variable for coarse line color
+/flc 0.9 def %define variable for fine line color
+% Draw fine grids 
+flc setgray %fill color for fine grid 
+flw setlinewidth
+newpath
+-0.792899 -0.792899 moveto
+0.792899 -0.792899 lineto
+0.792899 0.792899 lineto
+-0.792899 0.792899 lineto
+closepath
+stroke
+newpath
+-0.792899 -0.729467 moveto
+0 -0.729467 lineto
+0 -0.729467 lineto
+0.792899 -0.729467 lineto
+stroke
+newpath
+-0.729467 -0.792899 moveto
+-0.729467 0 lineto
+-0.729467 0 lineto
+-0.729467 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.666035 moveto
+0 -0.666035 lineto
+0 -0.666035 lineto
+0.792899 -0.666035 lineto
+stroke
+newpath
+-0.666035 -0.792899 moveto
+-0.666035 0 lineto
+-0.666035 0 lineto
+-0.666035 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.602603 moveto
+0 -0.602603 lineto
+0 -0.602603 lineto
+0.792899 -0.602603 lineto
+stroke
+newpath
+-0.602603 -0.792899 moveto
+-0.602603 0 lineto
+-0.602603 0 lineto
+-0.602603 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.539171 moveto
+0 -0.539171 lineto
+0 -0.539171 lineto
+0.792899 -0.539171 lineto
+stroke
+newpath
+-0.539171 -0.792899 moveto
+-0.539171 0 lineto
+-0.539171 0 lineto
+-0.539171 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.475739 moveto
+0 -0.475739 lineto
+0 -0.475739 lineto
+0.792899 -0.475739 lineto
+stroke
+newpath
+-0.475739 -0.792899 moveto
+-0.475739 0 lineto
+-0.475739 0 lineto
+-0.475739 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.412307 moveto
+0 -0.412307 lineto
+0 -0.412307 lineto
+0.792899 -0.412307 lineto
+stroke
+newpath
+-0.412307 -0.792899 moveto
+-0.412307 0 lineto
+-0.412307 0 lineto
+-0.412307 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.348875 moveto
+0 -0.348875 lineto
+0 -0.348875 lineto
+0.792899 -0.348875 lineto
+stroke
+newpath
+-0.348875 -0.792899 moveto
+-0.348875 0 lineto
+-0.348875 0 lineto
+-0.348875 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.285444 moveto
+0 -0.285444 lineto
+0 -0.285444 lineto
+0.792899 -0.285444 lineto
+stroke
+newpath
+-0.285444 -0.792899 moveto
+-0.285444 0 lineto
+-0.285444 0 lineto
+-0.285444 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.222012 moveto
+0 -0.222012 lineto
+0 -0.222012 lineto
+0.792899 -0.222012 lineto
+stroke
+newpath
+-0.222012 -0.792899 moveto
+-0.222012 0 lineto
+-0.222012 0 lineto
+-0.222012 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.15858 moveto
+0 -0.15858 lineto
+0 -0.15858 lineto
+0.792899 -0.15858 lineto
+stroke
+newpath
+-0.15858 -0.792899 moveto
+-0.15858 0 lineto
+-0.15858 0 lineto
+-0.15858 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.0951478 moveto
+0 -0.0951478 lineto
+0 -0.0951478 lineto
+0.792899 -0.0951478 lineto
+stroke
+newpath
+-0.0951478 -0.792899 moveto
+-0.0951478 0 lineto
+-0.0951478 0 lineto
+-0.0951478 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.031716 moveto
+0 -0.031716 lineto
+0 -0.031716 lineto
+0.792899 -0.031716 lineto
+stroke
+newpath
+-0.031716 -0.792899 moveto
+-0.031716 0 lineto
+-0.031716 0 lineto
+-0.031716 0.792899 lineto
+stroke
+newpath
+-0.792899 0.0317159 moveto
+0 0.0317159 lineto
+0 0.0317159 lineto
+0.792899 0.0317159 lineto
+stroke
+newpath
+0.0317159 -0.792899 moveto
+0.0317159 0 lineto
+0.0317159 0 lineto
+0.0317159 0.792899 lineto
+stroke
+newpath
+-0.792899 0.0951478 moveto
+0 0.0951478 lineto
+0 0.0951478 lineto
+0.792899 0.0951478 lineto
+stroke
+newpath
+0.0951478 -0.792899 moveto
+0.0951478 0 lineto
+0.0951478 0 lineto
+0.0951478 0.792899 lineto
+stroke
+newpath
+-0.792899 0.15858 moveto
+0 0.15858 lineto
+0 0.15858 lineto
+0.792899 0.15858 lineto
+stroke
+newpath
+0.15858 -0.792899 moveto
+0.15858 0 lineto
+0.15858 0 lineto
+0.15858 0.792899 lineto
+stroke
+newpath
+-0.792899 0.222012 moveto
+0 0.222012 lineto
+0 0.222012 lineto
+0.792899 0.222012 lineto
+stroke
+newpath
+0.222012 -0.792899 moveto
+0.222012 0 lineto
+0.222012 0 lineto
+0.222012 0.792899 lineto
+stroke
+newpath
+-0.792899 0.285444 moveto
+0 0.285444 lineto
+0 0.285444 lineto
+0.792899 0.285444 lineto
+stroke
+newpath
+0.285444 -0.792899 moveto
+0.285444 0 lineto
+0.285444 0 lineto
+0.285444 0.792899 lineto
+stroke
+newpath
+-0.792899 0.348875 moveto
+0 0.348875 lineto
+0 0.348875 lineto
+0.792899 0.348875 lineto
+stroke
+newpath
+0.348875 -0.792899 moveto
+0.348875 0 lineto
+0.348875 0 lineto
+0.348875 0.792899 lineto
+stroke
+newpath
+-0.792899 0.412307 moveto
+0 0.412307 lineto
+0 0.412307 lineto
+0.792899 0.412307 lineto
+stroke
+newpath
+0.412307 -0.792899 moveto
+0.412307 0 lineto
+0.412307 0 lineto
+0.412307 0.792899 lineto
+stroke
+newpath
+-0.792899 0.475739 moveto
+0 0.475739 lineto
+0 0.475739 lineto
+0.792899 0.475739 lineto
+stroke
+newpath
+0.475739 -0.792899 moveto
+0.475739 0 lineto
+0.475739 0 lineto
+0.475739 0.792899 lineto
+stroke
+newpath
+-0.792899 0.539171 moveto
+0 0.539171 lineto
+0 0.539171 lineto
+0.792899 0.539171 lineto
+stroke
+newpath
+0.539171 -0.792899 moveto
+0.539171 0 lineto
+0.539171 0 lineto
+0.539171 0.792899 lineto
+stroke
+newpath
+-0.792899 0.602603 moveto
+0 0.602603 lineto
+0 0.602603 lineto
+0.792899 0.602603 lineto
+stroke
+newpath
+0.602603 -0.792899 moveto
+0.602603 0 lineto
+0.602603 0 lineto
+0.602603 0.792899 lineto
+stroke
+newpath
+-0.792899 0.666035 moveto
+0 0.666035 lineto
+0 0.666035 lineto
+0.792899 0.666035 lineto
+stroke
+newpath
+0.666035 -0.792899 moveto
+0.666035 0 lineto
+0.666035 0 lineto
+0.666035 0.792899 lineto
+stroke
+newpath
+-0.792899 0.729467 moveto
+0 0.729467 lineto
+0 0.729467 lineto
+0.792899 0.729467 lineto
+stroke
+newpath
+0.729467 -0.792899 moveto
+0.729467 0 lineto
+0.729467 0 lineto
+0.729467 0.792899 lineto
+stroke
+% Draw coarse grids 
+clc setgray %fill color for coarse grid 
+clw setlinewidth
+newpath
+-0.792899 -0.792899 moveto
+0.792899 -0.792899 lineto
+0.792899 0.792899 lineto
+-0.792899 0.792899 lineto
+closepath
+stroke
+newpath
+-0.792899 -0.475739 moveto
+0 -0.475739 lineto
+0 -0.475739 lineto
+0.792899 -0.475739 lineto
+stroke
+newpath
+-0.475739 -0.792899 moveto
+-0.475739 0 lineto
+-0.475739 0 lineto
+-0.475739 0.792899 lineto
+stroke
+newpath
+-0.792899 -0.15858 moveto
+0 -0.15858 lineto
+0 -0.15858 lineto
+0.792899 -0.15858 lineto
+stroke
+newpath
+-0.15858 -0.792899 moveto
+-0.15858 0 lineto
+-0.15858 0 lineto
+-0.15858 0.792899 lineto
+stroke
+newpath
+-0.792899 0.15858 moveto
+0 0.15858 lineto
+0 0.15858 lineto
+0.792899 0.15858 lineto
+stroke
+newpath
+0.15858 -0.792899 moveto
+0.15858 0 lineto
+0.15858 0 lineto
+0.15858 0.792899 lineto
+stroke
+newpath
+-0.792899 0.475739 moveto
+0 0.475739 lineto
+0 0.475739 lineto
+0.792899 0.475739 lineto
+stroke
+newpath
+0.475739 -0.792899 moveto
+0.475739 0 lineto
+0.475739 0 lineto
+0.475739 0.792899 lineto
+stroke
+% Draw bounding boxes 
+blc setgray %fill color for bounding box 
+blw setlinewidth
+newpath
+-0.792899 -0.792899 moveto
+0.792899 -0.792899 lineto
+0.792899 0.792899 lineto
+-0.792899 0.792899 lineto
+closepath
+stroke
+% Draw points 
+pfc setrgbcolor %fill color for points
+0 -0.570887 p
+0.253728 0.317159 p
+-0.380591 -0.190296 p
+-0.0634319 0.761183 p
+0.697751 0.570887 p
+0.126864 0.444023 p
+0.317159 0.0634319 p
+-0.634319 0.253728 p
+-0.761183 -0.253728 p
+-0.190296 -0.126864 p
+0.380591 -0.634319 p
+0.0634319 -0.317159 p
+0.761183 0.190296 p
+0.570887 -0.761183 p
+-0.697751 -0.0634319 p
+0.634319 0.126864 p
+-0.444023 0.380591 p
+-0.126864 0 p
+-0.253728 -0.697751 p
+0.507455 -0.444023 p
+-0.317159 0.697751 p
+0.190296 0.507455 p
+0.444023 -0.380591 p
+-0.570887 0.634319 p
+-0.507455 -0.507455 p
+grestore

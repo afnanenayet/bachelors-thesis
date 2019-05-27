@@ -8,14 +8,20 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{setspace}
-\usepackage{graphicx}
-\usepackage{todo}
-\usepackage[]{color}
+\usepackage[dvips]{graphicx}
+\usepackage{color}
 \usepackage[cm]{sfmath}
 \usepackage{sourcecodepro}
 \usepackage{microtype}
 \usepackage{listings}
-\usepackage{minted}
+\usepackage[newfloat]{minted}
+\usepackage{datatool}
+\usepackage{readarray}
+\usepackage[outline]{contour}
+\usepackage{tikz}
+
+% enable global line numbers
+\setminted{linenos=true}
 \usepackage{etoolbox}
 \AtBeginEnvironment{minted}{
     \singlespacing%
@@ -23,20 +29,38 @@
     \selectfont
     \usemintedstyle{vs}
 }
+
+% proper font size of minted line numbers
+\renewcommand\theFancyVerbLine{\small \oldstylenums{\arabic{FancyVerbLine}}}
 \DeclareMathVersion{sans}
 \usepackage[hidelinks]{hyperref}
 \usepackage{biblatex}
+\usepackage{nicefrac}
+\usepackage{booktabs}
+\usepackage{rotating}
 \addbibresource{bibliography.bib}
 \spacing{1.5}
 
+%\usepackage[pdftex]{graphicx} \pdfcompresslevel=9
+%\else \usepackage[dvips]{graphicx} \fi
+
+% MACROS
+
+\input{macros}
+
+% God is dead
+
+% END PREAMBLE
+
 \title{
     {Orthogonal Array Sampling for Monte Carlo Based Rendering}\\
+    {\large Undergraduate Thesis} \\
     {\large Dartmouth College} \\
     \vspace{1.5cm}
     {\includegraphics[scale=0.3]{graphics/D-Pine_RGB.jpg}}
 }
 \author{Afnan Enayet}
-\date{\today} % TODO update the date whenever the deadline is announced
+%\date{\today} % TODO update the date whenever the deadline is announced
 
 \begin{document}
 
@@ -80,6 +104,12 @@ patience, and critical eye.
 %
 % Example: \input{folder/my_latex_file.latex}
 \input{chapters/background.latex}
+\input{chapters/orthogonal_arrays.latex}
+\input{chapters/oa_mc.latex}
+\input{chapters/results.latex}
+\input{chapters/conclusion.latex}
+
+\listoffigures
 
 \printbibliography
 

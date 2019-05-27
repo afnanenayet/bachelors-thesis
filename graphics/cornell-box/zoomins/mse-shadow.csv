@@ -1,0 +1,21 @@
+file, color error, error
+cornell-02-128-shadow.exr, 0.000526436 0.000283121 3.79915e-05 0, 2.825e-04
+cornell-02-256-shadow.exr, 0.000344598 0.0001779 2.38225e-05 0, 1.821e-04
+cornell-bose-cmj-121-shadow.exr, 0.000673743 0.000326689 4.37213e-05 0, 3.481e-04
+cornell-bush-s2-121-shadow.exr, 0.000297986 0.000157347 2.08548e-05 0, 1.587e-04
+cornell-bush-s2-169-shadow.exr, 0.000203494 0.000105925 1.40752e-05 0, 1.078e-04
+cornell-bush-s2-289-shadow.exr, 0.000108965 5.77349e-05 7.73666e-06 0, 5.815e-05
+cornell-cmj2d-121-shadow.exr, 0.0012005 0.00056728 7.49578e-05 0, 6.142e-04
+cornell-cmj2d-256-shadow.exr, 0.000259463 0.000139941 1.86658e-05 0, 1.394e-04
+cornell-halton-121-shadow.exr, 0.000320155 0.000162761 2.18458e-05 0, 1.683e-04
+cornell-halton-256-shadow.exr, 0.000131089 6.63573e-05 8.82244e-06 0, 6.876e-05
+cornell-mj-121-shadow.exr, 0.00119995 0.000579038 7.76699e-05 0, 6.189e-04
+cornell-mj-256-shadow.exr, 0.000255122 0.000134924 1.80123e-05 0, 1.360e-04
+cornell-random-121-shadow.exr, 0.00121216 0.000716967 9.72754e-05 0, 6.755e-04
+cornell-random-256-shadow.exr, 0.000577067 0.000337396 4.54667e-05 0, 3.200e-04
+cornell-reference-direct-shadow.exr, 0 0 0 0, 0.000e+00
+cornell-reference-path-shadow.exr, 5.42971e-06 2.91623e-06 3.92727e-07 0, 2.913e-06
+cornell-sobol-128-shadow.exr, 0.00063831 0.000361391 4.8163e-05 0, 3.493e-04
+cornell-sobol-256-shadow.exr, 0.000261152 0.000149712 1.94547e-05 0, 1.434e-04
+cornell-stratified-121-shadow.exr, 0.00118823 0.000572099 7.65084e-05 0, 6.123e-04
+cornell-stratified-256-shadow.exr, 0.00586376 0.00320171 0.000430755 0, 3.165e-03

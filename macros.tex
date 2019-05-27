@@ -1,0 +1,213 @@
+% !TEX root = oa-sampling.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% extra options for table
+% remove this if thing looks different
+% \usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{xfrac}
+% \usepackage{float}
+
+\usepackage{paralist}
+\usepackage{url}
+% \usepackage[usenames,dvipsnames]{xcolor}
+\hypersetup{
+  % colorlinks=true,
+  % linkcolor=black,
+  % citecolor=black,
+  % urlcolor=black,
+  breaklinks=true
+}
+% \hypersetup{draft}% include if you get errors about a link spanning page breaks
+
+\usepackage[sharp]{easylist}
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+% \usepackage{pdfpages}
+\usepackage{wrapfig}
+\usepackage{adjustbox}
+% \usepackage{subfig}
+% \usepackage{subcaption}
+\usepackage{units}
+\usepackage{siunitx}
+%\sisetup{output-exponent-marker=\ensuremath{\mathrm{e}}}
+\sisetup{exponent-product=\!\!\times\!\!}
+\usepackage{soul}
+\usepackage{array}
+% \usepackage{calc}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{xspace}
+% \usepackage[percent]{overpic}
+\usepackage{enumitem}
+% \usepackage{afterpage}
+\usepackage[normalem]{ulem}  % for strike-through (\sout)
+% \usepackage{multirow}
+% \usepackage[makeroom]{cancel}
+% \usepackage{bm}
+\usepackage[utf8]{inputenc}
+% % for commenting
+% \usepackage[final]{pdfcomment}  % for Final draft
+\usepackage[outline]{contour}
+%\contourlength{0.5em}
+% \usepackage{tcolorbox}
+\usepackage{datatool} % for reading CSV files
+\usepackage{readarray}
+
+% \usepackage{inconsolata}
+% \usepackage[scaled=0.9]{FiraMono}
+
+\usepackage{listings}
+\usepackage[capitalize]{cleveref}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.5,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codered}{rgb}{0.9,0,0}
+% \definecolor{codeblue}{rgb}{0.13,0.13,1}
+\definecolor{codeblue}{rgb}{0.15,0.2,.83}
+% \definecolor{otherkeywords}{rgb}{0.07,0.22,.48}
+
+%Code listing style named "mystyle"
+\makeatletter
+\lstdefinestyle{mystyle}{
+captionpos=t,
+keepspaces=true,
+numbers=left,
+numbersep=1em,
+tabsize=4,
+showspaces=false,
+showtabs=false,
+breaklines=true,
+frame=lines,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{codegreen},
+keywordstyle=\color{codeblue}\bfseries,
+stringstyle=\color{codered},
+numberstyle=\ttfamily\fontsize{6.65}{7.5}\selectfont\color{codegray}\bfseries,
+basicstyle=\ttfamily\lst@ifdisplaystyle\fontsize{6.65}{7.5}\else\fontsize{8.65}{9.5}\fi\selectfont
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+\lstset{
+emph={randfloat,permute,boseOA,bushOA,offset,pow,evalPoly,toBaseS,allBut1,allButJ},
+emphstyle=\ttfamily\lst@ifdisplaystyle\fontsize{6.65}{7.5}\else\fontsize{8.65}{9.5}\fi\selectfont\color{codepurple}
+}
+\makeatother
+
+
+% \def\inline{\lstinline[basicstyle=\ttfamily\fontsize{8.65}{9.5}\selectfont]}
+
+% \lstset{emph={vector},emphstyle=\ttfamily\fontsize{6.65}{7.5}\selectfont\color{codeblue}\bfseries}
+
+
+\newtheorem{mydef}{Definition}
+
+%Comments
+% Select the type of commenting you want to use: none, pdf margin comments, or in-text comments
+% \newcommand{\COMMENT}[3]{}  % for Final draft, removes comments
+% \newcommand{\COMMENT}[3]{\pdfcomment[avatar=#1]{#1: #3}}  % For work in progress using PDF annotations
+\newcommand{\COMMENT}[3]{\textcolor{#2}{{\footnotesize[\textsc{#1}: #3}]}}  % For work in progress using in-text comments
+
+%\titlespacing*{\paragraph}{0pt}{0.2\baselineskip}{\baselineskip}
+
+\newcommand{\TODO}[1]{\COMMENT{TODO}{red}{#1}}
+\newcommand{\WJ}[1]{\COMMENT{WJ}{blue}{#1}}
+\renewcommand{\AE}[1]{\COMMENT{AE}{orange}{#1}}
+\newcommand{\PC}[1]{\COMMENT{PC}{teal}{#1}}
+\newcommand{\AK}[1]{\COMMENT{AK}{olive}{#1}}
+\newcommand{\CK}[1]{\COMMENT{CK}{purple}{#1}}
+
+\newcommand{\IGNORE}[1]{}
+
+\definecolor{DarkGreen}{rgb}{0.0,0.6,0.2}
+\newcommand{\REMOVE}[1]{{\color{red}\sout{#1}}} % for work in progress
+\newcommand{\ADD}[1]{{\textcolor{DarkGreen}{#1}}} % for work in progress
+% \newcommand{\ADD}[1]{#1} % for work in progress
+\newcommand{\REPLACE}[2]{\ADD{#2}} % for work in progress, showing the old text
+
+
+% \definecolor{CancelColor}{rgb}{0.7,0.7,0.7}
+% \renewcommand{\CancelColor}{\color{CancelColor}}
+
+% \crefname{lstlisting}{listing}{listings}
+% \Crefname{lstlisting}{Listing}{Listings}
+% \crefname{lstnumber}{line}{line}
+% \crefname{lstnumber}{Line}{Line}
+\newcommand{\crefrangeconjunction}{--}
+
+\crefname{chapter}{Chapter}{Chapters}
+\crefname{section}{Sec.}{Secs.}
+\crefname{subsection}{Sec.}{Secs.}
+\crefname{subsubsection}{Sec.}{Secs.}
+\crefname{figure}{Fig.}{Figs.}
+\crefname{table}{Table}{Tables}
+\crefname{listing}{Listing}{Listings}
+
+%%Math
+\newcommand{\dif}{\mathrm{d}}
+
+\newcommand{\OA}[1]{OA$(#1)$}
+\newcommand{\sIndex}{\lambda}
+\newcommand{\sStrength}{t}
+\newcommand{\sDimension}{d}
+\newcommand{\sNumSamples}{N}
+\newcommand{\sLevels}{s}
+\newcommand{\bigO}{\mathcal{O}}
+
+\let\oldabs\abs % Store original \abs as \oldabs
+\let\abs\undefined % "Undefine" \abs
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand\dropshadowlabelcolor[5]{
+  \node at (#3, #4) {\footnotesize\contour{#2}{\color{#1}#5}};
+  \node at (#3, #4) {\footnotesize\color{#1}#5};
+}
+
+
+
+% Wojciech Jarosz:
+% Don't use small caps for author names in citations, only in the bibliography
+\providecommand{\mkbibnamefamily}[1]{#1}
+\newcommand\lastnameformat[1]{\textsc{#1}}
+\newcommand\givennameformat[1]{\textsc{#1}}
+% \renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
+% \renewcommand*{\mkbibnamegiven}[1]{\textsc{#1}}
+\AtBeginBibliography{%
+  \renewcommand\mkbibnamelast{\lastnameformat}%
+  \renewcommand\mkbibnamefamily{\lastnameformat}%
+  \renewcommand{\mkbibnamegiven}{\givennameformat}
+}
+
+% use sentence case
+% from: https://tex.stackexchange.com/questions/22980/sentence-case-for-titles-in-biblatex
+\DeclareFieldFormat{sentencecase}{\MakeSentenceCase{#1}}
+
+\renewbibmacro*{title}{%
+  \ifthenelse{\iffieldundef{title}\AND\iffieldundef{subtitle}}
+    {}
+    {\ifthenelse{\ifentrytype{article}\OR\ifentrytype{inbook}%
+      \OR\ifentrytype{incollection}\OR\ifentrytype{inproceedings}%
+      \OR\ifentrytype{inreference}}
+      {\printtext[title]{%
+        \printfield[sentencecase]{title}%
+        \setunit{\subtitlepunct}%
+        \printfield[sentencecase]{subtitle}}}%
+      {\printtext[title]{%
+        \printfield[titlecase]{title}%
+        \setunit{\subtitlepunct}%
+        \printfield[titlecase]{subtitle}}}%
+     \newunit}%
+  \printfield{titleaddon}}
+
+% End biblatex tweaks
