@@ -35,7 +35,7 @@ Owen demonstrates a simple transformation that can be applied to points of an
 orthogonal array to make them suitable for Monte Carlo integration. This mostly
 entails randomizing them, normalizing them, and jittering them within strata. \\
 
-It's crucial to randomize the orthogonal arrays, otherwise the points align
+It is crucial to randomize the orthogonal arrays, otherwise the points align
 along several planes, something that is referred to as the ``planar flaw''
 \cite{Owen:2013:Monte}. Refer to Figure~\ref{fig:oa-no-shuffle} to see what the
 canonical arrangement of the Bose construction looks like, and compare with
@@ -56,7 +56,7 @@ points within their strata, and then normalizes them so that they fall within
 the $[0, 1)$ unit domain (per each dimension). \\
 
 There are still improvements that can be made. For example, none of the
-shuffling in this transformation of the OA is correlated, and we don't meet the
+shuffling in this transformation of the OA is correlated, and we do not meet the
 Latin hypercube/N-rooks constraint, which would improve the sampler's
 performance in Monte Carlo integration.
 
@@ -68,11 +68,11 @@ provided by Owen. With these algorithms, we aim to be efficient, which entails
 low memory and computational requirements. These implementations are in-place,
 which means that any index and dimension of a sampler can be generated without
 requiring knowledge of other points, which lends itself to low memory overhead.
-Of course, this introduces some added complexity - how do you know where to
-place a point so that it meets strict stratification requirements and maintain
-the N-rooks guarantee if you don't know where the other points are positioned?
-In this section, we will explain how you can achieve that while presenting
-examples of code that we used to generate orthogonal array based point sets. \\
+Of course, this introduces some added complexity - how do we know where to place
+a point so that it meets strict stratification requirements and maintain the
+N-rooks guarantee if we don't know where the other points are positioned?  In
+this section, we will explain how we can achieve that while presenting examples
+of code that we used to generate orthogonal array based point sets. \\
 
 \subsection{Background Listings}
 
@@ -133,7 +133,7 @@ float randfloat(unsigned i, unsigned p) {
     i ^= i >> 17;
     i ^= i >> 10;       i *= 0xb36534e5;
     i ^= i >> 12;
-    i ^= i >> 21;	    i *= 0x93fc4795;
+    i ^= i >> 21;       i *= 0x93fc4795;
     i ^= 0xdf6e307f;
     i ^= i >> 17;       i *= 1 | p >> 18;
     return i * (1.0f / 4294967808.0f);
@@ -141,7 +141,7 @@ float randfloat(unsigned i, unsigned p) {
 \end{minted}
 
 \noindent
-An efficient function that generates a random number.
+\verb|randfloat| is an efficient function that generates a random number.
 
 \subsection{(Correlated) Multi-Jittering in 2D Projections}
 
@@ -161,30 +161,30 @@ $a \neq b$, will yield representations in any base such that $a$ and $b$ have
 different representations. In short, this means that different indices yield
 different combinations of strata. \\
 
-This is a good start, because we have well stratified points with respect to the
+This is a good start, because we have well-stratified points with respect to the
 coarse strata in the domain (there are $p$ strata in each dimension), but we
 also want to maintain the N-rooks constraint, as well as multi-jittered, and
 correlated multi-jittered offsets. Within each of the $p$ strata, there are $p$
 additional substrata in each dimension. The key to achieving the proper offsets
-is the select the correct substrata once a coarse strata has been selected. Our
-strategy for selecting offsets entails using the strata from another dimension
-to inform what the strata ought to be for the current dimension. \\
+is to select the correct substrata once a coarse stratum has been selected. Our
+strategy for selecting offsets entails using the stratum from another dimension
+to inform what the stratum ought to be for the current dimension. \\
 
-In order to implement simple jittering, we can choose a substrata at random by
+In order to implement simple jittering, we can choose a substratum at random by
 permuting the index through all of the available substrata. This ensures that we
-pick a unique substrata for each point, to meet the N-rooks constraint, but does
+pick a unique substratum for each point to meet the N-rooks constraint, but does
 not provide any correlation. If we want multi-jittered (MJ) sampling, we can be
 a bit more clever when choosing the offset function. We can permute through the
 substrata based on the coarse strata selected by some other dimension. For the
 first two dimensions, we base the substrata of the x dimension on the coarse
-strata of the y dimension. For higher dimensions, we simply need a consistent
-method of selecting a strata from another dimension. \\
+stratum of the y dimension. For higher dimensions, we simply need a consistent
+method of selecting a stratum from another dimension. \\
 
 We introduce a further complication in order to implement correlated-multi
 jittered (CMJ) sampling with respect to selecting the other dimension. We only
 enforce the CMJ constraint for ``primary'' pairs of dimensions, such as $(0,
 1)$, $(2, 3)$, etc. This means that all of the cross-dimensional projections of
-the point set don't get the CMJ stratification. Instead, we perform the MJ
+the point set do not get the CMJ stratification. Instead, we perform the MJ
 offset for the cross-dimensional projections. For the CMJ offset, we select the
 same substrata based off of the coarse strata for every dimension, so that the
 shuffles within CMJ-enabled dimensions are identical, as implemented in the
@@ -225,7 +225,7 @@ original 2D variant of CMJ \cite{Kensler:2013:Correlated}.
 The code listing above demonstrates an implementation of Bose in-place with
 selectable jittered, multi-jittered, and correlated-multi jittered offsets.
 
-\subsection{(Multi-)Jittering in $t$D Projections}
+\subsection{(Multi-)Jittering in t-D Projections}
 
 The Bush construction allows us to select an arbitrary strength ($t$), which
 equates to an arbitrary stratification guarantee. Where Bose was restricted to
@@ -234,13 +234,13 @@ construction allows us to expand beyond two dimensions and stratify in
 any $t$-dimensional projection. \\
 
 The basic strategy is similar to what we did for the Bose construction. We first
-select a coarse strata based on the index of the sample re-interpreted in base
-$p$. We then select a substrata by assigning a new unique index from the
+select a coarse stratum based on the index of the sample re-interpreted in base
+$p$. We then select a substratum by assigning a new unique index from the
 original index. In this case, we elected to make the new index $i / p \bmod p^{t
     - 1}$. Another transformation can be used, as long as every sample that
 falls into the same strata receives a unique index so we can ensure they all
 fall in different substrata. The standard jittering approach remains the same as
-before - select a random substrata for each sample.
+before - select a random substratum for each sample.
 
 \begin{minted}{cpp}
     float bushOA(int i, int j, int s, int t, int p, Offset ot) {
@@ -289,20 +289,19 @@ to transforming the index to base $p$, and reinterpreting it in base 10.
 
 We constructed a generalization of Kensler's CMJ technique that relaxes the
 constraint on the base that is present for the Bush and Bose construction
-techniques, and allows an arbitrary base that is not necessarily a prime number.
+techniques and allows an arbitrary base that is not necessarily a prime number.
 The downside to this method is that it constructs a full factorial design, an
 orthogonal array where $t=d$, so the stratification is equal to the
 dimensionality of the points (while still holding the N-rooks constraint). \\
 
-We achieve this design by converting the index to base $p$, which gives us
-essentially the selection of each strata. We can permute these factors in order
-to yield a random shuffling of the points. The trick here is to use the
-coefficient for the current dimension (use the first coefficient to calculate a
-point in the first dimension, and so on) to calculate the strata, and use the
-rest of the coefficients to calculate the substrata. We have already established
-that this strategy will create a unique selection of strata because the
-uniqueness of the indices holds regardless of which base they are represented
-in.
+We achieve this design by converting the index to base $p$, which essentially
+gives us the selection of each stratum. We can permute these factors in order to
+yield a random shuffling of the points. The trick here is to use the coefficient
+for the current dimension (use the first coefficient to calculate a point in the
+first dimension, and so on) to calculate the strata, and use the rest of the
+coefficients to calculate the substrata. We have already established that this
+strategy will create a unique selection of strata because the uniqueness of the
+indices holds regardless of which base they are represented in.
 
 \begin{minted}{cpp}
     float cmjdD(int i, int s, int t, int p) {

@@ -1,25 +1,25 @@
 \chapter{Results}
 
-We have explored the theory behind OA sampling, and explored different efficient
-construction techniques for different variations of OA sampling. It's important
-to also test for and establish both the theoretical bounds and empirical
+We have explored the theory behind OA sampling and different efficient
+construction techniques for different variations of OA sampling. It is also
+important to test for and establish both the theoretical bounds and empirical
 performance of the samplers. In this section we will present the theoretical
-bounds of OA sampling, as well as real world performance and results from
+bounds of OA sampling as well as real world performance and results from
 empirical analyses.
 
 \section{Theoretical Bounds}
 
-Functions can exhibit variation in a number of dimensions, and you ideally want
-your sampler to be well-stratified in the dimensions that a function exhibits
+Functions can exhibit variation in a number of dimensions, and we ideally want
+our sampler to be well-stratified in the dimensions that a function exhibits
 such variance. For example, if we have an additive one-dimensional function, any
-sampler that meets the N-rooks constraint will perform extremely similarly, and
+sampler that meets the N-rooks constraint will perform similarly, even
 identically when looking at the asymptotic convergence rates. \\
 
-We can take this idea and get much more fine-grained bounds on convergence rates
-if we know the dimensions the integrand varies in, and which dimensions our
-sampler is well-stratified in. Analytic variance analyses have been performed in
-several works \cite{ours} which show the theoretical bounds on Monte Carlo
-integration in particular scenarios. \\
+We can take this idea and get finer bounds on convergence rates if we know the
+dimensions in which the integrand varies and in which our sampler is
+well-stratified. Analytic variance analyses have been performed in several works
+\cite{ours} which show the theoretical bounds on Monte Carlo integration in
+particular scenarios. \\
 
 For starters, we know that naive random sampling always nets an asymptotic bound
 of $O(N^{-1})$, regardless of the function, its variance properties, or the
@@ -81,15 +81,15 @@ paper \cite{ours}. \\
 \end{table}
 
 We can see that orthogonal array sampling presents some distinct advantages. One
-big advantage, perhaps one of the biggest advantages, is that orthogonal array
-sampling can handle variation in any $d$ projection. If we know a function has
-variation in $d$ dimensions, we don't need to do any clever mapping to make sure
-the variation lines up with the dimensions of the sampler that are
-well-stratified, because every $d=t$ dimensional projection is well-stratified
-with OA sampling. This provides an even bigger advantage for functions that have
-cross-dimensional variation. Suppose we have some function that exhibits
-variance in multiple arbitrary $d$ dimensional projections. OA sampling can
-handle that as well, since we already have well stratified projections. \\
+big advantage is that orthogonal array sampling can handle variation in any
+$d$-projection. If we know a function has variation in $d$ dimensions, we do not
+need to do any clever mapping to make sure the variation lines up with the
+dimensions of the sampler that are well-stratified, because every $d=t$
+dimensional projection is well-stratified with OA sampling. This provides an
+even bigger advantage for functions that have cross-dimensional variation.
+Suppose we have some function that exhibits variance in multiple arbitrary $d$
+dimensional projections. OA sampling can handle that as well, since we already
+have well stratified-projections. \\
 
 The downside is that the variation needs to match the strength of the OA.
 Suppose we have an OA with $t = 3$, but the integrand is four-dimensional. This
@@ -97,8 +97,8 @@ will lead to the OA having a performance of $O(N^{-1})$, which is the same as
 random sampling, which is not ideal. Sobol sampling does not have this issue, as
 it maintains good stratification in multiple dimensions. OA sampling does not
 perform optimally when the dimensionality of the integrand is less than the
-strength of the OA. While the performance doesn't degrade as much as when the
-dimensionality is higher, it still doesn't offer as dramatic of an improvement
+strength of the OA. While the performance does not degrade as much as when the
+dimensionality is higher, it still does not offer as dramatic of an improvement
 as when the dimensionality and the strength match up. OA sampling uniquely
 poised to perform well when functions exhibit variance in all combinations of
 dimensions, such as in Equation~\eqref{eq:tuple-fn}. While this is a unique
@@ -112,17 +112,17 @@ fashion.
 \section{Empirical Results with Analytic Integrands}
 
 We modified the Empirical Error Analysis (EEA) \cite{Subr:2016:Fourier} tool to
-support multi-dimensional integrands, and added a number of samplers to it in
+support multi-dimensional integrands and added a number of samplers to it in
 order to test the variance of various functions and samplers. This tool allowed
 us to see if our samplers matched the theoretical expectations that we laid out,
 and the results seem to match up. \\
 
 Prior work has mostly focused on variation in two dimensions, and the variance
 analyses presented in this paper offer results that focus on variance in
-multiple dimensions. We crafted several functions that used one dimensional
+multiple dimensions. We crafted several functions that used one-dimensional
 functions as the basis, which were then combined to form higher dimensional
 functions in a way that allowed us to control the dimensionality (and the
-dimensionality of the variance) and the discontinuity of the resulting
+dimensionality of the variance) as well as the discontinuity of the resulting
 functions. \\
 
 Our one-dimensional basis functions consisted of a Gaussian, a C1 discontinuity,
@@ -205,7 +205,7 @@ legend of these graphs contain a sampler name, along with the convergence rate
 of the sampler, such that the number provided, $x$, corresponds to the slope
 $O(N^{x})$. \\
 
-You can see that the most significant performance improvements occur when the
+We can see that the most significant performance improvements occur when the
 dimensionality of the integrand, $d$, matches the strength of the OA, $t$. The
 1-additive integrand provides a scenario where the OA samplers can achieve a
 steeper convergence rate than even the QMC samplers, a significant result in
@@ -271,11 +271,11 @@ Sobol sampler. \\
 To measure the performance of our samplers, we computed a ground truth render
 for each scene, using the PBRT-implemented uniform random sampler with four
 orders of magnitude more samples than the rest of the samplers. This gave us a
-reasonably confidence estimate of what image the samplers should be converging
+reasonably confident estimate of what image the samplers should be converging
 to. We computed the MSE on each image to see how much error each sampler had at
 comparable sample counts. \\
 
-We created three scenes. The first, dubbed \textsc{CornellxBox}, is the classic
+We created three scenes. The first, dubbed \textsc{CornellBox}, is the classic
 Cornell box scene and uses anti-aliasing, soft shadows, and depth of field with
 a direct lighting integrator to create a 7D integrand
 \cite{Pharr:2016:Physically}. The second, dubbed \textsc{BlueSpheres}, is a
@@ -286,25 +286,25 @@ apartment with a swimming pool featuring global illumination with the path
 tracing integrator to yield a 43D integrand. \\
 
 We found that the benefits of using OA sampling had diminishing returns as the
-scenes got more complex. Visually, it's difficult to see the difference between
+scenes got more complex. Visually, it is difficult to see the difference between
 samplers as more complex scenes introduce more elements and noise. We computed
-the MSE for each scene with each sampler, and cropped specific zoom-ins for
+the MSE for each scene with each sampler and cropped specific zoom-ins for
 regions where we felt that there was a notable difference in performance between
 the samplers. These comparisons and MSE figures are in
 Figure~\ref{fig:rendered-comparison}. Generally, we found our OA sampling
 methods to be the highest performing non-QMC methods, except in the
-\textsc{CornellBox} scene, where OA sampling outperforms QMC sampling. You may
+\textsc{CornellBox} scene, where OA sampling outperforms QMC sampling. We may
 also noticed the artifacts from the Sobol sampler in the soft shadows of the
-\textsc{CornellBox} scene. These artifacts are distracting and very noticeable,
-and likely more pronounced because the Sobol sampler in PBRT is a global
-sampler, as mentioned earlier. It is likely that some of this artifacting could
-be rectified by using a per-pixel Sobol sampler. \\
+\textsc{CornellBox} scene. These artifacts are distracting, very noticeable, and
+likely more pronounced because the Sobol sampler in PBRT is a global sampler, as
+mentioned earlier. It is likely that some of this artifacting could be rectified
+by using a per-pixel Sobol sampler. \\
 
 We also conducted variance analyses using different sample sizes on a single
 pixel for the \textsc{CornellBox} and \textsc{BlueSpheres} scenes. The pixels
 were from the regions where the zoom-ins and crops were placed, highlighting
 areas in each scene where we thought the samplers had significant differences.
-In Figure~\ref{fig:rendered-variance}, you can see that Bose outperforms all of
+In Figure~\ref{fig:rendered-variance}, we can see that Bose outperforms all of
 the other samplers in \textsc{CornellBox}, and in the \textsc{BlueSpheres}
 scene, we get the expected results - the Bose sampler outperforms all of the
 non-QMC samplers.

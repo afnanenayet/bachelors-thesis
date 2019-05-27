@@ -10,45 +10,44 @@ Orthogonal arrays are closely tied to statistical experiment design. Many of the
 terms used to describe and define orthogonal arrays in the literature are
 conducive to a description of OAs in the context of scientific experiments. \\
 
-Suppose you want to conduct an experiment to figure out the optimal method to
-take care of a plant. It's a plant that sits by your window, and the only
-variables you can control are how much water you give the plant, and how much
-sunlight it receives. You would like to know the optimal levels of water and
-sunlight to give your plant in order to keep it alive. \\
+Suppose we want to conduct an experiment to figure out the optimal method to
+take care of a plant that sits by our window. The only variables we can control
+are how much water we give the plant and how much sunlight it receives. We
+would like to know the optimal levels of water and sunlight to give our plant in
+order to keep it alive. \\
 
-Let's define the variables here: levels of sunlight and levels of water. For
-simplicity, let's say it's a binary choice and you can either give
-water/sunlight or not. We can also call these variables \textbf{factors}, and
-state that there are two factors we are considering in this experiment. For each
-of these factors, we define two \textbf{levels}, which is the binary choice we
-referred to earlier. For the factor water, the levels are: administering water
-and not administering water. For the factor sunlight, the levels are: allowing
-the plant to see sunlight and not allowing the plant to see sunlight. \\
+Let us define the variables here: levels of sunlight and levels of water. For
+simplicity, let us say it is a binary choice and we can either give water/sunlight
+or not. We can also call these variables \textbf{factors}, and state that there
+are two factors we are considering in this experiment. For each of these
+factors, we define two \textbf{levels}, which is the binary choice we referred
+to earlier. For the factor water, the levels are: administering water and not
+administering water. For the factor sunlight, the levels are: allowing the plant
+to see sunlight and not allowing the plant to see sunlight. \\
 
-Once you have your factors and levels figured out, you need to carry out a
-number of trials of your experiment. We can call these trials \textbf{runs}, so
-you ``run'' your experiment a number of times with different configurations of
+Once we have our factors and levels figured out, we need to carry out a
+number of trials of our experiment. We can call these trials \textbf{runs}, so
+we ``run'' our experiment a number of times with different configurations of
 factors and levels. \\
 
 Now suppose that we want to figure out the most efficient way to test for the
 optimal combination of sunlight and water levels with respect to the survival of
-the plant. We could test every combination of factors and levels. This would
+the plant. We could test every combination of factors and levels, which would
 definitively tell us the effect of each factor on the dependent variable
 (survival of the plant). This method also has a name: \textbf{full factorial
-    design}. With an experiment utilizing full factorial design, you get a
-robust route for experimentation at the expense of time. It's not a very
-efficient method, since you have to try every combination of factors and levels
-to get your results. \\
+    design}. With an experiment utilizing full factorial design, we get a robust
+route for experimentation at the expense of time. It is not a very efficient
+method, since we have to try every combination of factors and levels to get our
+results. \\
 
-Orthogonal arrays attempt to provide a more efficient way of tackling this
-issue. They provide a method of testing different levels and factors in a more
-efficient manner by creating arrays that can be used for experiment design,
-which aim to provide the most optimal method of testing the effect of a factor
-on the outcome of an experiment without needing to resort to the full factorial
-design. Often, it will provide a way for you to design an experiment without
-needing to try every combination of factors and levels. In fact, the full
-factorial design is referred to as a degenerate case of an OA
-\cite{degenerate}.
+Orthogonal arrays attempt to provide a more better way of tackling this issue by
+testing different levels and factors in a more efficient manner. They do so by
+creating arrays that can be used for experiment design, which aim to provide the
+most optimal method of testing the effect of a factor on the outcome of an
+experiment without needing to resort to the full factorial design. Often, it
+will provide a way for us to design an experiment without needing to try every
+combination of factors and levels. In fact, the full factorial design is
+referred to as a degenerate case of an OA \cite{degenerate}.
 
 \section[Definition]{Defining an Orthogonal Array}
 
@@ -60,14 +59,14 @@ than or equal to the number of defined levels. If an orthogonal array has a
 strength of $t$, it means that every $t$-tuple from the set of levels appears
 exactly the same number of times across any $t$ factors. \\
 
-Going back to the example of the plant and sunlight, we had defined two levels.
-Let's refer to them as 0 and 1, so the set that defines the levels is as
-follows: $\{ 0, 1 \}$. If we have an orthogonal array with strength two, it
-means that we will see the following tuples appear in the OA with the same
-frequency: $\{ (0, 0), (0, 1), (1, 0), (1, 1) \}$. The number of times we see
-the tuples appear in the OA is referred to as the \textbf{index}. For the
-purposes of our research, we are most interested in cases where the index is 1,
-also referred to as the \textbf{unit index}. \\
+In the example with the plant experiment, we had defined two levels. Let us
+refer to them as 0 and 1, so the set that defines the levels is as follows: $\{
+0, 1 \}$. If we have an orthogonal array with strength two, it means that we
+will see the following tuples appear in the OA with the same frequency: $\{ (0,
+0), (0, 1), (1, 0), (1, 1) \}$. The number of times we see the tuples appear in
+the OA is referred to as the \textbf{index}. For the purposes of our research,
+we are most interested in cases where the index is 1, also referred to as the
+\textbf{unit index}. \\
 
 Now that we have some an understanding of the defining terms of an orthogonal
 array, we can provide a formal mathematical description. We denote an orthogonal
@@ -88,7 +87,7 @@ array as follows:
 
 \noindent
 Note that the $\lambda$ term is often omitted because it can be inferred from
-the other properties. If $\lambda$ is known, you can easily calculate $N$ as $N
+the other properties. If $\lambda$ is known, we can easily calculate $N$ as $N
 = \lambda s^t$. It is also important to note that the symbols used to define
 these terms are not entirely consistent across the literature, but the
 properties themselves are fairly consistent. \\
@@ -116,11 +115,11 @@ like on Figure~\ref{fig:oa-4-2-2-2-1}. \\
 
 Because the number of factors is so small, the resultant OA is a full factorial
 design, which does not adequately show the power and advantage of using an OA.
-Let's change the experiment slightly so we can understand why OAs are so useful.
+Let us change the experiment slightly so we can understand why OAs are so useful.
 Suppose, in this case, everything about the experiment remains the same, except
 now we have three levels: no sunlight/water, some sunlight/water, and a lot of
 sunlight/water. We will represent this set of levels as $\{0, 1, 2\}$, so now$s
-= 3$. Let's add two more factors as well: fertilizer and quality of soil, so now
+= 3$. Let us add two more factors as well: fertilizer and quality of soil, so now
 we have a total of 4 factors ($d=4$). We can see the resulting OA in
 Figure~\ref{fig:oa-9-4-3-2-1}. \\
 
@@ -156,7 +155,7 @@ We have four factors and three levels, yet our experiment design only requires
 nine runs. If we considered a full factorial design, we would require $4^3 = 64$
 runs. Clearly, using this design would be far more efficient. We can also better
 understand what a strength of two ($t = 2$) really means - take any two columns,
-and in those columns, you will see that every two-tuple from the set $\{0, 1,
+and in those columns, we will see that every two-tuple from the set $\{0, 1,
 2\}$ appears exactly once. \\
 
 Orthogonal arrays offer an efficient way to design experiments, optimizing for
@@ -169,7 +168,7 @@ testing \cite{Pressman:2010:Software}, experiment design, and cryptography.
 A lot of the literature surrounding orthogonal arrays focuses more on existence
 proofs of OAs with certain properties than practical (or even impractical) ways
 to construct OAs. As useful as it is to know that these OAs exist and have these
-great properties, you may also want to know how to actually produce one. We will
+great properties, we may also want to know how to actually produce one. We will
 explore some construction techniques which provide an efficient algorithmic
 method to create an OA.  Understanding these construction techniques will also
 provide an understanding of the current limitations of orthogonal arrays with
@@ -187,7 +186,7 @@ following orthogonal array
 
 \noindent
 where $p$ is a prime number. Admittedly, this construction is very limited in
-the regard that the orthogonal array must have a prime squared number of runs,
+the regard that the orthogonal array must have a prime squared number of runs
 and can only produce OAs of strength two. \\
 
 Let us suppose that the OA is denoted as $A$, and $A_{ij}$ is the number at the
@@ -215,7 +214,7 @@ of the other columns depends on columns 0 and 1. They are defined by Equation
 \subsection[Bush]{The Bush Construction Technique}
 
 The Bush construction technique is a generalization of the Bose construction
-technique, that relaxes the constraint on the strength ($t$), and the constraint
+technique that relaxes the constraint on the strength ($t$) and the constraint
 on the number of runs associated with an OA. With the Bush construction, we can
 construct the following OA \cite{Owen:2013:Monte}:
 
@@ -227,7 +226,7 @@ construct the following OA \cite{Owen:2013:Monte}:
 While we still have the constraint of needing a prime ``base'', we can now have
 an arbitrary strength, $t$, such that $ 1 \leq t < p$ \cite{Owen:2013:Monte}.
 The number of runs, as a consequence, can be a somewhat arbitrary power of a
-prime. It's still a big constraint, but less constricting than the Bose
+prime. It is still a big constraint, but less constricting than the Bose
 construction. \\
 
 The Bush construction relies on polynomials of the form \cite{Owen:2013:Monte}:
@@ -238,17 +237,17 @@ The Bush construction relies on polynomials of the form \cite{Owen:2013:Monte}:
 \end{equation}
 
 \noindent
-We construct these polynomial for every $i$ such that $ 0 \leq i < p^t$, picking
-the coefficients so $i = \sum_{l = 0}^{t - 1} a_{i, l} p^l$
+We construct these polynomials for every $i$ such that $ 0 \leq i < p^t$,
+picking the coefficients so $i = \sum_{l = 0}^{t - 1} a_{i, l} p^l$
 \cite{Owen:2013:Monte}. This is equivalent to taking a number, $x$, interpreting
 it in base $p$, and recording the coefficients, (including leading zeroes) up to
-degree $t$. Owen notes that we don't actually need to take this particular
+degree $t$. Owen notes that we do not actually need to take this particular
 polynomial, we simply need $p^t$ distinct polynomials, and interpreting the
 index in base $p$ presents an easy way to do so. There are other ways of
-creating distinct polynomials, which would allow us to allow for a base that is
-any power of a prime, rather than a base that is just a prime. In order to do
-so, you must utilize Galois field arithmetic to generate polynomials and perform
-the other operations \cite{Owen:2013:Monte}. \\
+creating distinct polynomials, which would allow for a base that is any power of
+a prime, rather than a base that is just a prime. In order to do so, we must
+utilize Galois field arithmetic to generate polynomials and perform the other
+operations \cite{Owen:2013:Monte}. \\
 
 We can then construct the columns $j = 0 \cdots p - 1$ as defined in
 \eqref{eq:bush-most-col-construction}, and column $p$ as defined in
