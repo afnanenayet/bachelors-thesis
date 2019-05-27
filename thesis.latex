@@ -5,12 +5,15 @@
 \usepackage[margin=1in]{geometry}
 \usepackage[default]{sourcesanspro}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{todo}
 \usepackage[]{color}
 \usepackage[cm]{sfmath}
 \usepackage{sourcecodepro}
+\usepackage{microtype}
 \usepackage{listings}
 \usepackage{minted}
 \usepackage{etoolbox}
@@ -24,13 +27,6 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{biblatex}
 \addbibresource{bibliography.bib}
-
-%\usepackage{fancyhdr}
-
-% formatting
-%\pagestyle{fancy}
-%\fancyhead{} % clear existing header style
-%\fancyhead[L]{\fontsize{10}{12} \selectfont}
 \spacing{1.5}
 
 \title{
