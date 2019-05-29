@@ -181,8 +181,8 @@ Consider a scenario where we are trying to sample a step function in which $f(x)
 happens that every sample falls in the region where $f(x) = 0$, then the
 estimated integral will be $0$, which is clearly incorrect. Random sampling
 presents the danger of oversampling or undersampling regions of functions. This
-phenomenon becomes even more dangerous with functions that are inconsistent
-across the sampled domain.
+phenomenon becomes even more dangerous with functions that are vary more across
+the sampled domain.
 
 \subsection{N-Rooks Sampling}
 
@@ -198,9 +198,9 @@ Imagine a finite 1D line. Now suppose that we want to place $N$ points on the
 line, ensuring that none of the points ``overlap.'' An easy method to do this is
 to divide the line into $N$ sections, or \textbf{strata}, and place a point
 within each stratum. We can randomly additionally jitter a point within a strata
-to provide a ``random'' looking set of points that also have a good numerical
-distribution. Refer to Figure~\ref{n-rooks-sampler-example} to see what this
-distribution looks like in two dimensions. \\
+to provide a ``random'' looking set of points while maintaining stratification.
+Refer to Figure~\ref{n-rooks-sampler-example} to see what this distribution
+looks like in two dimensions. \\
 
 N-Rooks sampling can be extended to multiple dimensions by generating an N-Rooks
 point set for each dimension and arbitrarily padding them together. This method
@@ -229,11 +229,13 @@ with the step function, we can avoid the pitfall of only sampling the side where
 $f(x) = 0$. \\
 
 This method has the advantage of being relatively simple to implement, and it
-scales easily to multiple dimensions (we can jitter in 2D by creating a grid of
-squares within the domain, jittering in 3D is the same except we select cubes,
-etc). Jittered sampling still does not provide the most efficient manner of
-sampling a function, as it has the unintended effect of clumping points near the
-boundaries of strata.
+can be extended in order to work in multiple dimensions. we can jitter in 2D by
+creating a grid of squares within the domain, jittering in 3D is the same except
+we select cubes, etc. Jittering falls under the ``curse of dimensionality,'' so
+it does not scale to higher dimensions efficiently, and scaling to higher and
+higher dimensions is progressively more expensive. Jittered sampling does not
+provide the most effective manner of sampling a function, as it has the
+unintended effect of clumping points near the boundaries of strata.
 
 \subsection{Multi-Jittered Sampling}
 
@@ -252,11 +254,11 @@ boundaries of strata.
 \end{figure}
 
 This sampling method was introduced by Pete Shirley to address functions that
-have variance in two dimensions. Shirley wanted to address the potential
-clumping of points that tends to happen with jittered sampling. His solution was
-to combine the constraints of jittered sampling with the constraints of N-rooks.
-This yields a perfect distribution in each 1D projection as well as a nice
-distribution in 2D. \\
+have variance in two dimensions \cite{Shirley:1991:Discrepancy}. Shirley wanted
+to address the potential clumping of points that tends to happen with jittered
+sampling. His solution was to combine the constraints of jittered sampling with
+the constraints of N-rooks.  This yields a perfect distribution in each 1D
+projection as well as a nice distribution in 2D. \\
 
 The technique to generate a multi-jittered point set is to start out by first
 dividing the domain (2D) into a set of strata and corresponding substrata.
@@ -265,6 +267,9 @@ which we can see in Figure~\ref{mj-canonical-sampler}. Note that the canonical
 arrangement maintains the jittered and N-Rooks constraints. Then shuffle the
 samples within each stratum in each dimension, while maintaining the jittered
 and N-Rooks constraints, which we can see in Figure~\ref{mj-randomized-sampler}.
+
+% TODO Refer to comments from Wojciech, elaborate on the technique used to
+% generate MJ
 
 \subsection{Correlated Multi-Jittered Sampling}
 
@@ -275,10 +280,10 @@ and N-Rooks constraints, which we can see in Figure~\ref{mj-randomized-sampler}.
     \label{cmj-sampler-example}
 \end{figure}
 
-Introduced by researcher Andrew Kensler of Pixar in 2013, correlated
-multi-jittered (CMJ) sampling modifies Shirley's multi-jittered sampling
-design to provide point sets that have a better shuffling arrangement and
-consequently yield steeper convergence rates in empirical testing. \\
+Introduced by Andrew Kensler, correlated multi-jittered (CMJ) sampling modifies
+Shirley's multi-jittered sampling design to provide point sets that have a
+better shuffling arrangement and consequently yield steeper convergence rates in
+empirical testing \cite{Kensler:2013:Correlated}. \\
 
 The key idea behind CMJ is changing the shuffling step from multi-jittered
 sampling. In Shirley's method, the strata in each dimension shuffle points
@@ -300,12 +305,13 @@ QMC sampling methods tend to provide much higher performance in Monte Carlo
 integration than other sampling methods and have become quite popular due to
 their superior performance, low discrepancy, and high efficiency. \\
 
-There are some terms that are commonly used to describe samplers for QMC, which
-include \textbf{(t, s) sequences} and \textbf{(t, m, s) nets}. Such terms
-describe stratification guarantees for samplers in a convenient and consistent
-manner. To explain these terms, we must first define the \textbf{elementary
-interval}, which we describe as the elementary $s$-interval in base $b$. Suppose
-we have some interval with the following properties:
+There are some common point sets and sequences in QMC that are commonly referred
+to in the literature, such as \textbf{(t, s) sequences} and \textbf{(t, m, s)
+    nets}. Such terms describe stratification guarantees for samplers in a
+convenient and consistent manner. To explain these terms, we must first define
+the \textbf{elementary interval}, which we describe as the elementary
+$s$-interval in base $b$. Suppose we have some interval with the following
+properties:
 
 \begin{equation}
     \prod^{s}_{j = 1} \bigg[ \frac{a_j}{b^{d_j}}, \frac{a_j + 1}{b^{d_j}}
@@ -431,14 +437,12 @@ benefits for rendering.
 
 \section{High-Dimensional Integration}
 
-In the current literature, there are not many sampling methods that explicitly
-address the issue of extremely high dimensional integrals. Most of the samplers
-we presented focus on stratifying and addressing variance in two dimensions.
-Rendering is extremely high dimensional and potentially infinitely dimensional.
-The functions that Monte Carlo rendering attempts to approximate often exhibit
-variance in more than two dimensions. Having sampling methods that explicitly
-address this high-dimensional variance would offer a significant improvement in
-efficiency. \\
+Many of the samplers we presented focus on stratifying and addressing variance
+in two dimensions. Rendering is extremely high dimensional and potentially
+infinitely dimensional. The functions that Monte Carlo rendering attempts to
+approximate often exhibit variance in more than two dimensions. Having sampling
+methods that explicitly address this high-dimensional variance would offer a
+significant improvement in efficiency. \\
 
 One of the techniques explained earlier, padding, attempts to rectify this to
 some degree. It generates high dimensional samples, but these samples are not

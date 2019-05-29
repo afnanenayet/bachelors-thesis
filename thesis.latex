@@ -1,17 +1,18 @@
 \documentclass[12pt]{report}
 
 % packages
+
+% set up fonts
+\usepackage[default]{sourcesanspro}
+\usepackage{sourcecodepro}
+
 \usepackage{biblatex}
 \usepackage[margin=1in]{geometry}
-\usepackage[default]{sourcesanspro}
-\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{setspace}
 \usepackage[dvips]{graphicx}
 \usepackage{color}
-%\usepackage[cm]{sfmath}
-\usepackage{sourcecodepro}
 \usepackage{microtype}
 \usepackage{listings}
 \usepackage[newfloat]{minted}
@@ -32,7 +33,7 @@
 
 % proper font size of minted line numbers
 \renewcommand\theFancyVerbLine{\small \oldstylenums{\arabic{FancyVerbLine}}}
-\DeclareMathVersion{sans}
+%\DeclareMathVersion{sans}
 \usepackage[hidelinks]{hyperref}
 \usepackage{biblatex}
 \usepackage{nicefrac}

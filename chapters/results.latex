@@ -217,8 +217,8 @@ circumstances.
 
 \onecolumn
 \begin{sidewaysfigure*}[h]
-    \centering
     \small
+    \begin{center}
     %\vspace*{5in}
     % \hspace*{-15pt}
     \begin{tabular}{@{}c@{\,}c@{\;}c@{\;}c@{\;}c@{}}
@@ -244,6 +244,7 @@ circumstances.
         \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/cross_corr_2_c0_mul} &
         \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/c0_ball}
     \end{tabular}
+    \end{center}
     \caption{Analytic variance of various samplers}{Variance behavior of 13
         samplers on 4D analytic integrands of different complexity (columns) and
         continuity (rows). We list the best-fit slope of each technique, which
@@ -319,7 +320,9 @@ non-QMC samplers.
     \DTLloaddb{blueSpheresZoomError}{graphics/bluespheres/zoomins/mse.csv}
     \DTLloaddb{barcelonaError}{graphics/barcelona/mse.csv}
     \DTLloaddb{barcelonaZoomError}{graphics/barcelona/zoomins/mse.csv}
-    \centering
+    %\centering TODO check whether this worked
+
+    \begin{center}
     \setlength{\fboxsep}{0pt}%
     \setlength{\fboxrule}{1pt}%
     \contourlength{0.1em}%
@@ -510,9 +513,10 @@ non-QMC samplers.
 
             \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{bush-s2-3969.exr}
             \dropshadowlabelcolor{white}{black}{7.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
-        \end{tikzpicture}%
+        \end{tikzpicture}
     }
-    \vspace*{-1.5\baselineskip}%
+    \end{center}
+    \vspace*{-1.5\baselineskip}
     \caption{Comparison of rendered scenes}{The \textsc{BlueSpheres},
         \textsc{CornellBox}, and \textsc{Barcelona} scenes feature different
         combinations of pixel antialiasing, DoF, motion blur, and several
@@ -521,14 +525,14 @@ non-QMC samplers.
         and each inset (bottom) show that our OA-based sampling technique is
         able to out-perform 2D padded samplers (first 4 columns), and is close
         to the quality of multi-dimensionally stratified global samplers like
-        Halton and Sobol. \cite{ours}}
+        Halton and Sobol \cite{ours}.}
     \label{fig:rendered-comparison}
     \vspace*{-\baselineskip}
 \end{figure*}
 
 
 \begin{figure}[t!]
-    \centering
+    \begin{center}
     \small
     \hspace*{-15pt}\begin{tabular}{@{}c@{\;}c@{}}
         \qquad\quad \textsc{BlueSpheres} & \textsc{CornellBox}\\
@@ -537,11 +541,12 @@ non-QMC samplers.
         \includegraphics[scale=1,trim=33pt 23pt 0 0,
         clip=true]{graphics/variance-plots/eea_graphs/cornell-box}
     \end{tabular}\vspace*{-0.5\baselineskip}
+    \end{center}
     \caption{Variance of samplers for rendered scenes}{Variance behavior and
         best-fit slope of various samplers for a pixel in the yellow inset in
         \textsc{BlueSpheres} and the blue inset of \textsc{CornellBox} in
         \cref{fig:rendered-comparison}. Our samplers always perform better than
         traditional padding approaches and even outperform the global Halton and
-        Sobol samplers in \textsc{CornellBox}\cite{ours}.}
+        Sobol samplers in \textsc{CornellBox} \cite{ours}.}
     \label{fig:rendered-variance}
 \end{figure}

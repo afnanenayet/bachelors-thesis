@@ -63,16 +63,16 @@ performance in Monte Carlo integration.
 \section{Practical Construction Algorithms}
 
 In this section, we aim to provide practical construction techniques for
-generating point sets that offer benefits over the ``naive'' transformation
-provided by Owen. With these algorithms, we aim to be efficient, which entails
-low memory and computational requirements. These implementations are in-place,
-which means that any index and dimension of a sampler can be generated without
-requiring knowledge of other points, which lends itself to low memory overhead.
-Of course, this introduces some added complexity - how do we know where to place
-a point so that it meets strict stratification requirements and maintain the
-N-rooks guarantee if we don't know where the other points are positioned?  In
-this section, we will explain how we can achieve that while presenting examples
-of code that we used to generate orthogonal array based point sets. \\
+generating point sets that use the transformation provided by Owen. With these
+algorithms, we aim to be efficient, which entails low memory and computational
+requirements. These implementations are in-place, which means that any index and
+dimension of a sampler can be generated without requiring knowledge of other
+points, which lends itself to low memory overhead.  Of course, this introduces
+some added complexity - how do we know where to place a point so that it meets
+strict stratification requirements and maintain the N-rooks guarantee if we
+don't know where the other points are positioned?  In this section, we will
+explain how we can achieve that while presenting examples of code that we used
+to generate orthogonal array based point sets. \\
 
 \subsection{Background Listings}
 
