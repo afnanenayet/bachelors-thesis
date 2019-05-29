@@ -140,7 +140,7 @@ Figure~\ref{fig:c0-1D-kernel}. They all share the parameters $r_{\text{end}} =
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.45]{figures/linearStep.png}
+    \includegraphics[scale=0.45]{figures/step.png}
     \label{fig:c0-1D-kernel}
     \caption{A visual representation of the $g^0$ function}
 \end{figure}
@@ -367,7 +367,12 @@ non-QMC samplers.
             \node at (6.5, 0.58) {Sobol};
             \node at (7.5, 0.58) {\bfseries BushMJ(t=2)};
             %
+
+            % need to modify the font size so the scores fit within the boxes
+            \begingroup
             \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{random-121.exr}
+            % \dropshadowlabelcolor{white}{black}{1.5}{0.4}{full: \num{\myval}};
+            % % TODO revoke
             \dropshadowlabelcolor{white}{black}{1.5}{0.4}{full: \num{\myval}};
 
             \DTLgetvalueforkey\myval{error}{blueSpheresError}{file}{stratified-121.exr}
@@ -513,6 +518,7 @@ non-QMC samplers.
 
             \DTLgetvalueforkey\myval{error}{barcelonaZoomError}{file}{bush-s2-3969.exr}
             \dropshadowlabelcolor{white}{black}{7.5}{0.0-3-0.06-0.4}{crop: \num{\myval}};
+        \endgroup
         \end{tikzpicture}
     }
     \end{center}

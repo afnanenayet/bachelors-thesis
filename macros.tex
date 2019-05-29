@@ -170,8 +170,8 @@ emphstyle=\ttfamily\lst@ifdisplaystyle\fontsize{6.65}{7.5}\else\fontsize{8.65}{9
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \newcommand\dropshadowlabelcolor[5]{
-  \node at (#3, #4) {\footnotesize\contour{#2}{\color{#1}#5}};
-  \node at (#3, #4) {\footnotesize\color{#1}#5};
+  \node at (#3, #4) {\fontsize{9pt}{2pt}\selectfont\contour{#2}{\color{#1}#5}};
+  \node at (#3, #4) {\fontsize{9pt}{2pt}\selectfont\color{#1}#5};
 }
 
 
