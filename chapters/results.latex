@@ -33,6 +33,11 @@ paper \cite{ours}. \\
 
 \begin{table}[t!]
     \label{tab:convergence-rates}
+    \caption{The convergence rate improvement ($b$ in $O(N^{-1-b})$) as a
+        function of the dimensionality and smoothness of the integrand for
+        various samplers. The 1- and $t$-additive integrands are
+        $d$-dimensional, where $t<d$. Best case for each integrand is bold.
+        \cite{ours}}
     \centering
     \begin{tabular}{rcccccccc}
     \toprule
@@ -73,11 +78,6 @@ paper \cite{ours}. \\
     $\mathbf{1}$\\
     \bottomrule
 \end{tabular}
-    \caption{The convergence rate improvement ($b$ in $O(N^{-1-b})$) as a
-        function of the dimensionality and smoothness of the integrand for
-        various samplers. The 1- and $t$-additive integrands are
-        $d$-dimensional, where $t<d$. Best case for each integrand is bold.
-        \cite{ours}}
 \end{table}
 
 We can see that orthogonal array sampling presents some distinct advantages. One

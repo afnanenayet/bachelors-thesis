@@ -10,7 +10,7 @@
 \usepackage{setspace}
 \usepackage[dvips]{graphicx}
 \usepackage{color}
-\usepackage[cm]{sfmath}
+%\usepackage[cm]{sfmath}
 \usepackage{sourcecodepro}
 \usepackage{microtype}
 \usepackage{listings}
@@ -75,18 +75,17 @@ image. \\
 Monte Carlo integration is a highly efficient method to estimate an integral
 that scales extremely well to a high number of dimensions, making it well suited
 for graphics, because generating images creates a high-dimensional integrand.
-The efficiency of these Monte Carlo integrations partially depends on the
-sampling techniques used, and using a more efficient sampling technique can make
-a Monte Carlo simulation converge to the right answer much more quickly than
-using more naive sampling techniques. \\
+The efficiency of these Monte Carlo integrations depends on the sampling
+techniques used, and using a more efficient sampling technique can make a Monte
+Carlo simulation converge to the right answer much more quickly than using more
+naive sampling techniques. \\
 
 In this thesis, we present an efficient sampling method that demonstrates much
-higher performance than other non-QMC based sampling techniques and tends to
-perform about as well as state-of-the-art QMC sampling techniques.  This novel
-sampling method, based on orthogonal arrays, offers guaranteed stratification
-in arbitrary projections, leading to better theoretical performance with
-integrands that have cross-correlated variance compared to sampling methods
-that do not offer these same guarantees.
+higher performance than many other sampling techniques. This novel sampling
+method, based on orthogonal arrays, offers guaranteed stratification in
+arbitrary projections, leading to better theoretical performance with integrands
+that have cross-correlated variance compared to sampling methods that do not
+offer these same guarantees.
 
 \chapter*{Acknowledgements}
 
@@ -99,6 +98,8 @@ patience, and critical eye.
 
 \tableofcontents
 
+\listoffigures
+
 % All other "real" chapters should be included as separate files to keep the
 % latex file from getting too messy
 %
@@ -109,7 +110,6 @@ patience, and critical eye.
 \input{chapters/results.latex}
 \input{chapters/conclusion.latex}
 
-\listoffigures
 
 \printbibliography
 

@@ -5,22 +5,22 @@ this thesis. In order to understand the significance of a sampling method, we
 must first explore the fundamentals of Monte Carlo integration and how
 different sampling strategies can affect the effectiveness of Monte Carlo
 integration. The background section will discuss different conventional
-sampling techniques for Monte Carlo integration. \\
+sampling techniques for Monte Carlo integration.
 
 \section{Monte Carlo Integration}
 
 Suppose we have a square dartboard that is one meter by one meter. We will call
 the length of a side $l$. We know that the area of a square is simply $l^2$, so
 the area of the dartboard is $1$. Now suppose we have a perfect circle inside of
-the square, and we do not know the area of this circle. For some reason, we have
-an unlimited supply of darts, and we know whether each dart we throw falls
-inside the circle, or outside of the circle (assuming that every dart hits the
-dartboard). If we want to find the area of the circle, we can throw a bunch of
-random darts, record the number of darts that hit the circle, and use the ratio
-of the number of darts that hit the circle to the total number of darts thrown
-to find the area of the circle. For example, if about a quarter of our darts hit
-the circle, then we can reasonably estimate that the size of our circle is $0.25
-* 1 = 0.25$. \\
+the square, and we do not know the area of this circle. We have an unlimited
+supply of darts, and we know whether each dart we throw falls inside the circle,
+or outside of the circle (assuming that every dart hits the dartboard). If we
+want to find the area of the circle, we can throw a bunch of random darts,
+record the number of darts that hit the circle, and use the ratio of the number
+of darts that hit the circle to the total number of darts thrown to find the
+area of the circle. For example, if about a quarter of our darts hit the circle,
+then we can reasonably estimate that the size of our circle is $0.25 \cdot 1 =
+0.25$. \\
 
 The principle of stochastically estimating some arbitrary area or shape is the
 same principle that underlies Monte Carlo integration. Instead of a perfectly
@@ -28,7 +28,7 @@ square dartboard, imagine an arbitrary integration domain. Now replace the
 circle with some arbitrary function. We can define the integral of the function
 as the area under the function. Now imagine throwing darts at random, within
 some domain, except now we are trying to find the integral of a function rather
-than the area of a square. \\
+than the area of a circle. \\
 
 In practice, Monte Carlo integration involves randomly selecting some point in
 the function's domain ($\mathbb{R}^d$) a certain number of times ($N$) and
@@ -39,19 +39,28 @@ averaging the calculated values.
 \end{equation}
 
 \noindent % don't indent since this is a continuation of the prev paragraph
-where $\overline{x}$ is a set of uniform random numbers and $\overline{x}_i$ is
-the $i^{th}$ element of the set of uniform random numbers. It is important to
-note that is is not strictly necessary to use uniform random sampling for Monte
-Carlo integration, but doing so makes the explanation of Monte Carlo simpler.
-An important property of Monte Carlo integration is that the estimation is
+where $\overline{x}_i$ is a uniform random number. It is important to note that
+it is not strictly necessary to use uniform random sampling for Monte Carlo
+integration, but doing so makes the explanation of Monte Carlo simpler.  An
+important property of Monte Carlo integration is that the estimation is
 guaranteed to converge towards the correct answer as $N$ approaches infinity.
-As a result, $N$ becomes a controlled variable that allows one to choose
-between speed and accuracy.
+As a result, $N$ becomes a variable that allows one to choose between speed and
+accuracy.
 
 \begin{equation}
     \lim_{N \rightarrow \inf} \frac{1}{N} \sum_{i = 1}^{i = N}
     f(\overline{x}_i) = \int_{a}^{b} f(x)
 \end{equation}
+
+\subsection{Variance}
+
+Generally, we want to know how reliable a numerical method is. If we have some
+method of approximating a value, it seems useful to know whether the answer we
+get will vary wildly across different runs, or whether it tends to be fairly
+consistent. In most cases, we want more consistency, something that becomes
+difficult to have with the element of randomness. The measure of how
+inconsistent these approximations are is called \textbf{variance}, also denoted
+as $\sigma^2$.
 
 \subsection{Convergence Rate}
 
@@ -61,27 +70,16 @@ property the \textbf{convergence rate}. One thing that makes Monte Carlo
 integration so appealing for many use cases is that its convergence rate is
 independent of the dimensionality of the integrand. Whether our integrand is a
 2D or a 90D integrand, the accuracy of the approximate integral will increase at
-the same rate. Monte Carlo integration with uniform random sampling has an
-asymptotic convergence rate of $O(N^{-1})$. While Monte Carlo with uncorrelated
-sampling has the advantage of having a convergence rate that does not scale with
-dimensionality, there are methods that make it possible to yield a steeper
-convergence rate. The convergence rate of Monte Carlo integration with a
-particular sampling method can be calculated theoretically given knowledge about
-the sampling methods and integrand, which yields an asymptotic bound as with
-random sampling, or empirically, by measuring the variance of a sampling method
-at various sample counts with a high number of trials. As part of our research,
-we ascertained the theoretical convergence bounds for various integrands and
-samplers, and verified them empirically.
-
-\subsection{Variance}
-
-Generally, we want to know how consistent a numerical method is. If we have
-some method of approximating a value, it seems useful to know whether the answer
-we get will vary wildly across different runs, or whether it tends to be fairly
-consistent. In most cases, we want more consistency, something that becomes
-difficult to have with the element of randomness. The measure of how
-inconsistent these approximations are is called \textbf{variance}, also denoted
-as $\sigma^2$.
+the same rate. While Monte Carlo with uncorrelated sampling has the advantage of
+having a convergence rate that does not scale with dimensionality, there are
+methods that make it possible to yield a steeper convergence rate. The
+convergence rate of Monte Carlo integration with a particular sampling method
+can be calculated theoretically given knowledge about the sampling methods and
+integrand, which yields an asymptotic bound as with random sampling, or
+empirically, by measuring the variance of a sampling method at various sample
+counts with a high number of trials. As part of our research, we ascertained the
+theoretical convergence bounds for various integrands and samplers, and verified
+them empirically.
 
 \begin{equation}
     \sigma^2 = E[(X - \mu^2)]
@@ -174,9 +172,8 @@ padding is an easy way to add the dimensions we need.
 
 We have already discussed one method for Monte Carlo sampling: uniform random
 sampling. There are several advantages to using this method, namely that it is
-relatively easy to implement correctly and is a fairly simple to understand. We
-can see what such a point set looks like in Figure~\ref{random-sampler-example}.
-\\
+relatively easy to implement correctly and simple to understand. We can see what
+such a point set looks like in Figure~\ref{random-sampler-example}. \\
 
 There is an intuitive pitfall that results from using naive random sampling.
 Consider a scenario where we are trying to sample a step function in which $f(x)
@@ -200,20 +197,18 @@ N-Rooks sampling is a method which yields a perfect 1D distribution of points.
 Imagine a finite 1D line. Now suppose that we want to place $N$ points on the
 line, ensuring that none of the points ``overlap.'' An easy method to do this is
 to divide the line into $N$ sections, or \textbf{strata}, and place a point
-within each strata. Because there are $N$ points and $N$ strata, we know that
-there will only be one point per strata without any overlap. We can randomly
-additionally jitter a point within a strata to provide a ``random'' looking set
-of points that also have a good numerical distribution. Refer to
-Figure~\ref{n-rooks-sampler-example} to see what this distribution looks like in
-two dimensions. \\
+within each stratum. We can randomly additionally jitter a point within a strata
+to provide a ``random'' looking set of points that also have a good numerical
+distribution. Refer to Figure~\ref{n-rooks-sampler-example} to see what this
+distribution looks like in two dimensions. \\
 
-N-Rooks sampling can be extended to multiple dimensions in an uncorrelated
-manner by generating an N-Rooks point set for each dimension and arbitrarily
-padding them together. This method tends to be suboptimal but has the advantage
-of being trivial to implement and not very computationally intensive. As we can
-see in Figure~\ref{n-rooks-sampler-example}, the constraints of the N-rooks
-sampler can still allow for intense clumping and awkward gaps. These properties
-lead to lower discrepancy and are not desirable for Monte Carlo integration.
+N-Rooks sampling can be extended to multiple dimensions by generating an N-Rooks
+point set for each dimension and arbitrarily padding them together. This method
+tends to be suboptimal but has the advantage of being trivial to implement and
+not very computationally intensive. As we can see in
+Figure~\ref{n-rooks-sampler-example}, the points are well-stratified in 1D
+projections, but is not stratified in two dimensions. These properties lead to
+lower discrepancy and are not desirable for Monte Carlo integration.
 
 \subsection{Jittered Sampling}
 

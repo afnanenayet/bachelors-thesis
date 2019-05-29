@@ -40,7 +40,7 @@ route for experimentation at the expense of time. It is not a very efficient
 method, since we have to try every combination of factors and levels to get our
 results. \\
 
-Orthogonal arrays attempt to provide a more better way of tackling this issue by
+Orthogonal arrays attempt to provide a better way of tackling this issue by
 testing different levels and factors in a more efficient manner. They do so by
 creating arrays that can be used for experiment design, which aim to provide the
 most optimal method of testing the effect of a factor on the outcome of an
