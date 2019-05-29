@@ -18,11 +18,11 @@ identically when looking at the asymptotic convergence rates. \\
 We can take this idea and get finer bounds on convergence rates if we know the
 dimensions in which the integrand varies and in which our sampler is
 well-stratified. Analytic variance analyses have been performed in several works
-\cite{ours} which show the theoretical bounds on Monte Carlo integration in
-particular scenarios. \\
+which show the theoretical bounds on Monte Carlo integration in
+particular scenarios \cite{ours}. \\
 
-For starters, we know that naive random sampling always nets an asymptotic bound
-of $O(N^{-1})$, regardless of the function, its variance properties, or the
+We know that naive random sampling always nets an asymptotic bound of
+$O(N^{-1})$, regardless of the function, its variance properties, or the
 dimensionality. Samplers that are well-stratified in $d$ dimensions with $d$
 dimensional integrands that are C1 discontinuous have a convergence rate of
 $O(N^{-1 - 2 / d})$ \cite{ours,Owen:2013:Monte}. The same scenario with a C0
@@ -135,8 +135,8 @@ Equation~\eqref{eq:c1-1D-kernel} and visualized in
 Figure~\ref{fig:c1-1D-kernel}. The C0 discontinuity is defined in
 Equation~\eqref{eq:c0-1D-kernel} and visualized in
 Figure~\ref{fig:c0-1D-kernel}. They all share the parameters $r_{\text{end}} =
-\frac{3}{\pi}$, $r_{\text{start}} = r_{\text{end}} - 0.2$, and $\sigma =
-\frac{1}{3}$.
+\nicefrac{3}{\pi}$, $r_{\text{start}} = r_{\text{end}} - 0.2$, and $\sigma =
+\nicefrac{1}{3}$.
 
 \begin{figure}
     \centering
@@ -294,8 +294,8 @@ regions where we felt that there was a notable difference in performance between
 the samplers. These comparisons and MSE figures are in
 Figure~\ref{fig:rendered-comparison}. Generally, we found our OA sampling
 methods to be the highest performing non-QMC methods, except in the
-\textsc{CornellBox} scene, where OA sampling outperforms QMC sampling. We may
-also noticed the artifacts from the Sobol sampler in the soft shadows of the
+\textsc{CornellBox} scene, where OA sampling outperforms QMC sampling.  Notice
+the artifacts from the Sobol sampler in the soft shadows of the
 \textsc{CornellBox} scene. These artifacts are distracting, very noticeable, and
 likely more pronounced because the Sobol sampler in PBRT is a global sampler, as
 mentioned earlier. It is likely that some of this artifacting could be rectified

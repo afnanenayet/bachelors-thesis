@@ -78,8 +78,8 @@ that scales extremely well to a high number of dimensions, making it well suited
 for graphics, because generating images creates a high-dimensional integrand.
 The efficiency of these Monte Carlo integrations depends on the sampling
 techniques used, and using a more efficient sampling technique can make a Monte
-Carlo simulation converge to the right answer much more quickly than using more
-naive sampling techniques. \\
+Carlo simulation converge to the right answer quicker than using more naive
+sampling techniques. \\
 
 In this thesis, we present an efficient sampling method that demonstrates much
 higher performance than many other sampling techniques. This novel sampling

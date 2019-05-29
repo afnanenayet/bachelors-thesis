@@ -125,7 +125,7 @@ The \verb|permute| function is method that produces an in-place or hashed
 permutation. It is equivalent to creating a list of $l$ elements, and shuffling
 each element around, and retrieving the $i^{th}$ element in that list. This
 function is taken from Kensler's technical report
-\cite{Kensler:2013:Correlated}.
+\cite{Kensler:2013:Correlated}. \\
 
 \begin{minted}{cpp}
 float randfloat(unsigned i, unsigned p) {
@@ -236,11 +236,11 @@ any $t$-dimensional projection. \\
 The basic strategy is similar to what we did for the Bose construction. We first
 select a coarse stratum based on the index of the sample re-interpreted in base
 $p$. We then select a substratum by assigning a new unique index from the
-original index. In this case, we elected to make the new index $i / p \bmod p^{t
-    - 1}$. Another transformation can be used, as long as every sample that
-falls into the same strata receives a unique index so we can ensure they all
-fall in different substrata. The standard jittering approach remains the same as
-before - select a random substratum for each sample.
+original index. In this case, we elected to make the new index $\nicefrac{i}{p}
+\bmod p^{t - 1}$. Another transformation can be used, as long as every sample
+that falls into the same strata receives a unique index so we can ensure they
+all fall in different substrata. The standard jittering approach remains the
+same as before - select a random substratum for each sample.
 
 \begin{minted}{cpp}
     float bushOA(int i, int j, int s, int t, int p, Offset ot) {

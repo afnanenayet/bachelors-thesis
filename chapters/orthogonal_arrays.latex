@@ -172,7 +172,7 @@ great properties, we may also want to know how to actually produce one. We will
 explore some construction techniques which provide an efficient algorithmic
 method to create an OA.  Understanding these construction techniques will also
 provide an understanding of the current limitations of orthogonal arrays with
-respect to the constraints associated with the current construction techniques.
+respect to the constraints associated with these techniques.
 
 \subsection[Bose]{The Bose Construction Technique}
 
