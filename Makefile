@@ -3,6 +3,9 @@
 #
 # Makefile to generate a pdf from latex files. Also offers a convenient script
 # to delete generated files
+#
+# Usage is simple: `make` generates the PDF, `make clean` cleans up any files
+# that were generated
 
 # input_file is the file that actually gets used to generate the PDF
 input_file=thesis.latex
@@ -17,7 +20,7 @@ bib=references/rendering-bibtex.bib references/strings-full.bib references/strin
 $(output_file): $(input_file) $(input_files) $(bib)
 	bibtex thesis
 	xelatex -shell-escape $(input_file)
-	# Need to run it again to sync the bibliography
+	# Need to run it again to sync the bibliography information
 	bibtex thesis
 	xelatex -shell-escape $(input_file)
 
