@@ -6,7 +6,6 @@
 \usepackage[default]{sourcesanspro}
 \usepackage{sourcecodepro}
 
-\usepackage{biblatex}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -35,12 +34,17 @@
 \renewcommand\theFancyVerbLine{\small \oldstylenums{\arabic{FancyVerbLine}}}
 %\DeclareMathVersion{sans}
 \usepackage[hidelinks]{hyperref}
-\usepackage{biblatex}
 \usepackage{nicefrac}
 \usepackage{booktabs}
 \usepackage{rotating}
-\addbibresource{bibliography.bib}
 \spacing{1.5}
+
+% bibliography info
+%\biberVersion
+%\BibtexOrBiblatex
+\usepackage[backend=biber,bibstyle=EG,citestyle=alphabetic,mincitenames=1,maxcitenames=2,maxbibnames=100,giveninits=true,backref=true,sorting=anyt,sortcites,doi=true]{biblatex}
+\addbibresource{bibliography.bib}
+%\addbibresource{egsr_bibliography.bib}
 
 %\usepackage[pdftex]{graphicx} \pdfcompresslevel=9
 %\else \usepackage[dvips]{graphicx} \fi

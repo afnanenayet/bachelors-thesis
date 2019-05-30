@@ -121,11 +121,10 @@ unsigned permute(unsigned i, unsigned l, unsigned p) {
 \end{minted}
 
 \noindent
-The \verb|permute| function is method that produces an in-place or hashed
-permutation. It is equivalent to creating a list of $l$ elements, and shuffling
-each element around, and retrieving the $i^{th}$ element in that list. This
-function is taken from Kensler's technical report
-\cite{Kensler:2013:Correlated}. \\
+The \verb|permute| function produces an in-place or hashed permutation. It is
+equivalent to creating a list of $l$ elements, and shuffling each element
+around, and retrieving the $i^{th}$ element in that list. This function is taken
+from Kensler's technical report \cite{Kensler:2013:Correlated}. \\
 
 \begin{minted}{cpp}
 float randfloat(unsigned i, unsigned p) {

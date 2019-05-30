@@ -115,13 +115,13 @@ like on Figure~\ref{fig:oa-4-2-2-2-1}. \\
 
 Because the number of factors is so small, the resultant OA is a full factorial
 design, which does not adequately show the power and advantage of using an OA.
-Let us change the experiment slightly so we can understand why OAs are so useful.
-Suppose, in this case, everything about the experiment remains the same, except
-now we have three levels: no sunlight/water, some sunlight/water, and a lot of
-sunlight/water. We will represent this set of levels as $\{0, 1, 2\}$, so now$s
-= 3$. Let us add two more factors as well: fertilizer and quality of soil, so now
-we have a total of 4 factors ($d=4$). We can see the resulting OA in
-Figure~\ref{fig:oa-9-4-3-2-1}. \\
+Let us change the experiment slightly so we can understand why OAs are so
+useful.  Suppose, in this case, everything about the experiment remains the
+same, except now we have three levels: no sunlight/water, some sunlight/water,
+and a lot of sunlight/water. We will represent this set of levels as $\{0, 1,
+2\}$, so now $s = 3$. Let us add two more factors as well: fertilizer and
+quality of soil, so now we have a total of 4 factors ($d=4$). We can see the
+resulting OA in Figure~\ref{fig:oa-9-4-3-2-1}. \\
 
 \begin{figure}
     \centering

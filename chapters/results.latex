@@ -27,7 +27,7 @@ dimensionality. Samplers that are well-stratified in $d$ dimensions with $d$
 dimensional integrands that are C1 discontinuous have a convergence rate of
 $O(N^{-1 - 2 / d})$ \cite{ours,Owen:2013:Monte}. The same scenario with a C0
 discontinuous integrand yields an asymptotic convergence rate of $O(N^{-1 - 1 /
-    d})$ \cite{ours}. Figure~\ref{tab:convergence-rates} presents selection of
+    d})$ \cite{ours}. Figure~\ref{tab:convergence-rates} presents a selection of
 scenarios and the best case convergence bounds, taken from a preprint of an EGSR
 paper \cite{ours}. \\
 
