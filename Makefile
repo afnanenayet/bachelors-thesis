@@ -7,21 +7,17 @@
 # Usage is simple: `make` generates the PDF, `make clean` cleans up any files
 # that were generated
 
-# input_file is the file that actually gets used to generate the PDF
-input_file=thesis.latex
-
-# define the actual input files so the makefile knows when to regenerate the PDF
-input_files=$(wildcard chapters/*.latex) macros.tex
+# define input files so the makefile knows when to regenerate the PDF
+input_files=$(wildcard chapters/*.latex) macros.tex thesis.latex
 output_file=thesis.pdf
-bib=references/rendering-bibtex.bib references/strings-full.bib references/strings-full.bib
+bib=$(wildcard refernces/*.latex)
 
 .PHONY: all clean
 
-$(output_file): $(input_file) $(input_files) $(bib)
-	bibtex thesis
+$(output_file): $(input_files) $(bib)
 	xelatex -shell-escape $(input_file)
-	# Need to run it again to sync the bibliography information
 	bibtex thesis
+	# Need to compile PDF again to sync new reference info and sync TOC/LOF
 	xelatex -shell-escape $(input_file)
 
 clean:
