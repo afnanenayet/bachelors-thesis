@@ -19,17 +19,17 @@ We can take this idea and get finer bounds on convergence rates if we know the
 dimensions in which the integrand varies and in which our sampler is
 well-stratified. Analytic variance analyses have been performed in several works
 which show the theoretical bounds on Monte Carlo integration in
-particular scenarios \cite{ours}. \\
+particular scenarios \citep{ours}. \\
 
 We know that naive random sampling always nets an asymptotic bound of
 $O(N^{-1})$, regardless of the function, its variance properties, or the
 dimensionality. Samplers that are well-stratified in $d$ dimensions with $d$
 dimensional integrands that are C1 discontinuous have a convergence rate of
-$O(N^{-1 - 2 / d})$ \cite{ours,Owen:2013:Monte}. The same scenario with a C0
+$O(N^{-1 - 2 / d})$ \citep{ours,Owen:2013:Monte}. The same scenario with a C0
 discontinuous integrand yields an asymptotic convergence rate of $O(N^{-1 - 1 /
-    d})$ \cite{ours}. Figure~\ref{tab:convergence-rates} presents a selection of
+    d})$ \citep{ours}. Figure~\ref{tab:convergence-rates} presents a selection of
 scenarios and the best case convergence bounds, taken from a preprint of an EGSR
-paper \cite{ours}. \\
+paper \citep{ours}. \\
 
 \begin{table}[t!]
     \label{tab:convergence-rates}
@@ -37,7 +37,7 @@ paper \cite{ours}. \\
         function of the dimensionality and smoothness of the integrand for
         various samplers. The 1- and $t$-additive integrands are
         $d$-dimensional, where $t<d$. Best case for each integrand is bold.
-        \cite{ours}}
+        \citep{ours}}
     \centering
     \begin{tabular}{rcccccccc}
     \toprule
@@ -101,17 +101,20 @@ strength of the OA. While the performance does not degrade as much as when the
 dimensionality is higher, it still does not offer as dramatic of an improvement
 as when the dimensionality and the strength match up. OA sampling uniquely
 poised to perform well when functions exhibit variance in all combinations of
-dimensions, such as in Equation~\eqref{eq:tuple-fn}. While this is a unique
-case, there is no other sampler better equipped to handle variation in this
-fashion.
+dimensions, for example:
 
 \begin{equation}
     f(x, y, z) = f(x, y) + f(y, z) + f(x, z)\label{eq:tuple-fn}
 \end{equation}
 
+\noindent
+While this is a unique
+case, there is no other sampler better equipped to handle variation in this
+fashion.
+
 \section{Empirical Results with Analytic Integrands}
 
-We modified the Empirical Error Analysis (EEA) \cite{Subr:2016:Fourier} tool to
+We modified the Empirical Error Analysis (EEA) \citep{Subr:2016:Fourier} tool to
 support multi-dimensional integrands and added a number of samplers to it in
 order to test the variance of various functions and samplers. This tool allowed
 us to see if our samplers matched the theoretical expectations that we laid out,
@@ -197,7 +200,7 @@ considered a function of the type $f^{D}_{3, 2+}$.
 We tested our samplers on these integrals. In addition to the samplers that have
 already been discussed, we tested several variations of padded samplers, such as
 CMJ padded, and the padded $(0, 2)$-sequence sampler that is present in PBRT
-\cite{Pharr:2016:Physically}. \\
+\citep{Pharr:2016:Physically}. \\
 
 In Figure~\ref{fig:simple-integrands-variance}, we present empirical convergence
 graphs for an extensive set of variance samplers with various functions. The
@@ -254,7 +257,7 @@ circumstances.
         high-dimensional QMC sequences for general high-dimensional integrands.
         When strength $t<d$ (right two columns), convergence degrades to $-1$,
         but higher strengths attain lower constant factors.
-        \cite{ours}}
+        \citep{ours}}
     \label{fig:simple-integrands-variance}
 \end{sidewaysfigure*}
 
@@ -279,7 +282,7 @@ comparable sample counts. \\
 We created three scenes. The first, dubbed \textsc{CornellBox}, is the classic
 Cornell box scene and uses anti-aliasing, soft shadows, and depth of field with
 a direct lighting integrator to create a 7D integrand
-\cite{Pharr:2016:Physically}. The second, dubbed \textsc{BlueSpheres}, is a
+\citep{Pharr:2016:Physically}. The second, dubbed \textsc{BlueSpheres}, is a
 scene that utilizes motion blur, depth of field, antialiasing, and
 inter-reflections with the path tracing integrator to create a 9D integrand. The
 third and most complex scene, dubbed \textsc{Barcelona}, is a scene of an
@@ -523,7 +526,7 @@ non-QMC samplers.
     }
     \end{center}
     \vspace*{-1.5\baselineskip}
-    \caption{Comparison of rendered scenes}{The \textsc{BlueSpheres},
+    \caption[Comparison of rendered scenes]{The \textsc{BlueSpheres},
         \textsc{CornellBox}, and \textsc{Barcelona} scenes feature different
         combinations of pixel antialiasing, DoF, motion blur, and several
         bounces of indirect illumination for combined integrands of 9D, 7D, and
@@ -531,7 +534,7 @@ non-QMC samplers.
         and each inset (bottom) show that our OA-based sampling technique is
         able to out-perform 2D padded samplers (first 4 columns), and is close
         to the quality of multi-dimensionally stratified global samplers like
-        Halton and Sobol \cite{ours}.}
+        Halton and Sobol \citep{ours}.}
     \label{fig:rendered-comparison}
     \vspace*{-\baselineskip}
 \end{figure*}
@@ -548,11 +551,11 @@ non-QMC samplers.
         clip=true]{graphics/variance-plots/eea_graphs/cornell-box}
     \end{tabular}\vspace*{-0.5\baselineskip}
     \end{center}
-    \caption{Variance of samplers for rendered scenes}{Variance behavior and
+    \caption[Variance of samplers for rendered scenes]{Variance behavior and
         best-fit slope of various samplers for a pixel in the yellow inset in
         \textsc{BlueSpheres} and the blue inset of \textsc{CornellBox} in
-        \cref{fig:rendered-comparison}. Our samplers always perform better than
+        \ref{fig:rendered-comparison}. Our samplers always perform better than
         traditional padding approaches and even outperform the global Halton and
-        Sobol samplers in \textsc{CornellBox} \cite{ours}.}
+        Sobol samplers in \textsc{CornellBox} \citep{ours}.}
     \label{fig:rendered-variance}
 \end{figure}

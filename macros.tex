@@ -62,7 +62,7 @@
 % \usepackage[scaled=0.9]{FiraMono}
 
 \usepackage{listings}
-\usepackage[capitalize]{cleveref}
+%\usepackage[capitalize]{cleveref}
 
 %New colors defined below
 \definecolor{codegreen}{rgb}{0,0.5,0}
@@ -144,13 +144,13 @@ emphstyle=\ttfamily\lst@ifdisplaystyle\fontsize{6.65}{7.5}\else\fontsize{8.65}{9
 % \crefname{lstnumber}{Line}{Line}
 \newcommand{\crefrangeconjunction}{--}
 
-\crefname{chapter}{Chapter}{Chapters}
-\crefname{section}{Sec.}{Secs.}
-\crefname{subsection}{Sec.}{Secs.}
-\crefname{subsubsection}{Sec.}{Secs.}
-\crefname{figure}{Fig.}{Figs.}
-\crefname{table}{Table}{Tables}
-\crefname{listing}{Listing}{Listings}
+%\crefname{chapter}{Chapter}{Chapters}
+%\crefname{section}{Sec.}{Secs.}
+%\crefname{subsection}{Sec.}{Secs.}
+%\crefname{subsubsection}{Sec.}{Secs.}
+%\crefname{figure}{Fig.}{Figs.}
+%\crefname{table}{Table}{Tables}
+%\crefname{listing}{Listing}{Listings}
 
 %%Math
 \newcommand{\dif}{\mathrm{d}}
@@ -183,31 +183,31 @@ emphstyle=\ttfamily\lst@ifdisplaystyle\fontsize{6.65}{7.5}\else\fontsize{8.65}{9
 \newcommand\givennameformat[1]{\textsc{#1}}
 % \renewcommand*{\mkbibnamefamily}[1]{\textsc{#1}}
 % \renewcommand*{\mkbibnamegiven}[1]{\textsc{#1}}
-\AtBeginBibliography{%
-  \renewcommand\mkbibnamelast{\lastnameformat}%
-  \renewcommand\mkbibnamefamily{\lastnameformat}%
-  \renewcommand{\mkbibnamegiven}{\givennameformat}
-}
+%\AtBeginBibliography{%
+  %\renewcommand\mkbibnamelast{\lastnameformat}%
+  %\renewcommand\mkbibnamefamily{\lastnameformat}%
+  %\renewcommand{\mkbibnamegiven}{\givennameformat}
+%}
 
 % use sentence case
 % from: https://tex.stackexchange.com/questions/22980/sentence-case-for-titles-in-biblatex
-\DeclareFieldFormat{sentencecase}{\MakeSentenceCase{#1}}
+%\DeclareFieldFormat{sentencecase}{\MakeSentenceCase{#1}}
 
-\renewbibmacro*{title}{%
-  \ifthenelse{\iffieldundef{title}\AND\iffieldundef{subtitle}}
-    {}
-    {\ifthenelse{\ifentrytype{article}\OR\ifentrytype{inbook}%
-      \OR\ifentrytype{incollection}\OR\ifentrytype{inproceedings}%
-      \OR\ifentrytype{inreference}}
-      {\printtext[title]{%
-        \printfield[sentencecase]{title}%
-        \setunit{\subtitlepunct}%
-        \printfield[sentencecase]{subtitle}}}%
-      {\printtext[title]{%
-        \printfield[titlecase]{title}%
-        \setunit{\subtitlepunct}%
-        \printfield[titlecase]{subtitle}}}%
-     \newunit}%
-  \printfield{titleaddon}}
+%\renewbibmacro*{title}{%
+  %\ifthenelse{\iffieldundef{title}\AND\iffieldundef{subtitle}}
+    %{}
+    %{\ifthenelse{\ifentrytype{article}\OR\ifentrytype{inbook}%
+      %\OR\ifentrytype{incollection}\OR\ifentrytype{inproceedings}%
+      %\OR\ifentrytype{inreference}}
+      %{\printtext[title]{%
+        %\printfield[sentencecase]{title}%
+        %\setunit{\subtitlepunct}%
+        %\printfield[sentencecase]{subtitle}}}%
+      %{\printtext[title]{%
+        %\printfield[titlecase]{title}%
+        %\setunit{\subtitlepunct}%
+        %\printfield[titlecase]{subtitle}}}%
+     %\newunit}%
+  %\printfield{titleaddon}}
 
 % End biblatex tweaks

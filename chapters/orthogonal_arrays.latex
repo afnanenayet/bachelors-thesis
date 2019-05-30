@@ -47,7 +47,7 @@ most optimal method of testing the effect of a factor on the outcome of an
 experiment without needing to resort to the full factorial design. Often, it
 will provide a way for us to design an experiment without needing to try every
 combination of factors and levels. In fact, the full factorial design is
-referred to as a degenerate case of an OA \cite{degenerate}.
+referred to as a degenerate case of an OA \citep{degenerate}.
 
 \section[Definition]{Defining an Orthogonal Array}
 
@@ -161,7 +161,7 @@ and in those columns, we will see that every two-tuple from the set $\{0, 1,
 Orthogonal arrays offer an efficient way to design experiments, optimizing for
 the number of runs required to determine the significance of some number of
 factors. This efficiency is been recognized and OAs are used for software
-testing \cite{Pressman:2010:Software}, experiment design, and cryptography.
+testing \citep{Pressman:2010:Software}, experiment design, and cryptography.
 
 \section[Construction]{Orthogonal Array Construction Techniques}
 
@@ -178,7 +178,7 @@ respect to the constraints associated with these techniques.
 
 First, we will explore the Bose construction technique, which can produce the
 following orthogonal array
-(\ref{eq:bose-oa-construction})\cite{Owen:2013:Monte}:
+(\ref{eq:bose-oa-construction})\citep{Owen:2013:Monte}:
 
 \begin{equation}
     OA(p^2, p + 1, p, 2, 1)\label{eq:bose-oa-construction}
@@ -191,12 +191,12 @@ and can only produce OAs of strength two. \\
 
 Let us suppose that the OA is denoted as $A$, and $A_{ij}$ is the number at the
 $i^{th}$ row and $j^{th}$ column of $A$. We define the construction of column 0
-with Equation~\eqref{eq:bose-first-col-construction}\cite{Owen:2013:Monte} and
+with Equation~\eqref{eq:bose-first-col-construction}\citep{Owen:2013:Monte} and
 the construction of column 1 with Equation
-\eqref{eq:bose-second-col-construction}\cite{Owen:2013:Monte}. The construction
+\eqref{eq:bose-second-col-construction}\citep{Owen:2013:Monte}. The construction
 of the other columns depends on columns 0 and 1. They are defined by Equation
 \eqref{eq:bose-other-col-construction} with the constraint that $j > 1$
-\cite{Owen:2013:Monte}.
+\citep{Owen:2013:Monte}.
 
 \begin{equation}
     A_{i0} = \Bigl\lfloor \frac{(i - 1)}{p}
@@ -216,7 +216,7 @@ of the other columns depends on columns 0 and 1. They are defined by Equation
 The Bush construction technique is a generalization of the Bose construction
 technique that relaxes the constraint on the strength ($t$) and the constraint
 on the number of runs associated with an OA. With the Bush construction, we can
-construct the following OA \cite{Owen:2013:Monte}:
+construct the following OA \citep{Owen:2013:Monte}:
 
 \begin{equation}
     OA(p^t, p + 1, p , t, 1)
@@ -224,12 +224,12 @@ construct the following OA \cite{Owen:2013:Monte}:
 
 \noindent
 While we still have the constraint of needing a prime ``base'', we can now have
-an arbitrary strength, $t$, such that $ 1 \leq t < p$ \cite{Owen:2013:Monte}.
+an arbitrary strength, $t$, such that $ 1 \leq t < p$ \citep{Owen:2013:Monte}.
 The number of runs, as a consequence, can be a somewhat arbitrary power of a
 prime. It is still a big constraint, but less constricting than the Bose
 construction. \\
 
-The Bush construction relies on polynomials of the form \cite{Owen:2013:Monte}:
+The Bush construction relies on polynomials of the form \citep{Owen:2013:Monte}:
 
 \begin{equation}
     \phi_i(x) = a_{i, t} x^{t - 1} + \cdots a_{i, 1} x + a_{i,
@@ -239,7 +239,7 @@ The Bush construction relies on polynomials of the form \cite{Owen:2013:Monte}:
 \noindent
 We construct these polynomials for every $i$ such that $ 0 \leq i < p^t$,
 picking the coefficients so $i = \sum_{l = 0}^{t - 1} a_{i, l} p^l$
-\cite{Owen:2013:Monte}. This is equivalent to taking a number, $x$, interpreting
+\citep{Owen:2013:Monte}. This is equivalent to taking a number, $x$, interpreting
 it in base $p$, and recording the coefficients, (including leading zeroes) up to
 degree $t$. Owen notes that we do not actually need to take this particular
 polynomial, we simply need $p^t$ distinct polynomials, and interpreting the
@@ -247,11 +247,11 @@ index in base $p$ presents an easy way to do so. There are other ways of
 creating distinct polynomials, which would allow for a base that is any power of
 a prime, rather than a base that is just a prime. In order to do so, we must
 utilize Galois field arithmetic to generate polynomials and perform the other
-operations \cite{Owen:2013:Monte}. \\
+operations \citep{Owen:2013:Monte}. \\
 
 We can then construct the columns $j = 0 \cdots p - 1$ as defined in
 \eqref{eq:bush-most-col-construction}, and column $p$ as defined in
-\eqref{eq:bush-last-col-construction} \cite{Owen:2013:Monte}.
+\eqref{eq:bush-last-col-construction} \citep{Owen:2013:Monte}.
 
 \begin{equation}
     A_{ij} = \phi_{i - 1}(j - 1) \bmod p\label{eq:bush-most-col-construction}

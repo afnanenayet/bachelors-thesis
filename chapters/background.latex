@@ -48,7 +48,7 @@ approaches infinity. As a result, $N$ is a variable that allows one to choose
 between speed and accuracy.
 
 \begin{equation}
-    \lim_{N \rightarrow \inf} \frac{1}{N} \sum_{i = 1}^{i = N}
+    \lim_{N \rightarrow \infty} \frac{1}{N} \sum_{i = 1}^{i = N}
     f(\overline{x}_i) = \int_{a}^{b} f(x)
 \end{equation}
 
@@ -68,7 +68,7 @@ $\sigma^2$.
 
 \noindent
 where $E$ denotes the \textbf{expected value}, $\mu$ is the average value of
-many runs, and $X$ is simply a random variable \cite{Loeve:1977:Probability}. In
+many runs, and $X$ is simply a random variable \citep{Loeve:1977:Probability}. In
 this case, $X$ is the result of some run of a Monte Carlo integration. \\
 
 If we get the same value every single time, then the difference between the
@@ -125,7 +125,7 @@ orthogonal array based sampling.
 Some common properties of sampling methods that are often used to describe a
 point set include something called the \textbf{discrepancy} of a point set. The
 discrepancy is a numerical measure of how spaced out a point set is
-\cite{Shirley:1991:Discrepancy}. We do not want our points to be clumped
+\citep{Shirley:1991:Discrepancy}. We do not want our points to be clumped
 together, and ensuring that all the points are well spaced out tends to be a
 property that is very important for Monte Carlo sampling. In the literature,
 many points sets are referred to in a favorable manner by being described as a
@@ -150,9 +150,9 @@ We can use these shuffled indices to add two more dimensions to the point set,
 by selecting some index, $i$, from the original point set, and ``padding'' it
 with some other index $l$ which is imply the $i^{th}$ element of $L$, yielding
 four dimensions. This method is called uncorrelated jittering
-\cite{Cook:1984:Distributed}. There have been other methods proposed for
-padding, such as Owen Scrambling \cite{Owen:1997:Monte} and random digit XOR
-scrambling \cite{Kollig:2002:Efficient}. \\
+\citep{Cook:1984:Distributed}. There have been other methods proposed for
+padding, such as Owen Scrambling \citep{Owen:1997:Monte} and random digit XOR
+scrambling \citep{Kollig:2002:Efficient}. \\
 
 Padding provides an obvious advantage with respect to efficiency. Consider that
 we can effectively ``re-use'' a point set to add more dimensions to it without
@@ -193,7 +193,7 @@ sampled domain.
 \end{figure}
 
 N-Rooks sampling is a method which yields a perfect 1D distribution of points
-\cite{Shirley:1991:Discrepancy}. Imagine a finite 1D line. Now suppose that we
+\citep{Shirley:1991:Discrepancy}. Imagine a finite 1D line. Now suppose that we
 want to place $N$ points on the line, ensuring that none of the points
 ``overlap.'' An easy method to do this is to divide the line into $N$ sections,
 or \textbf{strata}, and place a point within each stratum. We can also randomly
@@ -255,7 +255,7 @@ Figure~\ref{jittered-sampler-example}.
 \end{figure}
 
 This sampling method was introduced by Pete Shirley to address functions that
-exhibit variance in two dimensions \cite{Shirley:1991:Discrepancy}. Shirley
+exhibit variance in two dimensions \citep{Shirley:1991:Discrepancy}. Shirley
 wanted to address the potential clumping of points that tends to happen with
 jittered sampling. His solution was to combine the constraints of jittered
 sampling with the constraints of N-rooks.  This yields a perfect distribution in
@@ -292,13 +292,13 @@ vertically or horizontally with a point in another stratum.
 Introduced by Andrew Kensler, correlated multi-jittered (CMJ) sampling modifies
 Shirley's multi-jittered sampling design to provide point sets that have a
 better shuffling arrangement and consequently yield steeper convergence rates in
-empirical testing \cite{Kensler:2013:Correlated}. \\
+empirical testing \citep{Kensler:2013:Correlated}. \\
 
 The key idea behind CMJ is changing the shuffling step from multi-jittered
 sampling. In Shirley's method, the strata in each dimension shuffle points
 independently of shuffles in other strata. Kensler's modification entails using
 the same shuffle over each stratum in each dimension
-\cite{Kensler:2013:Correlated}. Qualitatively, these points look more
+\citep{Kensler:2013:Correlated}. Qualitatively, these points look more
 aesthetically pleasing given the stronger constraints that CMJ has for its
 points as we can see in Figure~\ref{cmj-sampler-example}.
 
@@ -328,7 +328,7 @@ properties:
 \end{equation}
 
 Note that the invariants $s \geq 1$ and $b \geq 2$ must hold for this definition
-\cite{NIEDERREITER198851}. We can see that the elementary interval provides a
+\citep{NIEDERREITER198851}. We can see that the elementary interval provides a
 notation that describes some sort of even partitioning within an arbitrary
 domain. This domain, consisting of evenly spaced partitions, naturally
 falls within the scope of sampling. This talk of elementary intervals is very
@@ -339,7 +339,7 @@ Now let us define a $(t, m, s)$-net in base $b$. We can define one as a set of
 $b^m$ points in a domain $[0, 1)^s$ such that if we define some sequence $x_i$,
 the cardinality of some elementary interval $P \cup \{ x_1, \cdots, x_{b^m} \} =
 b^t$ for every elementary interval $P$ in base $b$ such that the hypervolume of
-$P = b^{t - m}$ \cite{NIEDERREITER198851}. While the formal mathematical
+$P = b^{t - m}$ \citep{NIEDERREITER198851}. While the formal mathematical
 definition seems daunting, the more general implication of the $(t, m, s)$-net
 constraints is that some set of points is distributed in a uniform manner which
 is more acutely described by the properties of the net, $t, m, s$. \\
@@ -347,7 +347,7 @@ is more acutely described by the properties of the net, $t, m, s$. \\
 A $(t, s)$-sequence is somewhat based on $(t, m, s)$-nets. A $(t, s)$-net is an
 infinite sequence which requires that for every $m > t$ and every $k \geq 0$,
 the set $N$ is defined by Equation~\eqref{eq:ts-sequence}
-\cite{NIEDERREITER198851}, where $N$ must be a valid $(t, m, s)$ net in base
+\citep{NIEDERREITER198851}, where $N$ must be a valid $(t, m, s)$ net in base
 $b$.
 
 \begin{equation}
@@ -365,7 +365,7 @@ $b$.
 
 The Halton sequence, named after its author, was introduced in 1960 as a means
 of deterministically generating points that have low discrepancy, but at the
-same time, appear to look somewhat random \cite{Halton:1964:ARQ:355588.365104}
+same time, appear to look somewhat random \citep{Halton:1964:ARQ:355588.365104}
 (refer to Figure~\ref{halton-sampler-example}). The Halton sequence has the
 additional advantage of being a progressive sequence - we do not need knowledge
 of the previous points in order to generate the next point. This property
@@ -402,7 +402,7 @@ so we do not need to know the number of samples we will use beforehand, for
 example, which is a limitation present in many other sampling methods. The Sobol
 sequence exploits the properties of numbers in their binary representations in
 order to progressively refine the intervals that points are distributed across
-\cite{SOBOL196786} (refer to Figure~\ref{sobol-sampler-example}). \\
+\citep{SOBOL196786} (refer to Figure~\ref{sobol-sampler-example}). \\
 
 The Sobol sequence has the property of being well-distributed in the unit
 domain and can progressively partition the domain as more samples are generated
@@ -420,7 +420,7 @@ pertaining to rendering. \\
 We can generally think of the value of a pixel in a rendered image as the result
 of the integral of light multiplied by the color value. In 1986, James Kajiya
 introduced the rendering equation \eqref{eq:rendering}, perhaps one of the most
-well-known fundamental equations in graphics \cite{Kajiya:1986:RE:15886.15902}.
+well-known fundamental equations in graphics \citep{Kajiya:1986:RE:15886.15902}.
 
 \begin{equation}
     L_o(x, \omega_o,\lambda, t) = L_e(x, \omega_o, \lambda, t) + \int_{\Omega}
@@ -470,4 +470,4 @@ fact that many samplers do not exhibit stratification in high dimensions, can
 cause serious issues with Monte Carlo integration. If there is a mismatch
 between stratification and the dimensions in which a function exhibits variance,
 the performance of Monte Carlo will degrade to $O(N^{-1})$
-\cite{Singh:2017:Convergence}.
+\citep{Singh:2017:Convergence}.

@@ -19,6 +19,8 @@
 \usepackage{readarray}
 \usepackage[outline]{contour}
 \usepackage{tikz}
+\usepackage{natbib}
+\bibliographystyle{humannat}
 
 % enable global line numbers
 \setminted{linenos=true}
@@ -42,8 +44,19 @@
 % bibliography info
 %\biberVersion
 %\BibtexOrBiblatex
-\usepackage[backend=biber,bibstyle=EG,citestyle=alphabetic,mincitenames=1,maxcitenames=2,maxbibnames=100,giveninits=true,backref=true,sorting=anyt,sortcites,doi=true]{biblatex}
-\addbibresource{bibliography.bib}
+%\usepackage[
+%backend=biber,
+%bibstyle=EG,
+%citestyle=alphabetic,
+%mincitenames=1,
+%maxcitenames=2,
+%maxbibnames=100,
+%giveninits=true,
+%backref=true,
+%sorting=anyt,
+%sortcites,
+%doi=true]{biblatex}
+%\addbibresource{bibliography.bib}
 %\addbibresource{egsr_bibliography.bib}
 
 %\usepackage[pdftex]{graphicx} \pdfcompresslevel=9
@@ -115,7 +128,7 @@ patience, and critical eye.
 \input{chapters/results.latex}
 \input{chapters/conclusion.latex}
 
-
-\printbibliography
+%\printbibliography % for biber/biblatex
+\bibliography{references/rendering-bibtex,rendering/strings-full,rendering/additional}
 
 \end{document}

@@ -12,7 +12,7 @@ many things that can be done to improve on the existing research.
 \section{Limitations}
 
 The Bose and Bush construction have a rather daunting constraint: they require a
-prime base \cite{Owen:2013:Monte,Bose:1952:Orthogonal,Bush:1952:Orthogonal}.
+prime base \citep{Owen:2013:Monte,Bose:1952:Orthogonal,Bush:1952:Orthogonal}.
 With larger and larger sample sizes, finding a prime base can be extremely
 inconvenient. At lower sample sizes, it can cause an issue because the
 dimensionality of the point set is limited by the prime base, so for extremely
@@ -25,7 +25,7 @@ that the Sobol and Halton samplers have is that they are well-stratified in many
 dimensions and do not require this kind of fine-tuning for particular
 integrands. Sobol and Halton also have the advantage of being  progressive
 sequences
-\cite{Christensen:2018:Progressive,Halton:1964:ARQ:355588.365104,SOBOL196786}.
+\citep{Christensen:2018:Progressive,Halton:1964:ARQ:355588.365104,SOBOL196786}.
 As it stands with the construction techniques we have introduced, we need to
 know the number of samples required in advance and cannot progressively
 distribute samples in the manner achieved by Halton and Sobol.
@@ -37,11 +37,11 @@ areas of improvement for Monte Carlo integration. On the point of the
 dimensionality mismatch between OA strength and integrand variance, there is a
 promising area of research called \textbf{Strong Orthogonal Arrays} (SOAs) that
 could solve this issue by providing better stratification guarantees for
-multiple levels of projections \cite{He:2012:Strong}. Ideally, we could
+multiple levels of projections \citep{He:2012:Strong}. Ideally, we could
 generate an SOA with $t=4$, for example, and that would yield good
 stratification for $1, 2, 3, 4$-d projections. He and Tang have already proven
 that it is possible to generate an SOA from an OA with a larger dimensionality
-\cite{He:2012:Strong}. \\
+\citep{He:2012:Strong}. \\
 
 The stratification guarantees from SOAs are much denser than the guarantees of
 OAs. Consider a strength $t$. Now consider every combination of numbers that
@@ -52,17 +52,17 @@ stratification guarantees for an SOA of strength $t$ are $ s^{E_0} \times
 s^{E_1} \times \cdots \times s^{E_{|E|}}$. As a more practical example, consider
 $t=3$. We have the combinations: $0 + 0 + 3 $, $ 0 + 1 + 2 $, $ 1 + 1 + 1 $,
 etc. Those sets correspond to the stratification guarantees: $1 \times 1 \times
-s^3$, $1 \times s \times s^2$, $s \times s \times s$, etc \cite{He:2012:Strong}.
+s^3$, $1 \times s \times s^2$, $s \times s \times s$, etc \citep{He:2012:Strong}.
 This is not a comprehensive list, as the other combinations of these numbers
 shuffled around at different dimensions are included in the list of
 stratification guarantees that the SOA provides. As we can see, these
 stratification guarantees are quite dense and seem similar to the concept of
-elementary intervals \cite{NIEDERREITER198851,SOBOL196786}. \\
+elementary intervals \citep{NIEDERREITER198851,SOBOL196786}. \\
 
 There currently seem to be no efficient or easily implementable methods to
 construct strong orthogonal arrays, and existing methods require one to generate
-a larger orthogonal array and ``collapse'' it into an SOA \cite{He:2012:Strong},
-or use generalized orthogonal arrays \cite{Lawrence:1996:combinatorial}. A
+a larger orthogonal array and ``collapse'' it into an SOA \citep{He:2012:Strong},
+or use generalized orthogonal arrays \citep{Lawrence:1996:combinatorial}. A
 working, efficient, SOA construction method could yield a lot of gains for Monte
 Carlo integration performance, providing the advantages we get from OAs for high
 dimensional functions but relaxing constraints while possibly increasing the
