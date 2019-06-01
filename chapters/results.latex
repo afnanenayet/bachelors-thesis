@@ -33,11 +33,13 @@ paper \citep{ours}. \\
 
 \begin{table}[t!]
     \label{tab:convergence-rates}
-    \caption{The convergence rate improvement ($b$ in $O(N^{-1-b})$) as a
-        function of the dimensionality and smoothness of the integrand for
-        various samplers. The 1- and $t$-additive integrands are
-        $d$-dimensional, where $t<d$. Best case for each integrand is bold.
-        \citep{ours}}
+    \caption[Theoretical convergence rates]{
+        The convergence rate improvement ($b$ in $O(N^{-1-b})$) as a function of
+        the dimensionality and smoothness of the integrand for various samplers.
+        The 1- and $t$-additive integrands are $d$-dimensional, where $t<d$.
+        Best case for each integrand is bold.  \citep{ours}
+    }
+    \vspace{0.5cm}
     \centering
     \begin{tabular}{rcccccccc}
     \toprule
@@ -150,7 +152,7 @@ Figure~\ref{fig:c0-1D-kernel}. They all share the parameters $r_{\text{end}} =
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.45]{figures/smoothStep.png}
+    \includegraphics[scale=0.45]{figures/linearStep.png}
     \label{fig:c1-1D-kernel}
     \caption{A visual representation of the $g^1$ function}
 \end{figure}

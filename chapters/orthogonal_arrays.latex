@@ -96,22 +96,22 @@ The orthogonal array for the plant experiment we described earlier would be
 described as $OA(4, 2, 2, 2, 1)$. We can also see what the OA actually looks
 like on Figure~\ref{fig:oa-4-2-2-2-1}. \\
 
-\begin{figure}
-    \centering
-    \begin{tabular}{| c | c |}
-        \hline
-        0 & 0 \\
-        \hline
-        0 & 1 \\
-        \hline
-        1 & 0 \\
-        \hline
-        1 & 1 \\
-        \hline
-    \end{tabular}
-    \caption[$OA(4, 2, 2, 2, 1)$]{An example of an $OA(4, 2, 2, 2, 1)$}
-    \label{fig:oa-4-2-2-2-1}
-\end{figure}
+\begin{table}
+\centering
+\begin{tabular}{| c | c |}
+    \hline
+    0 & 0 \\
+    \hline
+    0 & 1 \\
+    \hline
+    1 & 0 \\
+    \hline
+    1 & 1 \\
+    \hline
+\end{tabular}
+\caption[$OA(4, 2, 2, 2, 1)$]{An example of an $OA(4, 2, 2, 2, 1)$} \label{fig:oa-4-2-2-2-1}
+\end{table}
+
 
 Because the number of factors is so small, the resultant OA is a full factorial
 design, which does not adequately show the power and advantage of using an OA.
@@ -121,9 +121,9 @@ same, except now we have three levels: no sunlight/water, some sunlight/water,
 and a lot of sunlight/water. We will represent this set of levels as $\{0, 1,
 2\}$, so now $s = 3$. Let us add two more factors as well: fertilizer and
 quality of soil, so now we have a total of 4 factors ($d=4$). We can see the
-resulting OA in Figure~\ref{fig:oa-9-4-3-2-1}. \\
+resulting OA in Table~\ref{fig:oa-9-4-3-2-1}. \\
 
-\begin{figure}
+\begin{table}
     \centering
     \begin{tabular}{| c | c | c | c |}
     \hline
@@ -148,7 +148,7 @@ resulting OA in Figure~\ref{fig:oa-9-4-3-2-1}. \\
     \end{tabular}
     \caption[$OA(9, 4, 3, 2, 1)$]{An example of an $OA(9, 4, 3, 2, 1)$}
     \label{fig:oa-9-4-3-2-1}
-\end{figure}
+\end{table}
 
 \noindent
 We have four factors and three levels, yet our experiment design only requires
@@ -178,38 +178,42 @@ respect to the constraints associated with these techniques.
 
 First, we will explore the Bose construction technique, which can produce the
 following orthogonal array
-(\ref{eq:bose-oa-construction})\citep{Owen:2013:Monte}:
 
 \begin{equation}
     OA(p^2, p + 1, p, 2, 1)\label{eq:bose-oa-construction}
 \end{equation}
 
 \noindent
-where $p$ is a prime number. Admittedly, this construction is very limited in
-the regard that the orthogonal array must have a prime squared number of runs
-and can only produce OAs of strength two. \\
+where $p$ is a prime number \citep{Owen:2013:Monte}. Admittedly, this
+construction is very limited in the regard that the orthogonal array must have a
+prime squared number of runs and can only produce OAs of strength two. \\
 
 Let us suppose that the OA is denoted as $A$, and $A_{ij}$ is the number at the
 $i^{th}$ row and $j^{th}$ column of $A$. We define the construction of column 0
-with Equation~\eqref{eq:bose-first-col-construction}\citep{Owen:2013:Monte} and
-the construction of column 1 with Equation
-\eqref{eq:bose-second-col-construction}\citep{Owen:2013:Monte}. The construction
-of the other columns depends on columns 0 and 1. They are defined by Equation
-\eqref{eq:bose-other-col-construction} with the constraint that $j > 1$
-\citep{Owen:2013:Monte}.
+as
 
 \begin{equation}
     A_{i0} = \Bigl\lfloor \frac{(i - 1)}{p}
     \Bigr\rfloor\label{eq:bose-first-col-construction}
 \end{equation}
 
+\noindent
+the construction of column 1 as
+
 \begin{equation}
     A_{i1} = (i - 1) \bmod p\label{eq:bose-second-col-construction}
 \end{equation}
 
+\noindent
+and the construction of the other columns as
+
 \begin{equation}
-    A_{ij} = A_{i1} + (j - 2) A_{i2}\label{eq:bose-other-col-construction}
+    A_{ij} = A_{i1} + (j - 2) A_{i2} \quad \text{where $j > 1$} \label{eq:bose-other-col-construction}
 \end{equation}
+
+\noindent
+noting that the construction of the other columns depends on the values from the
+first two columns.
 
 \subsection[Bush]{The Bush Construction Technique}
 
@@ -249,14 +253,19 @@ a prime, rather than a base that is just a prime. In order to do so, we must
 utilize Galois field arithmetic to generate polynomials and perform the other
 operations \citep{Owen:2013:Monte}. \\
 
-We can then construct the columns $j = 0 \cdots p - 1$ as defined in
-\eqref{eq:bush-most-col-construction}, and column $p$ as defined in
-\eqref{eq:bush-last-col-construction} \citep{Owen:2013:Monte}.
+Once we define the polynomials, we can construct the columns $j = 0 \cdots p -
+1$ of the OA as such:
 
 \begin{equation}
     A_{ij} = \phi_{i - 1}(j - 1) \bmod p\label{eq:bush-most-col-construction}
 \end{equation}
 
+\noindent
+and construct the last column, $p$,
+
 \begin{equation}
     A_{ip} = (i - 1) \bmod p\label{eq:bush-last-col-construction}
 \end{equation}
+
+\noindent
+which is a special case \citep{Owen:2013:Monte}.

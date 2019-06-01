@@ -7,6 +7,9 @@
 # Usage is simple: `make` generates the PDF, `make clean` cleans up any files
 # that were generated
 
+# The "root" input file that generates the rest of the report
+root_input=thesis.latex
+
 # define input files so the makefile knows when to regenerate the PDF
 input_files=$(wildcard chapters/*.latex) macros.tex thesis.latex
 output_file=thesis.pdf
@@ -15,10 +18,10 @@ bib=$(wildcard refernces/*.latex)
 .PHONY: all clean
 
 $(output_file): $(input_files) $(bib)
-	xelatex -shell-escape $(input_file)
+	xelatex -shell-escape $(root_input)
 	bibtex thesis
 	# Need to compile PDF again to sync new reference info and sync TOC/LOF
-	xelatex -shell-escape $(input_file)
+	xelatex -shell-escape $(root_input)
 
 clean:
 	rm -rf *.log *.aux *.toc *.pdf *.bbl *.bcf *.out *.xml *.lof *.upa *.upb

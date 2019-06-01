@@ -20,14 +20,14 @@ large strata used when sampling.
     \centering
     \includegraphics[scale=0.2]{figures/oas-no-shuffle.pdf}
     \caption[An OA with no randomization]{An OA with no randomization,
-        highlighting the ``planar flaw'' \citep{ours}}
+        highlighting the ``planar flaw'' \citep{ours}.}
     \label{fig:oa-no-shuffle}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.2]{figures/oas-shuffle.pdf}
-    \caption{A randomized OA \citep{ours}}
+    \caption[A randomized OA]{A randomized orthogonal array \citep{ours}.}
     \label{fig:oa-shuffle}
 \end{figure}
 
@@ -80,6 +80,7 @@ In this section, we will introduce some code snippets that will be used
 throughout this paper. These are useful snippets of code that we have either
 constructed or derived from other works.
 
+\begin{listing}
 \begin{minted}{cpp}
 /*!
  * \brief Permute a number
@@ -119,6 +120,12 @@ unsigned permute(unsigned i, unsigned l, unsigned p) {
   return (i + p) % l;
 }
 \end{minted}
+\caption[Hashed permutation]{
+    The hashed permutation function as presented by
+    \citeauthor{Kensler:2013:Correlated}, which allows for in-place permutation
+    of an arbitrarily sized array with no memory overhead.
+}
+\end{listing}
 
 \noindent
 The \verb|permute| function produces an in-place or hashed permutation. It is
@@ -126,6 +133,7 @@ equivalent to creating a list of $l$ elements, and shuffling each element
 around, and retrieving the $i^{th}$ element in that list. This function is taken
 from Kensler's technical report \citep{Kensler:2013:Correlated}. \\
 
+\begin{listing}
 \begin{minted}{cpp}
 float randfloat(unsigned i, unsigned p) {
     i ^= p;
@@ -138,6 +146,7 @@ float randfloat(unsigned i, unsigned p) {
     return i * (1.0f / 4294967808.0f);
 }
 \end{minted}
+\end{listing}
 
 \noindent
 \verb|randfloat| is an efficient function that generates a random number.
@@ -189,6 +198,7 @@ same substrata based off of the coarse strata for every dimension, so that the
 shuffles within CMJ-enabled dimensions are identical, as implemented in the
 original 2D variant of CMJ \citep{Kensler:2013:Correlated}.
 
+\begin{listing}
 \begin{minted}{cpp}
     float boseOA(int i, int j, int s, int p, Offset ot) {
         int Aij, Aik;
@@ -219,6 +229,12 @@ original 2D variant of CMJ \citep{Kensler:2013:Correlated}.
         return permute(sy, s, p);   // Defaults to CMJ
     }
 \end{minted}
+\caption[Bose construction]{
+    An implementation of the Bose construction technique with various types of
+    offsets.
+}
+\label{lst:bose-construction}
+\end{listing}
 
 \noindent
 The code listing above demonstrates an implementation of Bose in-place with
@@ -241,6 +257,7 @@ that falls into the same strata receives a unique index so we can ensure they
 all fall in different substrata. The standard jittering approach remains the
 same as before - select a random substratum for each sample.
 
+\begin{listing}
 \begin{minted}{cpp}
     float bushOA(int i, int j, int s, int t, int p, Offset ot) {
         int N          = pow(s, t);
@@ -277,6 +294,11 @@ same as before - select a random substratum for each sample.
         return permute((i / s) % numSS, numSS, p);  // Defaults to MJ
     }
 \end{minted}
+\caption[Bush in-place construction]{
+    An implementation of the Bush in-place construction technique with various
+    offsets.
+}
+\end{listing}
 
 \noindent
 Here we have the in-place implementation of Bush with jittered and
@@ -302,6 +324,7 @@ coefficients to calculate the substrata. We have already established that this
 strategy will create a unique selection of strata because the uniqueness of the
 indices holds regardless of which base they are represented in.
 
+\begin{listing}
 \begin{minted}{cpp}
     float cmjdD(int i, int s, int t, int p) {
         int N          = pow(s, t);
@@ -324,3 +347,8 @@ indices holds regardless of which base they are represented in.
         return out;
     }
 \end{minted}
+\label{lst:bush-construction}
+\caption[CMJND in-place implementation]{
+    An implementation of the CMJND construction technique.
+}
+\end{listing}
