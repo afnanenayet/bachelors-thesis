@@ -52,12 +52,14 @@ stratification guarantees for an SOA of strength $t$ are $ s^{E_0} \times
 s^{E_1} \times \cdots \times s^{E_{|E|}}$. As a more practical example, consider
 $t=3$. We have the combinations: $0 + 0 + 3 $, $ 0 + 1 + 2 $, $ 1 + 1 + 1 $,
 etc. Those sets correspond to the stratification guarantees: $1 \times 1 \times
-s^3$, $1 \times s \times s^2$, $s \times s \times s$, etc \citep{He:2012:Strong}.
-This is not a comprehensive list, as the other combinations of these numbers
-shuffled around at different dimensions are included in the list of
-stratification guarantees that the SOA provides. As we can see, these
-stratification guarantees are quite dense and seem similar to the concept of
-elementary intervals \citep{NIEDERREITER198851,SOBOL196786}. \\
+s^3$, $1 \times s \times s^2$, $s \times s \times s$, etc
+\citep{He:2012:Strong}.  This is not a comprehensive list, as the other
+combinations of these numbers shuffled around at different dimensions are
+included in the list of stratification guarantees that the SOA provides. As we
+can see, these stratification guarantees are quite dense and seem similar to the
+concept of elementary intervals \citep{NIEDERREITER198851,SOBOL196786}. The
+\verb|oars| library discussed earlier also contains utilities for verifying
+whether a point set is a valid SOA. \\
 
 There currently seem to be no efficient or easily implementable methods to
 construct strong orthogonal arrays, and existing methods require one to generate

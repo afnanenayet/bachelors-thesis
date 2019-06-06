@@ -41,8 +41,8 @@ along several planes, something that is referred to as the ``planar flaw''
 canonical arrangement of the Bose construction looks like, and compare with
 Figure~\ref{fig:oa-shuffle} to see what the OA looks like once randomized. \\
 
-Owen defines the randomized, jittered, and normalized arrangement of an OA as
-such:
+\citeauthor{Owen:2013:Monte} defines the randomized, jittered, and normalized
+arrangement of an OA as such:
 
 \begin{equation}
     X_{ij} = \frac{\pi_j(A_{ij}) + U_{ij}}{b}
@@ -63,16 +63,17 @@ performance in Monte Carlo integration.
 \section{Practical Construction Algorithms}
 
 In this section, we aim to provide practical construction techniques for
-generating point sets that use the transformation provided by Owen. With these
-algorithms, we aim to be efficient, which entails low memory and computational
-requirements. These implementations are in-place, which means that any index and
-dimension of a sampler can be generated without requiring knowledge of other
-points, which lends itself to low memory overhead.  Of course, this introduces
-some added complexity - how do we know where to place a point so that it meets
-strict stratification requirements and maintain the N-rooks guarantee if we
-don't know where the other points are positioned?  In this section, we will
-explain how we can achieve that while presenting examples of code that we used
-to generate orthogonal array based point sets. \\
+generating point sets that use the transformation provided by
+\citeauthor{Owen:2013:Monte}. With these algorithms, we aim to be efficient,
+which entails low memory and computational requirements. These implementations
+are in-place, which means that any index and dimension of a sampler can be
+generated without requiring knowledge of other points, which lends itself to low
+memory overhead.  Of course, this introduces some added complexity - how do we
+know where to place a point so that it meets strict stratification requirements
+and maintain the N-rooks guarantee if we don't know where the other points are
+positioned?  In this section, we will explain how we can achieve that while
+presenting examples of code that we used to generate orthogonal array based
+point sets. \\
 
 \subsection{Background Listings}
 
@@ -125,13 +126,14 @@ unsigned permute(unsigned i, unsigned l, unsigned p) {
     \citeauthor{Kensler:2013:Correlated}, which allows for in-place permutation
     of an arbitrarily sized array with no memory overhead.
 }
+\label{lst:hashed-permutation}
 \end{listing}
 
-\noindent
-The \verb|permute| function produces an in-place or hashed permutation. It is
-equivalent to creating a list of $l$ elements, and shuffling each element
-around, and retrieving the $i^{th}$ element in that list. This function is taken
-from Kensler's technical report \citep{Kensler:2013:Correlated}. \\
+The \verb|permute| function produces an in-place or hashed permutation (Listing
+~\ref{lst:hashed-permutation}). It is equivalent to creating a list of $l$
+elements, and shuffling each element around, and retrieving the $i^{th}$ element
+in that list. This function is taken from \citeauthor{Kensler:2013:Correlated}'s
+technical report \citep{Kensler:2013:Correlated}. \\
 
 \begin{listing}
 \begin{minted}{cpp}
@@ -146,10 +148,87 @@ float randfloat(unsigned i, unsigned p) {
     return i * (1.0f / 4294967808.0f);
 }
 \end{minted}
+\caption[RNG code]{An efficient function to generate a pseudo-random number.}
 \end{listing}
 
-\noindent
-\verb|randfloat| is an efficient function that generates a random number.
+\subsubsection{Libraries}
+
+For the purpose of this research, I wrote additional libraries to help with the
+verification of point sets and construction methods. One library, called
+\verb|oars|, is an orthogonal array construction and verification library
+written in the Rust language. It contains functions to generate orthogonal
+arrays using the Bose and Bush construction techniques, it also has verification
+methods to check whether a given point set is valid with respect to the
+OA parameters that it should have. Additionally, \verb|oars| has extensive
+benchmarking tools to check the performance of each constructor. \\
+
+Another more general purpose library, \verb|mcsampler|, is a Monte Carlo
+sampling library written in Rust. It contains a general interface for sampling
+and implements a number of sampling techniques, not just orthogonal array based
+sampling. The \verb|mcsampler| library also contains utilities for checking the
+validity of point sets, whether points are properly stratified, and have the
+N-rooks guarantee (see Listing \ref{lst:oars-oa-verify}).
+
+\begin{listing}
+\begin{minted}{rust}
+pub fn verify<T: OAInteger>(oa: &OA<T>) -> bool {
+    if oa.points.ndim() != 2 {
+        return false;
+    }
+
+    if oa.points.shape()[1] != oa.factors.to_usize().unwrap() {
+        return false;
+    }
+
+    let col_combos =
+        (0..oa.factors.to_u64().unwrap()).combinations(oa.strength.to_usize()
+        .unwrap());
+
+    // this iterator gives us every possible combination of columns
+    for selection in col_combos {
+        // tuple count holds the count for how many times each possible tuple is
+        // seen
+        let mut tuple_count: HashMap<u64, u64> = HashMap::new();
+
+        // loop through the points and count up how many times we encounter
+        // the tuple
+        for i in 0..oa.points.shape()[0] {
+            let mut tuple_index = 0;
+
+            for (power, column) in selection.iter().enumerate() {
+                tuple_index += (oa.points[[i, column.to_usize().unwrap()]] *
+                    pow(oa.levels, power))
+                    .to_u64()
+                    .unwrap();
+            }
+            // set count to 1 if it doesn't exist, otherwise update the count
+            *tuple_count.entry(tuple_index).or_insert(0) += 1;
+        }
+
+        // now verify that the hashmap has every possible combination, `index`
+        // times
+        for i in 0..oa
+            .levels
+            .to_u64()
+            .unwrap()
+            .pow(oa.strength.to_u32().unwrap())
+        {
+            // if the entry is not present in the array, set the count to 0
+            if *tuple_count.entry(i).or_insert(0) != oa.index.to_u64()
+                                                       .unwrap() {
+                return false;
+            }
+        }
+    }
+    true
+}
+\end{minted}
+\caption[Orthogonal array verification code]{
+    A method that verifies if a point set is a valid orthogonal array given a
+    point set and the parameters for the orthogonal array, written in Rust.
+}
+\label{lst:oars-oa-verify}
+\end{listing}
 
 \subsection{(Correlated) Multi-Jittering in 2D Projections}
 
@@ -231,14 +310,18 @@ original 2D variant of CMJ \citep{Kensler:2013:Correlated}.
 \end{minted}
 \caption[Bose construction]{
     An implementation of the Bose construction technique with various types of
-    offsets.
+    offsets. The parameter $i$ represents the index of the point set, $j$ is the
+    ``other'' dimension to use to calculate offsets within strata, $s$ is the
+    number of coarse strata in each dimension, $p$ is the effective seed to use
+    for the shuffling and randomization, and $ot$ is the offset type to apply
+    when shuffling within coarse strata.
 }
 \label{lst:bose-construction}
 \end{listing}
 
-\noindent
-The code listing above demonstrates an implementation of Bose in-place with
-selectable jittered, multi-jittered, and correlated-multi jittered offsets.
+Listing~\ref{lst:bose-construction} demonstrates an implementation of the Bose
+in-place sampler with selectable jittered, multi-jittered, and correlated-multi
+jittered offsets.
 
 \subsection{(Multi-)Jittering in t-D Projections}
 
@@ -255,7 +338,7 @@ original index. In this case, we elected to make the new index $\nicefrac{i}{p}
 \bmod p^{t - 1}$. Another transformation can be used, as long as every sample
 that falls into the same strata receives a unique index so we can ensure they
 all fall in different substrata. The standard jittering approach remains the
-same as before - select a random substratum for each sample.
+same as before - select a random substratum for each sample. \\
 
 \begin{listing}
 \begin{minted}{cpp}
@@ -296,15 +379,17 @@ same as before - select a random substratum for each sample.
 \end{minted}
 \caption[Bush in-place construction]{
     An implementation of the Bush in-place construction technique with various
-    offsets.
+    offsets. The parameters are identical as described in
+    Listing~\ref{lst:bose-construction}.
 }
+\label{lst:bush-construction}
 \end{listing}
 
-\noindent
-Here we have the in-place implementation of Bush with jittered and
-multi-jittered offsets. The functions \verb|evalPoly| and \verb|toBaseS|
-correspond to Equation~\eqref{eq:bush-poly}, which we established is equivalent
-to transforming the index to base $p$, and reinterpreting it in base 10.
+In Listing~\ref{lst:bush-construction}, we have the in-place implementation of
+Bush with jittered and multi-jittered offsets. The functions \verb|evalPoly| and
+\verb|toBaseS| correspond to Equation~\eqref{eq:bush-poly}, which we established
+is equivalent to transforming the index to base $p$, and reinterpreting it in
+base 10.
 
 \subsection{CMJND}
 
@@ -326,7 +411,7 @@ indices holds regardless of which base they are represented in.
 
 \begin{listing}
 \begin{minted}{cpp}
-    float cmjdD(int i, int s, int t, int p) {
+    float cmjdND(int i, int s, int t, int p) {
         int N          = pow(s, t);
         i              = permute(i, N, p * 0x51633e2d);
         auto iDigits   = toBaseS(i, s, t);
@@ -347,8 +432,46 @@ indices holds regardless of which base they are represented in.
         return out;
     }
 \end{minted}
-\label{lst:bush-construction}
+\label{lst:cmjnd-construction}
 \caption[CMJND in-place implementation]{
-    An implementation of the CMJND construction technique.
+    An implementation of the CMJND construction technique. $i$ represents the
+    index of the point within the point set, $s$ is the number of coarse strata
+    in each dimension, $t$ is the strength of the resulting point set (and also
+    the cross-stratification guarantee), and $p$ is the seed for the hashed pRNG
+    methods used by the method (such as the hashed permutation and random number
+    generator functions).
 }
 \end{listing}
+
+\subsection{PBRT Implementation}
+
+In order to test the performance of these sampling techniques on rendered
+scenes, we opted to use PBRT, an educational renderer that is commonly used in
+research. In order to do this, we had to integrate the sampling code we had into
+PBRT's sampling interface. \\
+
+PBRT provides two types of sampling interfaces: the per-pixel sampler and the
+global sampler. The per-pixel sampler provides a convenient interface for
+generating sample sets for each pixel. Every single pixel in the image will
+receive its own set of sampling points, all of which are unaware of the sampling
+points in other pixels. Sometimes, this is not sufficient, and a sampling point
+set should be well distributed over the entire image. For this, PBRT provides a
+global sampler. In the global sampler, one set of sampling points are used over
+a whole image, so samples that land in different pixels are ``aware'' of each
+other. \\
+
+We implemented the CMJND, Bush, and Bose sampling strategies in PBRT with the
+per-pixel sampler due to performance and ease of implementation. The global
+sampler in PBRT requires an instant reverse lookup of a pixel location to the
+index of a point. For example, if we have a pixel at location $(x, y)$, given
+our set of samples, we need to know which index $i$ results in a sample point
+that will land in the pixel $(x, y)$. The only feasible way to implement this is
+to know how to create a mapping of pixel locations to indices in the sampling
+point set.  Because we shuffle points using
+\citeauthor{Kensler:2013:Correlated}'s permutation function, it would seem that
+we could compute the reverse of the hash and get a mapping that yields the pixel
+locations and indices in an efficient manner.  Unfortunately, because the
+function relies on a destructive modulo operator, the method is not reversible.
+In this case, the only remaining option is to calculate all of the points and
+store a mapping of the points and pixel locations in memory, which is too
+inefficient for rendering.

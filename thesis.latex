@@ -3,12 +3,11 @@
 % packages
 
 % set up fonts
-%\usepackage[default]{sourcesanspro}
-\usepackage{sourcecodepro}
+\usepackage[default]{sourcesanspro}
 \usepackage{amsthm}
-\usepackage{libertine}
+%\usepackage{libertine}
 \usepackage[libertine]{newtxmath}
-
+\usepackage{sourcecodepro}
 
 \usepackage[margin=1in]{geometry}
 \usepackage{setspace}
@@ -30,7 +29,7 @@
 \usepackage{etoolbox}
 \AtBeginEnvironment{minted}{
     \singlespacing%
-    \fontsize{11}{11}
+    \fontsize{10}{10}
     \selectfont
     \usemintedstyle{vs}
 }

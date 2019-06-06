@@ -98,16 +98,16 @@ like on Figure~\ref{fig:oa-4-2-2-2-1}. \\
 
 \begin{table}
 \centering
-\begin{tabular}{| c | c |}
-    \hline
+\begin{tabular}{c  c}
+    \toprule
     0 & 0 \\
-    \hline
+    \midrule
     0 & 1 \\
-    \hline
+    \midrule
     1 & 0 \\
-    \hline
+    \midrule
     1 & 1 \\
-    \hline
+    \bottomrule
 \end{tabular}
 \caption[$OA(4, 2, 2, 2, 1)$]{An example of an $OA(4, 2, 2, 2, 1)$} \label{fig:oa-4-2-2-2-1}
 \end{table}
@@ -125,26 +125,26 @@ resulting OA in Table~\ref{fig:oa-9-4-3-2-1}. \\
 
 \begin{table}
     \centering
-    \begin{tabular}{| c | c | c | c |}
-    \hline
+    \begin{tabular}{c c c c}
+    \toprule
     0 & 0 & 0 & 0 \\
-    \hline
+    \midrule
     0 & 1 & 1 & 1 \\
-    \hline
+    \midrule
     0 & 2 & 2 & 2 \\
-    \hline
+    \midrule
     1 & 0 & 1 & 2 \\
-    \hline
+    \midrule
     1 & 1 & 2 & 0 \\
-    \hline
+    \midrule
     1 & 2 & 0 & 1 \\
-    \hline
+    \midrule
     2 & 0 & 2 & 1 \\
-    \hline
+    \midrule
     2 & 1 & 0 & 2 \\
-    \hline
+    \midrule
     2 & 2 & 1 & 0 \\
-    \hline
+    \bottomrule
     \end{tabular}
     \caption[$OA(9, 4, 3, 2, 1)$]{An example of an $OA(9, 4, 3, 2, 1)$}
     \label{fig:oa-9-4-3-2-1}

@@ -130,18 +130,32 @@ functions in a way that allowed us to control the dimensionality (and the
 dimensionality of the variance) as well as the discontinuity of the resulting
 functions. \\
 
-Our one-dimensional basis functions consisted of a Gaussian, a C1 discontinuity,
-and a C0 discontinuity, all of which were clipped so that the center of the
+Our one-dimensional basis functions consisted of a Gaussian,
+
+\begin{equation}
+    g^{\infty}(r) = \text{exp}(-r^2 / (2 \sigma^2))\label{eq:gaussian-1D-kernel}
+\end{equation}
+
+a C1 discontinuity,
+
+\begin{equation}
+    g^1(r) = 1 - \text{linearStep}(r, r_{\text{start}},
+    r_{\text{end}})\label{eq:c1-1D-kernel}
+\end{equation}
+
+and a C0 discontinuity,
+
+\begin{equation}
+g^0(r) = 1 - \text{binaryStep}(r, r_{\text{end}})\label{eq:c0-1D-kernel}
+\end{equation}
+
+\noindent
+all of which were clipped so that the center of the
 functions began in the origin of the domain. The clipping made the function
-asymmetrical, which is a desired property for these tests. The Gaussian is
-defined in Equation~\eqref{eq:gaussian-1D-kernel} and visualized in
-Figure~\ref{fig:gaussian-1D-kernel}. The C1 discontinuity is defined in
-Equation~\eqref{eq:c1-1D-kernel} and visualized in
-Figure~\ref{fig:c1-1D-kernel}. The C0 discontinuity is defined in
-Equation~\eqref{eq:c0-1D-kernel} and visualized in
-Figure~\ref{fig:c0-1D-kernel}. They all share the parameters $r_{\text{end}} =
+asymmetrical, which is a desired property for these tests. 
+They all share the parameters $r_{\text{end}} =
 \nicefrac{3}{\pi}$, $r_{\text{start}} = r_{\text{end}} - 0.2$, and $\sigma =
-\nicefrac{1}{3}$.
+\nicefrac{1}{3}$. \\
 
 \begin{figure}
     \centering
@@ -163,19 +177,6 @@ Figure~\ref{fig:c0-1D-kernel}. They all share the parameters $r_{\text{end}} =
     \label{fig:gaussian-1D-kernel}
     \caption{A visual representation of the $g^{\infty}$ function}
 \end{figure}
-
-\begin{equation}
-    g^0(r) = 1 - \text{binaryStep}(r, r_{\text{end}})\label{eq:c0-1D-kernel}
-\end{equation}
-
-\begin{equation}
-    g^1(r) = 1 - \text{linearStep}(r, r_{\text{start}},
-    r_{\text{end}})\label{eq:c1-1D-kernel}
-\end{equation}
-
-\begin{equation}
-    g^{\infty}(r) = \text{exp}(-r^2 / (2 \sigma^2))\label{eq:gaussian-1D-kernel}
-\end{equation}
 
 We built several integrands, both additive and multiplicative, by constructing
 variance in various projections. The way we achieved this was by constructing
