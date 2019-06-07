@@ -13,14 +13,14 @@ root_input=thesis.latex
 # define input files so the makefile knows when to regenerate the PDF
 input_files=$(wildcard chapters/*.latex) macros.tex thesis.latex
 output_file=thesis.pdf
-bib=$(wildcard refernces/*.latex)
+bib=$(wildcard references/*.bib)
 
 .PHONY: all clean
 
 $(output_file): $(input_files) $(bib)
 	xelatex -shell-escape $(root_input)
 	bibtex thesis
-	# Need to compile PDF again to sync new reference info and sync TOC/LOF
+	# Need to compile PDF again to sync references and TOC/LOF
 	xelatex -shell-escape $(root_input)
 
 clean:
