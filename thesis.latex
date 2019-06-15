@@ -22,7 +22,7 @@
 \usepackage[outline]{contour}
 \usepackage{tikz}
 \usepackage{natbib}
-\bibliographystyle{humannat}
+\bibliographystyle{dinat}
 
 % enable global line numbers
 \setminted{linenos=true}
@@ -41,7 +41,6 @@
 \usepackage{nicefrac}
 \usepackage{booktabs}
 \usepackage{rotating}
-\spacing{1.5}
 
 % MACROS
 
@@ -51,6 +50,8 @@
 
 % END PREAMBLE
 
+\spacing{1.5}
+
 \title{
     {Orthogonal Array Sampling for Monte Carlo Based Rendering}\\
     {\large Undergraduate Thesis} \\
@@ -58,12 +59,21 @@
     \vspace{1.5cm}
     {\includegraphics[scale=0.3]{graphics/D-Pine_RGB.jpg}}
 }
-\author{Afnan Enayet}
-\date{May 30, 2019} % TODO update the date whenever the deadline is announced
+
+\spacing{1.0}
+
+\author{
+    Afnan Enayet \\
+    Dr. Wojciech Jarosz \\
+    {\small Advisor} \\
+    Dartmouth Computer Science Technical Report TR2019-872
+}
 
 \begin{document}
 
 \maketitle
+
+\spacing{1.5}
 
 \chapter*{Abstract}
 In computer graphics (especially in offline rendering), the current state of
@@ -88,12 +98,12 @@ offer these same guarantees.
 
 \chapter*{Acknowledgements}
 
-I would like to thank my thesis advisor, Wojciech Jarosz, whose help was
-crucial in the development of this thesis. I would also like to acknowledge
-Andrew Kensler, Per Christensen, and Charlie Kilpatrick from Pixar for their
-help and collaborative efforts in the development of this thesis and the
-related research paper. I would also like to thank Rebecca Luo for her support,
-patience, and critical eye.
+I would like to thank my thesis advisor, Wojciech Jarosz, whose help was crucial
+in the development of this thesis. I would also like to acknowledge Andrew
+Kensler, Per Christensen, and Charlie Kilpatrick from Pixar for their help and
+collaborative efforts in the development of this thesis and the related research
+paper. I would also like to thank Rebecca Luo for her support, patience, and
+critical eye.
 
 \tableofcontents
 

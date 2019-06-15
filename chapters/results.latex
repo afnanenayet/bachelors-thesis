@@ -128,14 +128,13 @@ multiple dimensions. We crafted several functions that used one-dimensional
 functions as the basis, which were then combined to form higher dimensional
 functions in a way that allowed us to control the dimensionality (and the
 dimensionality of the variance) as well as the discontinuity of the resulting
-functions. \\
-
-Our one-dimensional basis functions consisted of a Gaussian,
+functions. Our one-dimensional basis functions consisted of a Gaussian,
 
 \begin{equation}
     g^{\infty}(r) = \text{exp}(-r^2 / (2 \sigma^2))\label{eq:gaussian-1D-kernel}
 \end{equation}
 
+\noindent
 a C1 discontinuity,
 
 \begin{equation}
@@ -143,6 +142,7 @@ a C1 discontinuity,
     r_{\text{end}})\label{eq:c1-1D-kernel}
 \end{equation}
 
+\noindent
 and a C0 discontinuity,
 
 \begin{equation}
@@ -251,7 +251,7 @@ circumstances.
         \includegraphics[scale=0.73,trim=33pt 0 0 0, clip=true]{graphics/variance-plots/graphs/c0_ball}
     \end{tabular}
     \end{center}
-    \caption{Analytic variance of various samplers}{Variance behavior of 13
+    \caption[Analytic variance of various samplers]{Variance behavior of 13
         samplers on 4D analytic integrands of different complexity (columns) and
         continuity (rows). We list the best-fit slope of each technique, which
         generally matches the theoretically predicted convergences

@@ -35,7 +35,7 @@ the function's domain ($\mathbb{R}^d$) a certain number of times ($N$) and
 averaging the calculated values.
 
 \begin{equation}
-    \int_{a}^{b} f(x) \approx \frac{1}{N} \sum_{i = 1}^{i = N} f(\overline{x}_i)
+    \int_{0}^{1} f(x) \approx \frac{1}{N} \sum_{i = 1}^{i = N} f(\overline{x}_i)
     \quad \text{where $\overline{x}_i$ is a uniform random number}
 \end{equation}
 

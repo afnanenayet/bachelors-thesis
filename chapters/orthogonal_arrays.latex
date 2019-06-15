@@ -98,6 +98,8 @@ like on Figure~\ref{fig:oa-4-2-2-2-1}. \\
 
 \begin{table}
 \centering
+\caption[$OA(4, 2, 2, 2, 1)$]{An example of an $OA(4, 2, 2, 2, 1)$} \label{fig:oa-4-2-2-2-1}
+\vspace{1cm}
 \begin{tabular}{c  c}
     \toprule
     0 & 0 \\
@@ -109,7 +111,6 @@ like on Figure~\ref{fig:oa-4-2-2-2-1}. \\
     1 & 1 \\
     \bottomrule
 \end{tabular}
-\caption[$OA(4, 2, 2, 2, 1)$]{An example of an $OA(4, 2, 2, 2, 1)$} \label{fig:oa-4-2-2-2-1}
 \end{table}
 
 
@@ -125,6 +126,8 @@ resulting OA in Table~\ref{fig:oa-9-4-3-2-1}. \\
 
 \begin{table}
     \centering
+    \caption[$OA(9, 4, 3, 2, 1)$]{An example of an $OA(9, 4, 3, 2, 1)$}
+    \vspace{1cm}
     \begin{tabular}{c c c c}
     \toprule
     0 & 0 & 0 & 0 \\
@@ -146,7 +149,6 @@ resulting OA in Table~\ref{fig:oa-9-4-3-2-1}. \\
     2 & 2 & 1 & 0 \\
     \bottomrule
     \end{tabular}
-    \caption[$OA(9, 4, 3, 2, 1)$]{An example of an $OA(9, 4, 3, 2, 1)$}
     \label{fig:oa-9-4-3-2-1}
 \end{table}
 
