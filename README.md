@@ -10,7 +10,9 @@ thesis.
 In order to generate the PDF from the latex source files, simply run
 
 ```sh
-pdflatex thesis.latex
+make
 ```
 
-in the root directory of this repo
+in the root directory of this repo.
+
+The `make clean` command is provided for removing build artifacts.
