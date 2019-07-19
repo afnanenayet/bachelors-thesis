@@ -1,3 +1,5 @@
-*.bibtex   text diff=bibtex
-*.latex    text diff=tex
-*.tex      text diff=tex
+*.bibtex       linguist-language=bibtex
+*.bbx          linguist-language=bibtex
+*.latex        linguist-language=latex
+*.tex          linguist-language=latex
+graphics/*     linguist-detectable=false
